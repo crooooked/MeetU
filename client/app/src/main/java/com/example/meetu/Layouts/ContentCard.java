@@ -3,9 +3,7 @@ package com.example.meetu.Layouts;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
-
 import androidx.constraintlayout.widget.ConstraintLayout;
-
 import com.example.meetu.R;
 
 public class ContentCard extends ConstraintLayout {
