@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.LoginActivity"
+    android:orientation="vertical"
+    android:background="@drawable/shape_corner_white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/shape_corner_white"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="parent"
+        android:id="@+id/linear_imput">
+        <ImageView
+            android:layout_margin="50dp"
+            android:layout_height="0dp"
+            android:layout_width="match_parent"
+
+            android:layout_weight="6"
+            android:src="@drawable/logo"
+            android:layout_gravity="center_horizontal"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="20dp">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icons_head"
+                android:id="@+id/iv_icon_head"
+                android:labelFor="@+id/ed_username"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center_vertical"
+                />
+            <EditText
+                android:id="@+id/ed_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/shadow_corner_white"
+                android:hint="  username"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="20dp">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icons_key"
+                android:id="@+id/iv_icon_key"
+                android:labelFor="@+id/ed_password"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center_vertical"
+                />
+            <EditText
+                android:id="@+id/ed_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/shadow_corner_white"
+                android:hint="  password"
+                android:inputType="textPassword"
+                android:textSize="20sp" />
+
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"/>
+
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="40dp"
+
+            android:background="@drawable/shape_corner_button"
+            android:onClick="onclick"
+            android:text="登录"
+            android:textColor="#ffffff"
+            android:textSize="28sp"
+            android:padding="10dp"/>
+        <View
+
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="8"/>
+
+        <TextView
+            android:id="@+id/tv_register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="没有账号？"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginBottom="40dp"
+            android:onClick="onclick"
+            />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
