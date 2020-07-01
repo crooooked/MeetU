@@ -1,10 +1,12 @@
-package com.example.meetu;
+package com.example.meetu.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.os.Bundle;
 import android.widget.LinearLayout;
+
+import com.example.meetu.Layouts.ContentCard;
+import com.example.meetu.R;
 
 public class MainActivity extends AppCompatActivity {
 
