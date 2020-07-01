@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="10dp"
+    android:layout_margin="5dp">
+
+    <!--第一部分：状态头部，包括头像、用户名、发布日期-->
+
+    <ImageButton
+        android:id="@+id/user_head"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:scaleType="centerCrop"
+        app:srcCompat="@mipmap/head_sample"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="#00000000"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:text="@string/user_name_sample"
+        android:textSize="18dp"
+        app:layout_constraintStart_toEndOf="@+id/user_head"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/post_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/post_time_sample"
+        app:layout_constraintStart_toEndOf="@+id/user_head"
+        app:layout_constraintTop_toBottomOf="@+id/user_name" />
+
+    <Space
+        android:id="@+id/space_head"
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        app:layout_constraintTop_toBottomOf="@id/post_time"/>
+
+
+    <!--第二部分：状态内容，包括文字、图片、转发内容-->
+
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/content_sample"
+        android:textSize="20dp"
+        android:padding="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/space_head"
+        android:layout_marginBottom="10dp"/>
+
+    <Space
+        android:id="@+id/space_content"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        app:layout_constraintTop_toBottomOf="@id/content"/>
+
+
+    <!--第三部分：互动操作栏，包括转发、评论、点赞-->
+
+    <ImageButton
+        android:id="@+id/repost_button"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        app:srcCompat="@mipmap/repost_grey"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toBottomOf="@id/space_content"
+        app:layout_constraintRight_toLeftOf="@id/repost_slogan"
+        android:background="#00000000"/>
+
+    <TextView
+        android:id="@+id/repost_slogan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/repost_slogan"
+        android:textSize="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/space_content"
+        app:layout_constraintEnd_toStartOf="@id/remark_slogan"/>
+
+    <ImageButton
+        android:id="@+id/remark_button"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        app:srcCompat="@mipmap/remark"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toBottomOf="@+id/space_content"
+        app:layout_constraintRight_toLeftOf="@id/remark_slogan"
+        android:background="#00000000"/>
+
+    <TextView
+        android:id="@+id/remark_slogan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/remark_slogan"
+        android:textSize="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/like_slogan"
+        app:layout_constraintStart_toEndOf="@+id/repost_slogan"
+        app:layout_constraintTop_toBottomOf="@+id/space_content" />
+
+    <ImageButton
+        android:id="@+id/like_button"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        app:srcCompat="@mipmap/like_grey"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toBottomOf="@+id/space_content"
+        app:layout_constraintRight_toLeftOf="@id/like_slogan"
+        android:background="#00000000"/>
+
+    <TextView
+        android:id="@+id/like_slogan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/like_slogan"
+        android:textSize="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/space_content"
+        app:layout_constraintStart_toEndOf="@id/remark_slogan"/>
+
+    <Space
+        android:id="@+id/space_interact"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        app:layout_constraintTop_toBottomOf="@id/remark_slogan"/>
+
+
+    <!--第四部分：评论栏，包括两条示例评论和一个评论输入框-->
+
+    <EditText
+        android:id="@+id/remark_edit"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="@string/remark_hint"
+        android:background="@drawable/edit_background_with_frame"
+        app:layout_constraintTop_toBottomOf="@id/space_interact"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"/>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

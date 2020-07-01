@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">MeetU</string>
+
+<!--    状态管理模块用到的string-->
+<!--    作者：陈文锦-->
+    <string name="user_name_sample"> 爱吃糖的小明 </string>
+    <string name="post_time_sample"> 2020年10月20日 </string>
+    <string name="content_sample"> 今天吃了米线，很开心！\n还和朋友逛街买了一个玩偶。 </string>
+
+    <string name="like_slogan"> 点赞 </string>
+    <string name="remark_slogan"> 评论 </string>
+    <string name="repost_slogan"> 转发 </string>
+    <string name="remark_hint"> 发表评论 </string>
 </resources>
