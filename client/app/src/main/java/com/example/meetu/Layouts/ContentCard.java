@@ -4,9 +4,12 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import androidx.constraintlayout.widget.ConstraintLayout;
+
+import com.example.meetu.Entities.Content;
 import com.example.meetu.R;
 
 public class ContentCard extends ConstraintLayout {
+    Content content;
 
     public ContentCard(Context context) {
         super(context);
