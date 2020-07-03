@@ -18,6 +18,7 @@ import java.util.ArrayList;
 public class ContentImage extends GridView {
     Context context;
     int imageNumber;
+    ContentImageItemAdapter adapter;
 
     public ContentImage(Context context, int imageNumber) {
         super(context);
@@ -40,14 +41,16 @@ public class ContentImage extends GridView {
 
         }
 
-        ContentImageItemAdapter adapter = new ContentImageItemAdapter(context, imageNumber);
+        //不加载图片，显示灰色背景
+        ContentImageItemAdapter adapter = new ContentImageItemAdapter(context, imageNumber, null);
+        this.adapter = adapter;
         this.setAdapter(adapter);
-
     }
 
     //在已创建好的网格中加载图片
-    public void showImages() {
-
+    public void showImages(ArrayList<Bitmap> images) {
+        adapter.setImages(images);
+        //adapter.notifyDataSetChanged();
     }
 
     //查看大图
@@ -57,14 +60,17 @@ public class ContentImage extends GridView {
 }
 
 class ContentImageItemAdapter extends BaseAdapter {
-    ArrayList<Integer> images;
+    ArrayList<Bitmap> images;
     int count = 0;
     Context context;
 
-    public ContentImageItemAdapter(Context context, int imageNumber) {
+    public ContentImageItemAdapter(Context context, int imageNumber, ArrayList<Bitmap> images) {
         super();
         this.context = context;
         count = imageNumber;
+        this.images = new ArrayList<Bitmap>();
+        if(images != null)
+            setImages(images);
     }
 
     @Override
@@ -76,7 +82,7 @@ class ContentImageItemAdapter extends BaseAdapter {
         this.count = count;
     }
 
-    public void setImages(ArrayList<Integer> images) {
+    public void setImages(ArrayList<Bitmap> images) {
         this.images.clear();
         count = images.size();
         for(int i=0; i<count; i++) {
@@ -100,7 +106,7 @@ class ContentImageItemAdapter extends BaseAdapter {
         View view = LayoutInflater.from(context).inflate(R.layout.content_image_item, null);
         final ImageView imageView = view.findViewById(R.id.image_item);
         if(images != null && images.size() >= position)
-            imageView.setImageResource(images.get(position));
+            imageView.setImageBitmap(images.get(position));
 
         //图片显示时，设置图片宽高为正方形
         final ImageView mv = imageView;
@@ -111,7 +117,7 @@ class ContentImageItemAdapter extends BaseAdapter {
                 int height = mv.getMeasuredHeight();
 
                 android.view.ViewGroup.LayoutParams lp = mv.getLayoutParams();
-                lp.height = width;
+                lp.height = width - imageView.getPaddingTop() - imageView.getPaddingBottom();
                 lp.width = width - imageView.getPaddingLeft() - imageView.getPaddingRight();
                 mv.setLayoutParams(lp);
 
@@ -121,6 +127,8 @@ class ContentImageItemAdapter extends BaseAdapter {
             }
         };
         observer.addOnPreDrawListener(preDrawListener);
+
+        //设置图片的点击事件
 
         return view;
     }
