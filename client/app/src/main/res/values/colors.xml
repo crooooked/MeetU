@@ -4,4 +4,5 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="colorGrey">#C1B9B9</color>
+    <color name="colorGreyForRepostBackground">#EEEEEE</color>
 </resources>

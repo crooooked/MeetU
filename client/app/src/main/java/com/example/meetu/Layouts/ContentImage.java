@@ -2,6 +2,7 @@ package com.example.meetu.Layouts;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,14 +21,19 @@ public class ContentImage extends GridView {
     int imageNumber;
     ContentImageItemAdapter adapter;
 
-    public ContentImage(Context context, int imageNumber) {
+    public ContentImage(Context context) {
         super(context);
         this.context = context;
-        this.imageNumber = imageNumber;
+    }
+
+    public ContentImage(Context context, AttributeSet attributeSet) {
+        super(context, attributeSet);
+        this.context = context;
     }
 
     //加载网格
-    public void initGrid() {
+    public void initGrid(int imageNumber) {
+        this.imageNumber = imageNumber;
         //设置列数
         if(imageNumber == 1) //1张图片：按图片大小显示，高度和宽度均有上限
             setNumColumns(1);
@@ -50,7 +56,6 @@ public class ContentImage extends GridView {
     //在已创建好的网格中加载图片
     public void showImages(ArrayList<Bitmap> images) {
         adapter.setImages(images);
-        //adapter.notifyDataSetChanged();
     }
 
     //查看大图

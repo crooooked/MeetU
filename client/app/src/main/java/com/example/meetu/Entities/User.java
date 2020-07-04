@@ -18,6 +18,14 @@ public class User {
         this.uid = uid;
     }
 
+    //用来测试的sample数据
+    public User(Bitmap head, Bitmap background) {
+        uid = 0;
+        username = "萌神张飞";
+        head_image = head;
+        background_image = background;
+    }
+
     public void setInfo(String username, String password, String address, String gender, String head_url, String background_url) {
         this.username = username;
         this.password = password;
@@ -28,12 +36,12 @@ public class User {
     }
 
     //已知head_url，获取head_image
-    public void getHeadImage() {
+    public void loadHeadImage() {
 
     }
 
     //已知background_url，获取background_image
-    public void getBackgroundImage() {
+    public void loadBackgroundImage() {
 
     }
 

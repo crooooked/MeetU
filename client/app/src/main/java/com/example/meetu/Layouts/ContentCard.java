@@ -1,23 +1,104 @@
 package com.example.meetu.Layouts;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
+
+import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 
 import com.example.meetu.Entities.Content;
 import com.example.meetu.R;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
+//此类用于显示状态中的图片
 public class ContentCard extends ConstraintLayout {
     Content content;
 
-    public ContentCard(Context context) {
+    ImageButton userHead;
+    TextView userName;
+    TextView postTime;
+
+    TextView contentText;
+    ContentImage contentImage;
+    ContentRepost contentRepost;
+
+    ImageButton repostButton;
+    TextView repostSlogan;
+    ImageButton remarkButton;
+    TextView remarkSlogan;
+    ImageButton likeButton;
+    TextView likeSlogan;
+
+    EditText remarkEdit;
+
+
+    public ContentCard(Context context, Content content) {
         super(context);
-        initView(context);
+        initView(context, content);
     }
 
-    public void initView(Context context) {
+    public void initView(Context context, Content content) {
         LayoutInflater.from(context).inflate(R.layout.view_content_card, this, true);
+        this.content = content;
+
+        userHead = findViewById(R.id.user_head);
+        userName = findViewById(R.id.user_name);
+        postTime = findViewById(R.id.post_time);
+        contentText = findViewById(R.id.content);
+        contentImage = findViewById(R.id.image_content);
+        contentRepost = findViewById(R.id.repost_content);
+        repostButton = findViewById(R.id.repost_button);
+        repostSlogan = findViewById(R.id.repost_slogan);
+        remarkButton = findViewById(R.id.remark_button);
+        remarkSlogan = findViewById(R.id.remark_slogan);
+        likeButton = findViewById(R.id.like_button);
+        likeSlogan = findViewById(R.id.like_slogan);
+        remarkEdit = findViewById(R.id.remark_edit);
+
+        //加入数据
+        //userHead头像
+        Bitmap headImage = content.getUser().getHead_image();
+        if(headImage != null)
+            userHead.setImageBitmap(headImage);
+        //userName用户名
+        userName.setText(content.getUser().getUsername());
+        //postTime发布时间
+        SimpleDateFormat format =  new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
+        String date_String = format.format(content.getTime());
+        postTime.setText(date_String);
+        //contentText状态内容
+        contentText.setText(content.getContent());
+
+        //显示图片模块contentImage
+        ArrayList<Bitmap> images = content.getImages();
+        if(images != null && images.size() != 0) {
+            contentImage.initGrid(images.size());
+            contentImage.showImages(images);
+        }
+        Log.i("bug", ""+contentImage.getHeight());
+
+        //contentRepost转发
+        if(content.getRepost() == content.NO_REPOST)
+            contentRepost.setVisibility(GONE);
+        else {
+            Content repostContent = content.getRepostContent();
+
+        }
+
+        //设置按钮点击事件
+
     }
 
     //事件源：userhead头像
