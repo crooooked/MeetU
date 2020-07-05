@@ -13,4 +13,19 @@
     <string name="remark_hint"> 发表评论 </string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+
+
+    <!--   关注搜索模块用到的string-->
+    <!--    作者：李博洋-->
+    <string name="addFocus">添加关注</string>
+    <string name="cancelFocus">取消关注</string>
+    <string name="watchMoment">查看空间</string>
+    <string name="personInfo">个人资料</string>
+    <string name="gender">性别:</string>
+    <string name="address">地址:</string>
+    <string name="search">搜索</string>
+
+
 </resources>
