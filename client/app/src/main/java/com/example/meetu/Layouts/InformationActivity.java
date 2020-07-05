@@ -52,15 +52,12 @@ public class InformationActivity extends AppCompatActivity {
     private static final int []RC_SELECT={101,102};
     private String []url={ip+"/upload-head",ip+"/upload-background"};
 
+    //初始化
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_information);
-
         initView();
-//        @SuppressLint("InflateParams") View view=getLayoutInflater().inflate(R.layout.fragment_personal,null);
-//        View view2=View.inflate(getApplicationContext(),R.layout.fragment_personal,false);
-
     }
 
     private User user;
@@ -102,15 +99,20 @@ public class InformationActivity extends AppCompatActivity {
         }
     }
 
+    private String bHDUrl=null;
+    private String bBGUrl=null;
     //通过顶栏返回键返回父activity
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.home:
                 if(NavUtils.getParentActivityName(getParent())!=null){
-                    NavUtils.navigateUpFromSameTask(getParent());
+//                    NavUtils.navigateUpFromSameTask(getParent());
                     Intent intent=new Intent();
+                    Log.e("!!!!!", " 执行了返回intent");
                     intent.putExtra("user",user);
+                    intent.putExtra("head",bHDUrl);
+                    intent.putExtra("background",bBGUrl);
                     setResult(104,intent);
                     this.finish();
                 }
@@ -131,18 +133,17 @@ public class InformationActivity extends AppCompatActivity {
     //获取本地图片路径
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (data == null||data.getData()==null) {
-            Toast.makeText(getApplicationContext(),"没有选中！",Toast.LENGTH_SHORT).show();
-        }
-        else{
+        if (data != null&&data.getData()!=null) {
             String filePath = FileUtil.getFilePathByUri(this, data.getData());
             int index=0;
             switch (requestCode) {
                 case 101:
                     index=0;
+                    bHDUrl=filePath;
                     break;
                 case 102:
                     index=1;
+                    bBGUrl=filePath;
                     break;
             }
             postImage(filePath,index);

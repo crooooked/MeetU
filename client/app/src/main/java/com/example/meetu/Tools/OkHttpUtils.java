@@ -158,7 +158,6 @@ public class OkHttpUtils {
                     .addFormDataPart("username",username)
                     .build();
 
-
             final Request request=new Request.Builder()
                     .url(url)
                     .post(requestBody)
@@ -177,7 +176,7 @@ public class OkHttpUtils {
                 }
                 @Override
                 public void onResponse(@NotNull Call call, @NotNull final Response response) throws IOException {
-                    if (response != null & response.isSuccessful()) {
+                    if (response.isSuccessful()) {
                         final String json = response.body().string();
                         mHandler.post(new Runnable() {
                             @Override

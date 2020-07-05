@@ -4,13 +4,18 @@
     <!--    状态管理模块用到的string-->
     <!--    作者：陈文锦-->
     <string name="user_name_sample"> 爱吃糖的小明 </string>
+    <string name="user_name_sample2"> 萌神张飞 </string>
     <string name="post_time_sample"> 2020年10月20日 </string>
+    <string name="post_time_sample2"> 2020年5月3日 </string>
     <string name="content_sample"> 今天吃了米线，很开心！\n还和朋友逛街买了一个玩偶。 </string>
+    <string name="content_sample2"> 和小明一起逛街太快乐了吧！\n幸福~~ </string>
+    <string name="name_and_content_sample"> 萌神张飞：和小明一起逛街太快乐了吧！\n幸福~~ </string>
 
     <string name="like_slogan"> 点赞 </string>
     <string name="remark_slogan"> 评论 </string>
     <string name="repost_slogan"> 转发 </string>
     <string name="remark_hint"> 发表评论 </string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

@@ -22,6 +22,14 @@ public class User implements Parcelable{
         this.uid = uid;
     }
 
+    //用来测试的sample数据
+    public User(Bitmap head, Bitmap background) {
+        uid = 0;
+        username = "萌神张飞";
+        head_image = head;
+        background_image = background;
+    }
+
     protected User(Parcel in) {
         uid = in.readInt();
         username = in.readString();
