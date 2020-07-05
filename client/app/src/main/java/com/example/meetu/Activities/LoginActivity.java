@@ -45,9 +45,14 @@ public class LoginActivity extends AppCompatActivity {
                 Manifest.permission.INTERNET,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.ACCESS_NETWORK_STATE};
+                Manifest.permission.ACCESS_NETWORK_STATE,
+                Manifest.permission.CAMERA,
 
-        int []permissionCode=new int[]{100,101,102,103};
+                Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS,
+                Manifest.permission.ACCESS_CHECKIN_PROPERTIES
+        };
+
+        int []permissionCode=new int[]{101,102,103,104,105,106,107};
         for (int i=0;i<permissions.length;i++){
             if (ContextCompat.checkSelfPermission(this,
                     permissions[i]) !=
@@ -62,24 +67,29 @@ public class LoginActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch(requestCode){
-            case 100:
+            case 101:
                 if(grantResults.length==0||grantResults[0]!=PackageManager.PERMISSION_GRANTED){
                     Toast.makeText(getApplicationContext(),"你未获取网络权限！",Toast.LENGTH_SHORT).show();
                 }
                 break;
-            case 101:
+            case 102:
                 if(grantResults.length==0||grantResults[0]!=PackageManager.PERMISSION_GRANTED){
                     Toast.makeText(getApplicationContext(),"你未获取存储权限！",Toast.LENGTH_SHORT).show();
                 }
                 break;
-            case 102:
+            case 103:
                 if(grantResults.length==0||grantResults[0]!=PackageManager.PERMISSION_GRANTED){
                     Toast.makeText(getApplicationContext(),"你未获取读取权限！",Toast.LENGTH_SHORT).show();
                 }
                 break;
-            case 103:
+            case 104:
                 if(grantResults.length==0||grantResults[0]!=PackageManager.PERMISSION_GRANTED){
                     Toast.makeText(getApplicationContext(),"你未获取读取网络状态权限！",Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case 105:
+                if(grantResults.length==0||grantResults[0]!=PackageManager.PERMISSION_GRANTED){
+                    Toast.makeText(getApplicationContext(),"你未获取相机权限！",Toast.LENGTH_SHORT).show();
                 }
                 break;
             default:
