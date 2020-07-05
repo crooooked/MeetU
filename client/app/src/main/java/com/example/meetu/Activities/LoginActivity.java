@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import com.example.meetu.Entities.Convert;
 import com.example.meetu.Entities.User;
-import com.example.meetu.OkHttpUtils;
+import com.example.meetu.Tools.OkHttpUtils;
 import com.example.meetu.R;
 
 import org.json.JSONException;
@@ -101,7 +101,7 @@ public class LoginActivity extends AppCompatActivity {
                 break;
             case R.id.tv_register:
                 startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
-                this.finish();
+//                this.finish();
                 break;
         }
     }
@@ -139,8 +139,8 @@ public class LoginActivity extends AppCompatActivity {
         }
         return null;
     }
-
-    private static final String url="http://192.168.43.2:8080/login";
+    //连接网络
+    private static final String url="http://10.234.184.24:8080/login";
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void PostLogin(final String name, final String pwd){
         final String json = Convert.strRegLog(name, pwd);
@@ -157,16 +157,15 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, s, Toast.LENGTH_SHORT).show();
                     Intent intent=new Intent(LoginActivity.this,BodyActivity.class);
                     intent.putExtra("userName",name);
-                    intent.putExtra("password",pwd);
+                    intent.putExtra("passWord",pwd);
                     startActivity(intent);
                     LoginActivity.this.finish();
                 }
                 else {
                     Toast.makeText(LoginActivity.this, "密码错误或账号不存在！", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
-
     }
+
 }

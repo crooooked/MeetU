@@ -1,9 +1,11 @@
 package com.example.meetu.Activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NavUtils;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
@@ -11,37 +13,52 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
+import android.os.PersistableBundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.meetu.Entities.Convert;
-import com.example.meetu.OkHttpUtils;
+import com.example.meetu.Tools.OkHttpUtils;
 import com.example.meetu.R;
 
 
-import java.io.IOException;
+import java.util.Objects;
 import java.util.regex.Pattern;
-
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 public class RegisterActivity extends AppCompatActivity {
     private EditText userName;
     private EditText passWord;
     private EditText confirmPwd;
-    private String url = "http://192.168.43.2:8080/register";
+    private String url = "http://10.234.184.96:8080/register";
     private static final int SUCCESS = 100;
     private static final int FAILED = 110;
     private Button btnReg;
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
+        super.onCreate(savedInstanceState, persistentState);
+        if(NavUtils.getParentActivityName(getParent())!=null){
+            Objects.requireNonNull(getActionBar()).setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.home:
+                if(NavUtils.getParentActivityName(getParent())!=null){
+                    NavUtils.navigateUpFromSameTask(getParent());
+                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,9 +117,8 @@ public class RegisterActivity extends AppCompatActivity {
             default:
         }
     }
-
+    //按钮点击事件
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-
     public void onclick(View view) {
         String username = userName.getText().toString();
         String pswd = passWord.getText().toString();
@@ -116,7 +132,7 @@ public class RegisterActivity extends AppCompatActivity {
                 break;
         }
     }
-
+    //注册实现
     private boolean logup(String username, String password1, String password2) {
         boolean flag = true;
         String[] cueWords = {

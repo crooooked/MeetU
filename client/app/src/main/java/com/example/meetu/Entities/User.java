@@ -1,9 +1,13 @@
 package com.example.meetu.Entities;
 
 import android.graphics.Bitmap;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import com.bumptech.glide.Glide;
 
 //用户类
-public class User {
+public class User implements Parcelable{
     int uid;            //id
     String username;    //用户名
     String password;    //密码
@@ -26,6 +30,30 @@ public class User {
         background_image = background;
     }
 
+    protected User(Parcel in) {
+        uid = in.readInt();
+        username = in.readString();
+        password = in.readString();
+        address = in.readString();
+        gender = in.readString();
+        head_url = in.readString();
+        head_image = in.readParcelable(Bitmap.class.getClassLoader());
+        background_url = in.readString();
+        background_image = in.readParcelable(Bitmap.class.getClassLoader());
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
+
     public void setInfo(String username, String password, String address, String gender, String head_url, String background_url) {
         this.username = username;
         this.password = password;
@@ -36,12 +64,12 @@ public class User {
     }
 
     //已知head_url，获取head_image
-    public void loadHeadImage() {
+    public void getHeadImage() {
 
     }
 
     //已知background_url，获取background_image
-    public void loadBackgroundImage() {
+    public void getBackgroundImage() {
 
     }
 
@@ -116,5 +144,24 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(uid);
+        parcel.writeString(username);
+        parcel.writeString(password);
+        parcel.writeString(address);
+        parcel.writeString(gender);
+        parcel.writeString(head_url);
+        parcel.writeParcelable(head_image, i);
+        parcel.writeString(background_url);
+        parcel.writeParcelable(background_image, i);
     }
 }

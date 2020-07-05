@@ -23,7 +23,8 @@
         android:id="@+id/view_line"
         app:layout_constraintTop_toBottomOf="@+id/view_above"
         app:layout_constraintBottom_toTopOf="@+id/linear_bottom"/>
-    <!--按钮-->
+
+    <!--底栏按钮-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -33,55 +34,16 @@
         app:layout_constraintTop_toBottomOf="@+id/view_line"
         app:layout_constraintBottom_toBottomOf="parent"
         >
-        <RadioGroup
+        <com.google.android.material.tabs.TabLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/rg_nav"
-            android:orientation="horizontal"
-            >
-            <RadioButton
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:id="@+id/rb_follow"
-                android:textSize="20sp"
-                android:text="关注"
-                android:textColor="@drawable/buttom_bar_text_color"
-
-                android:gravity="center"
-                android:button="@null"
-                android:onClick="onclick"
-                />
-
-            <RadioButton
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:id="@+id/rb_dynamic"
-                android:textSize="20sp"
-                android:text="动态"
-                android:textColor="@drawable/buttom_bar_text_color"
-
-                android:gravity="center"
-                android:button="@null"
-                android:onClick="onclick"
-                />
-
-            <RadioButton
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:id="@+id/rb_personal"
-                android:textSize="20sp"
-                android:text="个人"
-                android:textColor="@drawable/buttom_bar_text_color"
-
-                android:gravity="center"
-                android:button="@null"
-                android:onClick="onclick"
-                android:checked="true"
-                />
-        </RadioGroup>
+            android:id="@+id/tl_bottom_nav"
+            app:tabTextColor="@color/colorGrey"
+            app:tabSelectedTextColor="@color/colorPrimary"
+            app:tabIndicatorColor="@color/colorPrimary"
+            app:tabMode="fixed"
+            app:tabIndicatorGravity="top">
+        </com.google.android.material.tabs.TabLayout>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

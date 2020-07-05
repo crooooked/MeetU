@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         //测试无图片+无转发的状态
         Content content1 = new Content(head, null);
-        //layout.addView(new ContentCard(this, content1));
+        layout.addView(new ContentCard(this, content1));
 
         //测试有图片+无转发的状态
         Content content2 = new Content(head, null);
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         Content content3 = new Content(head, null);
         content3.setRepost(123);
         content3.setRepostContent(content1);
-        //layout.addView(new ContentCard(this, content3));
+        layout.addView(new ContentCard(this, content3));
 
 //        ContentImage contentImage = new ContentImage(this);
 //        contentImage.initGrid(images.size());
