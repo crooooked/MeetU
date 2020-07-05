@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:background="@color/colorPrimaryDark"
+
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="91dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/personInfo"
+            android:textColor="@color/colorWhite"
+            android:textSize="25sp" />
+        <!--关注按钮 查看空间按钮布局-->
+        <ImageButton
+            android:id="@+id/imageButton_return_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            android:onClick="Return_Last_Page"
+            android:src="@drawable/return_icon"
+
+            />
+
+
+    </androidx.appcompat.widget.Toolbar>
+
+
+    <!--背景显示框-->
+
+
+    <ImageView
+        android:id="@+id/image_background_show"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:background="@color/colorBackground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        tools:ignore="MissingConstraints" />
+
+    <LinearLayout
+        android:id="@+id/linearlayout_head_nick"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/image_background_show"
+        tools:ignore="MissingConstraints">
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_addr_gender"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="60dp"
+        app:layout_constraintTop_toBottomOf="@+id/linearlayout_head_nick"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/left">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="60dp"
+                android:text="@string/gender"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/idSize" />
+
+            <TextView
+                android:id="@+id/tv_gender_show"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/idSize" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorBray"
+            android:layout_margin="10dp"
+            />
+
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="60dp"
+            android:text="@string/address"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/idSize" />
+
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/colorBlack"
+            android:id="@+id/tv_addr_show"
+
+            android:textSize="@dimen/idSize"
+            />
+    </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/linearlayout_addr_gender"
+        tools:ignore="MissingConstraints">
+
+        <Button
+            android:id="@+id/btn_focus"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:onClick="PayAttentionTo"
+            android:text="@string/addFocus"
+
+            android:textSize="@dimen/bigSize"
+
+            tools:ignore="OnClick" />
+
+        <Button
+            android:id="@+id/btn_watch_moment"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:onClick="WatchMoment"
+            android:text="@string/watchMoment"
+            android:textSize="@dimen/bigSize"
+            android:layout_marginLeft="20dp"
+            tools:ignore="OnClick" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/image_person_head"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+
+
+        android:layout_marginStart="45dp"
+
+        android:layout_marginLeft="45dp"
+        android:layout_marginTop="200dp"
+        android:src="@drawable/default_head"
+        app:layout_constraintStart_toStartOf="@+id/linearlayout_head_nick"
+        app:layout_constraintTop_toTopOf="@+id/image_background_show"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+
+        android:id="@+id/tv_nick_show"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="8dp"
+
+        android:text="nick"
+        android:textSize="@dimen/bigSize"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/image_background_show"
+        app:layout_constraintStart_toEndOf="@+id/image_person_head"
+        tools:ignore="MissingConstraints" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
