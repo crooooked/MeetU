@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -86,15 +87,17 @@ public class ContentCard extends ConstraintLayout {
         if(images != null && images.size() != 0) {
             contentImage.initGrid(images.size());
             contentImage.showImages(images);
+            contentImage.setBackground(getResources().getDrawable(R.color.colorGreyForRepostBackground));
         }
-        Log.i("bug", ""+contentImage.getHeight());
 
-        //contentRepost转发
+        //显示转发模块contentRepost
         if(content.getRepost() == content.NO_REPOST)
             contentRepost.setVisibility(GONE);
         else {
-            Content repostContent = content.getRepostContent();
-
+            Content repost = content.getRepostContent();
+            contentRepost.setContent(repost.getUser().getUsername(), repost.getContent());
+            if(repost.getImages() != null)
+                contentRepost.setImages(repost.getImages());
         }
 
         //设置按钮点击事件

@@ -5,6 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.example.meetu.Entities.Content;
@@ -35,11 +41,6 @@ public class MainActivity extends AppCompatActivity {
         images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image7));
         images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image8));
         images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image9));
-        //3张图
-        ArrayList<Bitmap> images2 = new ArrayList<>();
-        images2.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image1));
-        images2.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image2));
-        images2.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image3));
 
         //测试无图片+无转发的状态
         Content content1 = new Content(head, null);
@@ -47,8 +48,14 @@ public class MainActivity extends AppCompatActivity {
 
         //测试有图片+无转发的状态
         Content content2 = new Content(head, null);
-        content2.setImages(images2);
-        //layout.addView(new ContentCard(this, content2));
+        content2.setImages(images);
+        ContentCard contentCard2 = new ContentCard(this, content2);
+        layout.addView(contentCard2);
+
+//        android.view.ViewGroup.LayoutParams lp = contentCard2.getLayoutParams();
+//        lp.height = contentCard2.getMeasuredWidth();
+//        Log.i("height", ""+lp.height);
+//        contentCard2.setLayoutParams(lp);
 
         //测试无图片+有转发的状态
         Content content3 = new Content(head, null);
@@ -56,10 +63,36 @@ public class MainActivity extends AppCompatActivity {
         content3.setRepostContent(content1);
         //layout.addView(new ContentCard(this, content3));
 
-//        //测试ContentImage
-//        ContentImage tst = new ContentImage(this, 9);
+//        ContentImage contentImage = new ContentImage(this);
+//        contentImage.initGrid(images.size());
+//        contentImage.showImages(images);
+//        //layout.addView(contentImage);
+//
+//        ContentImage contentImage2 = new ContentImage(this);
+//        contentImage2.initGrid(images.size());
+//        contentImage2.showImages(images);
+//        layout.addView(contentImage2);
+//
+//        View view = LayoutInflater.from(this).inflate(R.layout.content_image_item, null);
+//        final ImageView imageView = view.findViewById(R.id.image_item);
+//        imageView.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image2));
+//        layout.addView(view);
+//
+//        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(360, 360);
+//        view.setLayoutParams(lp);
+//
+//        View view2 = LayoutInflater.from(this).inflate(R.layout.content_image_item, null);
+//        final ImageView imageView2 = view2.findViewById(R.id.image_item);
+//        imageView2.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image2));
+//        layout.addView(view2);
+//
+//        LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(360, 360);
+//        view2.setLayoutParams(lp2);
+
+        //测试ContentImage
+//        ContentImage tst = new ContentImage(this);
 //        layout.addView(tst);
-//        tst.initGrid();
+//        tst.initGrid(9);
 
 //        tst.showImages(images);
     }

@@ -2,8 +2,11 @@ package com.example.meetu.Layouts;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,6 +69,7 @@ public class ContentImage extends GridView {
 
 class ContentImageItemAdapter extends BaseAdapter {
     ArrayList<Bitmap> images;
+    ArrayList<ImageView> imageViews;
     int count = 0;
     Context context;
 
@@ -74,6 +78,7 @@ class ContentImageItemAdapter extends BaseAdapter {
         this.context = context;
         count = imageNumber;
         this.images = new ArrayList<Bitmap>();
+        imageViews = new ArrayList<ImageView>();
         if(images != null)
             setImages(images);
     }
@@ -108,30 +113,44 @@ class ContentImageItemAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         //设置图片源
-        View view = LayoutInflater.from(context).inflate(R.layout.content_image_item, null);
+        View view = LayoutInflater.from(context).inflate(R.layout.content_image_item, parent, false);
         final ImageView imageView = view.findViewById(R.id.image_item);
-        if(images != null && images.size() >= position)
+        imageViews.add(imageView);
+        if(images != null && images.size() > position)
             imageView.setImageBitmap(images.get(position));
 
-        //图片显示时，设置图片宽高为正方形
-        final ImageView mv = imageView;
-        final ViewTreeObserver observer = mv.getViewTreeObserver();
-        final ViewTreeObserver.OnPreDrawListener preDrawListener = new ViewTreeObserver.OnPreDrawListener() {
-            public boolean onPreDraw() {
-                int width = mv.getMeasuredWidth();
-                int height = mv.getMeasuredHeight();
 
-                android.view.ViewGroup.LayoutParams lp = mv.getLayoutParams();
-                lp.height = width - imageView.getPaddingTop() - imageView.getPaddingBottom();
-                lp.width = width - imageView.getPaddingLeft() - imageView.getPaddingRight();
-                mv.setLayoutParams(lp);
-
-                final ViewTreeObserver vto1 = mv.getViewTreeObserver();
-                vto1.removeOnPreDrawListener(this); //调用一次之后移除，不影响性能
-                return true;
-            }
-        };
-        observer.addOnPreDrawListener(preDrawListener);
+//        //图片显示时，设置图片宽高为正方形
+//        final ImageView mv = imageView;
+//        final ViewTreeObserver observer = mv.getViewTreeObserver();
+//
+//        final ViewTreeObserver.OnPreDrawListener preDrawListener = new ViewTreeObserver.OnPreDrawListener() {
+//            public boolean onPreDraw() {
+////                try {
+////                    Thread.sleep(100);
+////                } catch (InterruptedException e) {
+////                    e.printStackTrace();
+////                }
+//
+//                mv.setMaxHeight(360);
+//
+//                int width = mv.getMeasuredWidth();
+//                Log.i("w", ""+imageViews.get(0).getMeasuredWidth());
+//                Log.i("h", ""+imageViews.get(0).getMeasuredHeight());
+//                Log.i("w2", ""+imageViews.get(0).getLayoutParams().width);
+//                Log.i("h2", ""+imageViews.get(0).getLayoutParams().height);
+//
+//                android.view.ViewGroup.LayoutParams lp = mv.getLayoutParams();
+//                lp.height = width - imageView.getPaddingTop() - imageView.getPaddingBottom();
+//                lp.width = width - imageView.getPaddingLeft() - imageView.getPaddingRight();
+//                mv.setLayoutParams(lp);
+//
+//                //final ViewTreeObserver vto1 = mv.getViewTreeObserver();
+//                //vto1.removeOnPreDrawListener(this); //调用一次之后移除，不影响性能
+//                return true;
+//            }
+//        };
+//        observer.addOnPreDrawListener(preDrawListener);
 
         //设置图片的点击事件
 

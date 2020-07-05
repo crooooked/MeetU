@@ -10,18 +10,19 @@
         android:background="@color/colorGreyForRepostBackground">
 
         <TextView
-            android:id="@+id/repost_content"
+            android:id="@+id/repost_text"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:text="@string/name_and_content_sample"/>
+            android:text="@string/name_and_content_sample"
+            android:padding="5dp"/>
 
         <com.example.meetu.Layouts.ContentImage
             android:id="@+id/repost_content_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/repost_content" />
+            app:layout_constraintTop_toBottomOf="@id/repost_text" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
