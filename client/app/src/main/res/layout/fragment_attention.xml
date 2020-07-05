@@ -6,9 +6,36 @@
     tools:context=".Fragments.AttentionFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <ImageView
+    <LinearLayout
+
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ff0000"/>
+
+        tools:context=".Activities.FocusListActivity">
+
+
+
+        <SearchView
+            android:layout_marginTop="@dimen/left"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:background="@drawable/shape"
+
+            android:theme="?attr/actionBarStyle"
+            android:queryHint="@string/search"
+
+            android:id="@+id/search"/>
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:id="@+id/listView_focus"
+
+            />
+
+
+    </LinearLayout>
 
 </FrameLayout>

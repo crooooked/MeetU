@@ -38,7 +38,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.MainActivity" />
+        <activity android:name=".Activities.MainActivity"
+            android:parentActivityName=".Activities.BodyActivity"/>
+        <activity android:name=".Activities.PersonalDataShowActivity"></activity>
+
+        <activity android:name=".Activities.FocusListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>

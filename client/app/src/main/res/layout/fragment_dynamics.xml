@@ -6,9 +6,15 @@
     tools:context=".Fragments.DynamicsFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <ImageView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#00ff00"/>
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/test"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
 
 </FrameLayout>

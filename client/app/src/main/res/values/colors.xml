@@ -8,4 +8,5 @@
     <color name="colorBackground">#CCFFFF</color>
     <color name="colorBlack">#000000</color>
     <color name="colorBray">#EEEEEE</color>
+    <color name="colorGreyForRepostBackground">#EEEEEE</color>
 </resources>

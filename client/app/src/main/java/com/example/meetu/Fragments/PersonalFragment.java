@@ -20,6 +20,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.meetu.Activities.BodyActivity;
+import com.example.meetu.Activities.LoginActivity;
+import com.example.meetu.Activities.MainActivity;
 import com.example.meetu.Entities.Convert;
 import com.example.meetu.Entities.User;
 import com.example.meetu.Layouts.InformationActivity;
@@ -39,6 +41,7 @@ public class PersonalFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     private static final int CHANGE_INFORMATION=103;
+    private static final int MAIN_ACTIVITY=106;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -120,6 +123,24 @@ public class PersonalFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), InformationActivity.class);
                 intent.putExtra("user",user);
                 startActivityForResult(intent, CHANGE_INFORMATION);
+            }
+        });
+        //跳转到我的主页
+        tvPersonalSpace.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivityForResult(intent, MAIN_ACTIVITY);
+            }
+        });
+
+        //退出
+        tvSetting.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+                getActivity().finish();
             }
         });
     }

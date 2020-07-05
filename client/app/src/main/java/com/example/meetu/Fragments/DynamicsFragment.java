@@ -1,5 +1,7 @@
 package com.example.meetu.Fragments;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -8,8 +10,13 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
+import com.example.meetu.Entities.Content;
+import com.example.meetu.Layouts.ContentCard;
 import com.example.meetu.R;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -62,7 +69,45 @@ public class DynamicsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_dynamics, container, false);
+        View view=inflater.inflate(R.layout.fragment_dynamics, container, false);
+        LinearLayout layout;
+        layout = view.findViewById(R.id.test);
+        Bitmap head = BitmapFactory.decodeResource(getResources(), R.mipmap.sample_head);
+        //9张图
+        ArrayList<Bitmap> images = new ArrayList<>();
+        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image1));
+        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image2));
+        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image3));
+        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image4));
+        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image5));
+        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image6));
+        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image7));
+        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image8));
+        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image9));
+
+        //测试无图片+无转发的状态
+        Content content1 = new Content(head, null);
+        layout.addView(new ContentCard(getContext(), content1));
+
+        //测试有图片+无转发的状态
+        Content content2 = new Content(head, null);
+        content2.setImages(images);
+        ContentCard contentCard2 = new ContentCard(getContext(), content2);
+        layout.addView(contentCard2);
+
+//        android.view.ViewGroup.LayoutParams lp = contentCard2.getLayoutParams();
+//        lp.height = contentCard2.getMeasuredWidth();
+//        Log.i("height", ""+lp.height);
+//        contentCard2.setLayoutParams(lp);
+
+        //测试无图片+有转发的状态
+        Content content3 = new Content(head, null);
+        content3.setRepost(123);
+        content3.setRepostContent(content1);
+        layout.addView(new ContentCard(getContext(), content3));
+        return view;
+
+
     }
 
 }

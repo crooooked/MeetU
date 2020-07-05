@@ -22,7 +22,6 @@ import com.example.meetu.FocusClass.FocusData;
 import com.example.meetu.FocusClass.Httprequest;
 import com.example.meetu.R;
 
-
 import java.io.ByteArrayOutputStream;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
@@ -35,26 +34,16 @@ public class FocusListActivity extends AppCompatActivity {
     public Button button;
     public android.widget.ListView listView;
     public SearchView searchView;
-
     public android.widget.TextView tv_nick,tv_gender,tv_addr;
     public Button btn_focus,btn_watch;
     public ImageButton return_iconButton;
     public ImageView image_head,image_background;
-
-
-
     public ImageView image_show;
 
     Httprequest httprequest=new Httprequest();
     //httprequest.handler=handler;将Httprequest的handler与下面的handler关联在一起
 
-
-
     Bitmap bitmap;
-
-
-
-
     /*
 
     上面的nick[]应该向后端请求，读数据库，读出图片和名称，然后将数据放到nick[]中
@@ -144,7 +133,7 @@ public class FocusListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(android.os.Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.fragment_attention);
 
         searchView=findViewById(R.id.search);
         listView=findViewById(R.id.listView_focus);
@@ -163,12 +152,8 @@ public class FocusListActivity extends AppCompatActivity {
 
             }
         });
-
-
         new ListViewAsyncTask().execute();
-
         Search();
-
     }
 
 
@@ -184,18 +169,12 @@ public class FocusListActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 //要判断一下，判断是否有这个用户
-
-
-
-
                 //用Intent进行跳转
                 Intent intent=new Intent(FocusListActivity.this,PersonalDataShowActivity.class);
                 //0：表示从搜索框到个人资料界面
                 intent.putExtra("flag","0");
                 intent.putExtra("Name",query);
-
                 startActivity(intent);
-
                 return false;
             }
 
@@ -206,8 +185,6 @@ public class FocusListActivity extends AppCompatActivity {
             }
         });
     }
-
-
 
     //自定义AsyncTask类，三个参数，第一个不定量入参，第二个：进度 第三个：结果
     public class ListViewAsyncTask extends AsyncTask<Void, Void, String> {
@@ -287,10 +264,7 @@ public class FocusListActivity extends AppCompatActivity {
             }
             //绑定数据
             listView.setAdapter(new MyListAdapter(FocusListActivity.this,focusdatas));
-
         }
-
-
     }
 
 

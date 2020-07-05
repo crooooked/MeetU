@@ -164,7 +164,7 @@ public class LoginActivity extends AppCompatActivity {
             public void success(String json) {
                 String s = json;
                 if(s.equals("200")){
-                    Toast.makeText(LoginActivity.this, s, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(LoginActivity.this, s, Toast.LENGTH_SHORT).show();
                     Intent intent=new Intent(LoginActivity.this,BodyActivity.class);
                     intent.putExtra("userName",name);
                     intent.putExtra("passWord",pwd);

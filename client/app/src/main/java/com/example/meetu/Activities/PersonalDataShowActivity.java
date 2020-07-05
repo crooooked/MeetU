@@ -2,9 +2,11 @@ package com.example.meetu.Activities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -13,7 +15,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
 
 import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
@@ -26,6 +31,7 @@ import com.example.meetu.Tools.GlideCircleTransform;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.util.Objects;
 
 /*
 先别写，等关注列表显示出来了再写这个
@@ -89,10 +95,12 @@ public class PersonalDataShowActivity extends AppCompatActivity {
     String url_getInformation="http://10.234.184.24:8080/get-information";
     String url_mangeAttention="http://10.234.184.24:8080/manage-attentions";
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        Objects.requireNonNull(getSupportActionBar()).hide();
         setContentView(R.layout.peopledata);
         Init();
         Intent intent=getIntent();
@@ -116,6 +124,7 @@ public class PersonalDataShowActivity extends AppCompatActivity {
         }
 
     }
+
 
 
     //控件初始化
@@ -156,9 +165,13 @@ public class PersonalDataShowActivity extends AppCompatActivity {
 
     //"<"箭头响应，回到关注页面
     public void Return_Last_Page(View view) {
+            Intent intent=new Intent();
+            Log.e("!!!!!", " 执行了返回intent");
+            setResult(105,intent);
+            this.finish();
 
-        Intent intent=new Intent(this, FocusListActivity.class);
-        startActivity(intent);
+//        Intent intent=new Intent(this, FocusListActivity.class);
+//        startActivity(intent);
 
 
     }

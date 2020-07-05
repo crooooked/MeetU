@@ -4,69 +4,72 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.RegisterActivity">
+    tools:context=".Activities.RegisterActivity"
+    android:background="@color/colorWhite"
+    >
 
     <ImageView
         android:id="@+id/iv_logo_reg"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:padding="30dp"
-        android:src="@drawable/logo"
-
+        android:padding="40dp"
+        android:src="@drawable/logo1"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/ed_username_register"
 
-        app:layout_constraintVertical_weight="3"
+        app:layout_constraintVertical_weight="0.7"
         />
 
     <ImageView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginLeft="20dp"
-        android:src="@drawable/icons_head"
         android:id="@+id/iv_icon_head"
+        android:layout_width="40dp"
+        android:layout_height="58dp"
+        android:layout_marginLeft="21dp"
+        android:src="@drawable/icons_head"
 
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/ed_username_register"
-        app:layout_constraintRight_toLeftOf="@+id/ed_username_register"
         app:layout_constraintBottom_toBottomOf="@+id/ed_username_register"
-
-
-        app:layout_constraintVertical_weight="2"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintHorizontal_weight="1"
-        />
+        app:layout_constraintLeft_toLeftOf="parent"
+
+
+        app:layout_constraintRight_toLeftOf="@+id/ed_username_register"
+        app:layout_constraintTop_toTopOf="@+id/ed_username_register"
+        app:layout_constraintVertical_bias="0.444"
+        app:layout_constraintVertical_weight="2" />
 
     <EditText
         android:id="@+id/ed_username_register"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginRight="55dp"
         android:background="@drawable/shadow_corner_white"
-        android:hint="  username"
-        android:textSize="20sp"
+        android:hint="  账号"
+        android:textSize="14sp"
 
         app:layout_constraintTop_toBottomOf="@+id/iv_logo_reg"
         app:layout_constraintStart_toEndOf="@+id/iv_icon_head"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/ed_password_register"
 
-        app:layout_constraintVertical_weight="1"
+        app:layout_constraintVertical_weight="0.3"
         app:layout_constraintHorizontal_weight="5"/>
-    <ImageView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:src="@drawable/icons_key"
-        android:layout_marginLeft="20dp"
-        android:id="@+id/iv_icon_key1"
-        android:paddingLeft="10dp"
 
+    <ImageView
+        android:id="@+id/iv_icon_key1"
+        android:layout_width="44dp"
+        android:layout_height="56dp"
+        android:layout_marginLeft="18dp"
+        android:paddingLeft="10dp"
+        android:src="@drawable/icons_key"
+
+        app:layout_constraintBottom_toBottomOf="@+id/ed_password_register"
+        app:layout_constraintHorizontal_weight="1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/ed_password_register"
-        app:layout_constraintTop_toTopOf="@+id/ed_password_register"
-        app:layout_constraintBottom_toBottomOf="@+id/ed_password_register"
 
+        app:layout_constraintTop_toTopOf="@+id/ed_password_register"
         app:layout_constraintVertical_weight="2"
-        app:layout_constraintHorizontal_weight="1"
 
         />
     <EditText
@@ -76,53 +79,52 @@
 
 
         android:background="@drawable/shadow_corner_white"
-        android:hint="  password"
+        android:hint="  密码"
         android:inputType="textPassword"
-        android:textSize="20sp"
+        android:textSize="14sp"
 
         app:layout_constraintLeft_toRightOf="@+id/iv_icon_key1"
         app:layout_constraintRight_toRightOf="@id/ed_username_register"
         app:layout_constraintTop_toBottomOf="@+id/ed_username_register"
         app:layout_constraintBottom_toTopOf="@id/ed_password_register2"
 
-        app:layout_constraintVertical_weight="1"
+        app:layout_constraintVertical_weight="0.3"
         app:layout_constraintHorizontal_weight="5"
         />
 
 
     <ImageView
         android:id="@+id/iv_icon_key2"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:src="@drawable/icons_key"
+        android:layout_width="44dp"
+        android:layout_height="42dp"
+        android:layout_marginLeft="18dp"
         android:labelFor="@+id/ed_password_register2"
-        android:layout_marginLeft="20dp"
         android:paddingLeft="10dp"
+        android:src="@drawable/icons_key"
 
+        app:layout_constraintBottom_toBottomOf="@+id/ed_password_register2"
+        app:layout_constraintHorizontal_weight="1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/ed_password_register2"
-        app:layout_constraintTop_toTopOf="@+id/ed_password_register2"
-        app:layout_constraintBottom_toBottomOf="@+id/ed_password_register2"
 
-        app:layout_constraintVertical_weight="2"
-        app:layout_constraintHorizontal_weight="1"
-        />
+        app:layout_constraintTop_toTopOf="@+id/ed_password_register2"
+        app:layout_constraintVertical_weight="2" />
     <EditText
         android:id="@+id/ed_password_register2"
         android:layout_width="0dp"
         android:layout_height="0dp"
-
+        android:layout_marginBottom="120dp"
         android:background="@drawable/shadow_corner_white"
-        android:hint="  confirm password"
+        android:hint="  确认密码"
         android:inputType="textPassword"
-        android:textSize="20sp"
+        android:textSize="14sp"
 
         app:layout_constraintLeft_toRightOf="@+id/iv_icon_key2"
         app:layout_constraintRight_toRightOf="@id/ed_password_register"
         app:layout_constraintTop_toBottomOf="@+id/ed_password_register"
-        app:layout_constraintBottom_toBottomOf="@id/btn_logup"
+        app:layout_constraintBottom_toTopOf="@id/btn_logup"
 
-        app:layout_constraintVertical_weight="1"
+        app:layout_constraintVertical_weight="0.3"
         app:layout_constraintHorizontal_weight="5"
         />
 
@@ -131,9 +133,10 @@
         android:id="@+id/btn_logup"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_margin="60dp"
-        android:layout_marginTop="32dp"
-
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="80dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginEnd="80dp"
         android:background="@drawable/shape_corner_button"
         android:onClick="onclick"
         android:text="注册"
@@ -145,7 +148,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
 
 
-        app:layout_constraintVertical_weight="1"
+        app:layout_constraintVertical_weight="0.22"
 
         />
 
