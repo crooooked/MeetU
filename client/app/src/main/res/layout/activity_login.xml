@@ -4,112 +4,127 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.LoginActivity"
-    android:orientation="vertical"
-    android:background="@drawable/shape_corner_white">
+    tools:context=".Activities.LoginActivity">
 
-    <LinearLayout
+    <ImageView
+        android:id="@+id/iv_logo"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@drawable/shape_corner_white"
-        android:orientation="vertical"
+
+        android:padding="30dp"
+        android:src="@drawable/logo"
+        app:layout_constraintBottom_toTopOf="@+id/ed_username"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toRightOf="parent"
-        android:id="@+id/linear_imput">
-        <ImageView
-            android:layout_margin="50dp"
-            android:layout_height="0dp"
-            android:layout_width="match_parent"
+        app:layout_constraintVertical_weight="5"/>
 
-            android:layout_weight="6"
-            android:src="@drawable/logo"
-            android:layout_gravity="center_horizontal"
-            />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_margin="20dp">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/icons_head"
-                android:id="@+id/iv_icon_head"
-                android:labelFor="@+id/ed_username"
-                android:layout_marginLeft="20dp"
-                android:layout_gravity="center_vertical"
-                />
-            <EditText
-                android:id="@+id/ed_username"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
-                android:background="@drawable/shadow_corner_white"
-                android:hint="  username"
-                android:textSize="20sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_margin="20dp">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/icons_key"
-                android:id="@+id/iv_icon_key"
-                android:labelFor="@+id/ed_password"
-                android:layout_marginLeft="20dp"
-                android:layout_gravity="center_vertical"
-                />
-            <EditText
-                android:id="@+id/ed_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
-                android:background="@drawable/shadow_corner_white"
-                android:hint="  password"
-                android:inputType="textPassword"
-                android:textSize="20sp" />
+    <ImageView
+        android:id="@+id/iv_icon_head"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="20dp"
+        android:labelFor="@+id/ed_username"
+        android:src="@drawable/icons_head"
 
 
-        </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"/>
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ed_username"
+        app:layout_constraintBottom_toBottomOf="@+id/ed_username"
+        app:layout_constraintRight_toLeftOf="@+id/ed_username"
 
-        <Button
-            android:id="@+id/btn_login"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="40dp"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintVertical_weight="2"/>
 
-            android:background="@drawable/shape_corner_button"
-            android:onClick="onclick"
-            android:text="登录"
-            android:textColor="#ffffff"
-            android:textSize="28sp"
-            android:padding="10dp"/>
-        <View
+    <EditText
+        android:id="@+id/ed_username"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/shadow_corner_white"
+        android:hint="  username"
+        android:textSize="20sp"
 
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="8"/>
+        app:layout_constraintBottom_toTopOf="@+id/ed_password"
+        app:layout_constraintLeft_toRightOf="@+id/iv_icon_head"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_logo"
 
-        <TextView
-            android:id="@+id/tv_register"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="没有账号？"
-            android:textSize="20sp"
-            android:gravity="center"
-            android:textColor="@color/colorPrimary"
-            android:layout_marginBottom="40dp"
-            android:onClick="onclick"
-            />
-    </LinearLayout>
+        app:layout_constraintVertical_weight="2"
+        app:layout_constraintHorizontal_weight="5"
+        />
+
+    <ImageView
+        android:id="@+id/iv_icon_key"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:labelFor="@+id/ed_password"
+        android:src="@drawable/icons_key"
+        android:layout_marginLeft="20dp"
+        android:paddingLeft="10dp"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ed_password"
+        app:layout_constraintRight_toLeftOf="@+id/ed_password"
+        app:layout_constraintBottom_toBottomOf="@+id/ed_password"
+
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintVertical_weight="2"/>
+
+    <EditText
+        android:id="@+id/ed_password"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/shadow_corner_white"
+        android:hint="  password"
+        android:inputType="textPassword"
+        android:textSize="20sp"
+
+        app:layout_constraintBottom_toTopOf="@+id/btn_login"
+        app:layout_constraintEnd_toEndOf="@+id/ed_username"
+        app:layout_constraintStart_toEndOf="@+id/iv_icon_key"
+        app:layout_constraintTop_toBottomOf="@+id/ed_username"
+
+        app:layout_constraintHorizontal_weight="5"
+        app:layout_constraintVertical_weight="2"/>
+
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="80dp"
+
+
+        android:layout_marginTop="32dp"
+        android:background="@drawable/shape_corner_button"
+        android:onClick="onclick"
+        android:padding="5dp"
+        android:text="登录"
+        android:textColor="#ffffff"
+        android:textSize="28sp"
+        app:layout_constraintTop_toBottomOf="@+id/ed_password"
+        app:layout_constraintBottom_toTopOf="@+id/tv_register"
+
+        app:layout_constraintVertical_weight="1.5"/>
+<!--        <View-->
+
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="0dp"-->
+<!--            android:layout_weight="8"/>-->
+
+    <TextView
+        android:id="@+id/tv_register"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:onClick="onclick"
+        android:text="没有账号？"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_login"
+
+        app:layout_constraintVertical_weight="1"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

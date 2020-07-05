@@ -4,136 +4,149 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.RegisterActivity"
-    android:orientation="vertical">
+    tools:context=".Activities.RegisterActivity">
 
-    <LinearLayout
+    <ImageView
+        android:id="@+id/iv_logo_reg"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@drawable/shape_corner_white"
-        android:orientation="vertical"
+        android:padding="30dp"
+        android:src="@drawable/logo"
+
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toRightOf="parent"
-        android:id="@+id/linear_imput_register">
+        app:layout_constraintBottom_toTopOf="@+id/ed_username_register"
 
-        <ImageView
-            android:layout_margin="50dp"
-            android:layout_height="0dp"
-            android:layout_width="match_parent"
+        app:layout_constraintVertical_weight="3"
+        />
 
-            android:layout_weight="6"
-            android:src="@drawable/logo"
-            android:layout_gravity="center_horizontal"
-            />
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="20dp"
+        android:src="@drawable/icons_head"
+        android:id="@+id/iv_icon_head"
 
-        <LinearLayout
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_margin="20dp">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/icons_head"
-                android:labelFor="@+id/ed_username_register"
-                android:layout_marginLeft="20dp"
-                android:layout_gravity="center_vertical"
-
-                />
-            <EditText
-                android:id="@+id/ed_username_register"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
-                android:background="@drawable/shadow_corner_white"
-                android:hint="  username"
-                android:textSize="20sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_margin="20dp">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/icons_key"
-                android:labelFor="@+id/ed_password_register2"
-                android:layout_marginLeft="20dp"
-                android:layout_gravity="center_vertical"
-                />
-            <EditText
-                android:id="@+id/ed_password_register2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ed_username_register"
+        app:layout_constraintRight_toLeftOf="@+id/ed_username_register"
+        app:layout_constraintBottom_toBottomOf="@+id/ed_username_register"
 
 
-                android:background="@drawable/shadow_corner_white"
-                android:hint="  password"
-                android:inputType="textPassword"
-                android:textSize="20sp" />
+        app:layout_constraintVertical_weight="2"
+        app:layout_constraintHorizontal_weight="1"
+        />
+
+    <EditText
+        android:id="@+id/ed_username_register"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/shadow_corner_white"
+        android:hint="  username"
+        android:textSize="20sp"
+
+        app:layout_constraintTop_toBottomOf="@+id/iv_logo_reg"
+        app:layout_constraintStart_toEndOf="@+id/iv_icon_head"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/ed_password_register"
+
+        app:layout_constraintVertical_weight="1"
+        app:layout_constraintHorizontal_weight="5"/>
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/icons_key"
+        android:layout_marginLeft="20dp"
+        android:id="@+id/iv_icon_key1"
+        android:paddingLeft="10dp"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/ed_password_register"
+        app:layout_constraintTop_toTopOf="@+id/ed_password_register"
+        app:layout_constraintBottom_toBottomOf="@+id/ed_password_register"
+
+        app:layout_constraintVertical_weight="2"
+        app:layout_constraintHorizontal_weight="1"
+
+        />
+    <EditText
+        android:id="@+id/ed_password_register"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
 
 
-        </LinearLayout>
+        android:background="@drawable/shadow_corner_white"
+        android:hint="  password"
+        android:inputType="textPassword"
+        android:textSize="20sp"
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_margin="20dp">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/icons_key"
-                android:labelFor="@+id/ed_password_register"
-                android:layout_marginLeft="20dp"
-                android:layout_gravity="center_vertical"
-                />
-            <EditText
-                android:id="@+id/ed_password_register"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
+        app:layout_constraintLeft_toRightOf="@+id/iv_icon_key1"
+        app:layout_constraintRight_toRightOf="@id/ed_username_register"
+        app:layout_constraintTop_toBottomOf="@+id/ed_username_register"
+        app:layout_constraintBottom_toTopOf="@id/ed_password_register2"
 
-                android:background="@drawable/shadow_corner_white"
-                android:hint="  confirm password"
-                android:inputType="textPassword"
-                android:textSize="20sp" />
+        app:layout_constraintVertical_weight="1"
+        app:layout_constraintHorizontal_weight="5"
+        />
 
 
-        </LinearLayout>
+    <ImageView
+        android:id="@+id/iv_icon_key2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/icons_key"
+        android:labelFor="@+id/ed_password_register2"
+        android:layout_marginLeft="20dp"
+        android:paddingLeft="10dp"
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"/>
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/ed_password_register2"
+        app:layout_constraintTop_toTopOf="@+id/ed_password_register2"
+        app:layout_constraintBottom_toBottomOf="@+id/ed_password_register2"
 
-        <Button
-            android:id="@+id/btn_logup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="40dp"
+        app:layout_constraintVertical_weight="2"
+        app:layout_constraintHorizontal_weight="1"
+        />
+    <EditText
+        android:id="@+id/ed_password_register2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
 
-            android:background="@drawable/shape_corner_button"
-            android:onClick="onclick"
-            android:text="注册"
-            android:textColor="#ffffff"
-            android:textAllCaps="false"
-            android:textSize="28sp"
-            android:padding="10dp"/>
+        android:background="@drawable/shadow_corner_white"
+        android:hint="  confirm password"
+        android:inputType="textPassword"
+        android:textSize="20sp"
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="8"
-            />
+        app:layout_constraintLeft_toRightOf="@+id/iv_icon_key2"
+        app:layout_constraintRight_toRightOf="@id/ed_password_register"
+        app:layout_constraintTop_toBottomOf="@+id/ed_password_register"
+        app:layout_constraintBottom_toBottomOf="@id/btn_logup"
 
-    </LinearLayout>
+        app:layout_constraintVertical_weight="1"
+        app:layout_constraintHorizontal_weight="5"
+        />
 
+
+    <Button
+        android:id="@+id/btn_logup"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="60dp"
+        android:layout_marginTop="32dp"
+
+        android:background="@drawable/shape_corner_button"
+        android:onClick="onclick"
+        android:text="注册"
+        android:textColor="#ffffff"
+        android:textSize="28sp"
+        android:padding="5dp"
+
+        app:layout_constraintTop_toBottomOf="@+id/ed_password_register2"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+
+        app:layout_constraintVertical_weight="1"
+
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
