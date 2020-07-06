@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.meetu.Activities.MainActivity;
 import com.example.meetu.Entities.Content;
 import com.example.meetu.Entities.User;
 import com.example.meetu.Layouts.ContentCard;

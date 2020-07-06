@@ -23,6 +23,7 @@ import java.util.logging.LogRecord;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -60,6 +61,7 @@ public class Content {
 
     //通过网络获取Content
     public Content(Context context, int content_id) throws IOException {
+        this.content_id = content_id;
         //获取Content
         OkHttpClient client = new OkHttpClient();
         String url = "http://" + IP + ":8080/get-specific-state?content_id="+content_id;
@@ -142,53 +144,84 @@ public class Content {
         }
     }
 
-        //点赞
+    //点赞
     public boolean like() {
         String url = "http://"+IP+":8080/like";
-        OkHttpClient okHttpClient = new OkHttpClient();
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("content_id", ""+content_id);
+            jsonObject.put("uid", ""+myId);
+            jsonObject.put("flag", "true");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-        RequestBody body = new FormBody.Builder()
-                .add("content_id", ""+content_id)
-                .add("uid", ""+myId)
-                .add("flag", "true")
-                .build();
-
+        final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        OkHttpClient client = new OkHttpClient();
+        RequestBody body = RequestBody.create(JSON, jsonObject.toString());
         Request request = new Request.Builder()
                 .url(url)
                 .post(body)
                 .build();
-
-        Call call = okHttpClient.newCall(request);
         try {
-            Response response = call.execute();
-            Log.i("like_response", response.body().string());
+            Response response = client.newCall(request).execute();
+            Log.i("like_res", response.body().string());
         } catch (IOException e) {
             e.printStackTrace();
-            return false;
         }
         return true;
     }
 
     //评论
     public void remark(String text) {
-        String url = "http://\"+IP+\":8080/remark";
-        OkHttpClient okHttpClient = new OkHttpClient();
+        String url = "http://"+IP+":8080/remark";
 
-        RequestBody body = new FormBody.Builder()
-                .add("content_id", ""+content_id)
-                .add("uid", "值")
-                .add("content", text)
-                .build();
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("content_id", ""+content_id);
+            jsonObject.put("uid", ""+myId);
+            jsonObject.put("content", text);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
+        final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        OkHttpClient client = new OkHttpClient();
+        RequestBody body = RequestBody.create(JSON, jsonObject.toString());
         Request request = new Request.Builder()
                 .url(url)
                 .post(body)
                 .build();
-
-        Call call = okHttpClient.newCall(request);
         try {
-            Response response = call.execute();
-            System.out.println(response.body().string());
+            Response response = client.newCall(request).execute();
+            Log.i("Remark_res", response.body().string());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void repost(String text) {
+        String url = "http://"+IP+":8080/repost-state";
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("content_id", ""+content_id);
+            jsonObject.put("uid", ""+myId);
+            jsonObject.put("content", text);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        OkHttpClient client = new OkHttpClient();
+        RequestBody body = RequestBody.create(JSON, jsonObject.toString());
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .build();
+        try {
+            Response response = client.newCall(request).execute();
+            Log.i("Repost_res", response.body().string());
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -24,7 +24,9 @@
             android:parentActivityName=".Activities.BodyActivity" />
         <activity
             android:name=".Activities.BodyActivity"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:configChanges="keyboardHidden"
+            android:windowSoftInputMode="adjustPan|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
