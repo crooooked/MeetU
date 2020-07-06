@@ -155,13 +155,17 @@ public class ContentCard extends ConstraintLayout {
     //事件源：like_button + like_slogan
     //评论状态
     public void like(View view) {
-        content.like();
+        boolean result = content.like();
+        if(result)
+            likeButton.setImageResource(R.mipmap.like_red);
+        else
+            likeButton.setImageResource(R.mipmap.like_grey);
     }
 
     //事件源：remark_edit（输入结束后按回车）
     //评论状态
-    public void submit_remark(View view) {
-
+    public void submit_remark(View view, String text) {
+        content.remark(text);
     }
 
 }

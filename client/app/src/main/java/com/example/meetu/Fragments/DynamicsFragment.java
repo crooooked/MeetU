@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.StrictMode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.example.meetu.Entities.Content;
 import com.example.meetu.Layouts.ContentCard;
 import com.example.meetu.R;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -72,6 +74,11 @@ public class DynamicsFragment extends Fragment {
         View view=inflater.inflate(R.layout.fragment_dynamics, container, false);
         LinearLayout layout = view.findViewById(R.id.linear_layout_space);
 
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+
         //测试用的数据
         Bitmap head = BitmapFactory.decodeResource(getResources(), R.mipmap.sample_head);
         //9张图
@@ -114,10 +121,14 @@ public class DynamicsFragment extends Fragment {
         ContentCard contentCard4 = new ContentCard(getContext(), content4);
         layout.addView(contentCard4);
 
-
 //        //测试从网络获取content
-//        Content content4 = new Content(this, 111);
-//        layout.addView(new ContentCard(this, content4));
+//        Content content5 = null;
+//        try {
+//            content5 = new Content(getContext(), 1);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        layout.addView(new ContentCard(getContext(), content5));
 
         return view;
 
