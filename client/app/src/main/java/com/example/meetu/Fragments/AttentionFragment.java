@@ -171,6 +171,7 @@ public class AttentionFragment extends Fragment {
     };
 
 
+
     java.util.List<FocusData> focusdatas;
 
 
@@ -221,7 +222,6 @@ public class AttentionFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         setHasOptionsMenu(true);
-
 
         View view = inflater.inflate(R.layout.fragment_attention, container, false);
         tv_nick = view.findViewById(R.id.tv_nick_show);
@@ -278,9 +278,6 @@ public class AttentionFragment extends Fragment {
 
 
 
-
-
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -316,10 +313,6 @@ public class AttentionFragment extends Fragment {
     }
 
 
-
-    /*
-    自定义活动写在这里
-     */
 
 
     //搜索框searchview

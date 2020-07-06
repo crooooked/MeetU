@@ -22,6 +22,7 @@ import androidx.fragment.app.Fragment;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.example.meetu.Activities.BodyActivity;
 import com.example.meetu.Activities.PersonalDataShowActivity;
 import com.example.meetu.Adapter.MyListAdapter;
 import com.example.meetu.FocusClass.AnalyseJson;
@@ -62,12 +63,7 @@ public class ListFansFragment extends Fragment {
     Httprequest httprequest = new Httprequest();
     //httprequest.handler=handler;将Httprequest的handler与下面的handler关联在一起
 
-    Bitmap bitmap;
-    /*
 
-    上面的nick[]应该向后端请求，读数据库，读出图片和名称，然后将数据放到nick[]中
-
-     */
 
     Handler handler = new Handler() {
         @Override
@@ -122,10 +118,12 @@ public class ListFansFragment extends Fragment {
 
     };
 
+    String ip="10.234.184.71";
+    String url_getAudiences="http://"+ip+":8080/get-audiences?username=";
+
+    String myName= BodyActivity.key_username;
 
     List<FocusData> focusdatas;
-
-
 
     public ListFansFragment() {
         // Required empty public constructor
@@ -264,7 +262,7 @@ public class ListFansFragment extends Fragment {
         //开启另一个线程，用于后台异步加载的工作
         protected String doInBackground(Void... voids) {
 
-            String result = request("http://10.234.184.71:8080/get-audiences?username=", "lby");
+            String result = request(url_getAudiences, myName);
             Log.d("Tag","获取听众列表====="+result);
             //返回Json数据
             return result;

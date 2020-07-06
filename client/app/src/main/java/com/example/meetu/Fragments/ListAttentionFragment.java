@@ -22,6 +22,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.example.meetu.Activities.BodyActivity;
 import com.example.meetu.Activities.PersonalDataShowActivity;
 import com.example.meetu.Adapter.AttentionAdapter;
 import com.example.meetu.Adapter.MyListAdapter;
@@ -62,9 +63,8 @@ public class ListAttentionFragment extends Fragment {
     public ImageView image_show;
     private static int PERSONAL_DATA=105;
     Httprequest httprequest = new Httprequest();
-    //httprequest.handler=handler;将Httprequest的handler与下面的handler关联在一起
 
-    Bitmap bitmap;
+
     /*
 
     上面的nick[]应该向后端请求，读数据库，读出图片和名称，然后将数据放到nick[]中
@@ -124,8 +124,13 @@ public class ListAttentionFragment extends Fragment {
 
     };
 
+    String ip="10.234.184.71";
+    String url_getAttention="http://"+ip+":8080/get-attentions?username=";
 
     List<FocusData> focusdatas;
+
+    String myName= BodyActivity.key_username;
+
 
 
 
@@ -222,10 +227,6 @@ public class ListAttentionFragment extends Fragment {
 
 
 
-    /*
-    自定义活动写在这里
-     */
-
 
 //    //搜索框searchview
 //    public void Search() {
@@ -266,7 +267,7 @@ public class ListAttentionFragment extends Fragment {
         //开启另一个线程，用于后台异步加载的工作
         protected String doInBackground(Void... voids) {
 
-            String result = request("http://10.234.184.71:8080/get-attentions?username=", "lby");
+            String result = request(url_getAttention, myName);
             //返回Json数据
             return result;
         }

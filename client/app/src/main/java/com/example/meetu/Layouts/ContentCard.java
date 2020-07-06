@@ -95,6 +95,7 @@ public class ContentCard extends ConstraintLayout {
         }
 
         //显示转发模块contentRepost
+//        //显示转发模块contentRepost
 //        if(content.getRepost() == content.NO_REPOST)
 //            contentRepost.setVisibility(GONE);
 //        else {
