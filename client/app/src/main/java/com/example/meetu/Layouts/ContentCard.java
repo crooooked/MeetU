@@ -42,6 +42,8 @@ public class ContentCard extends ConstraintLayout {
     ImageButton likeButton;
     TextView likeSlogan;
 
+    TextView remark1;
+    TextView remark2;
     EditText remarkEdit;
 
 
@@ -66,6 +68,8 @@ public class ContentCard extends ConstraintLayout {
         remarkSlogan = findViewById(R.id.remark_slogan);
         likeButton = findViewById(R.id.like_button);
         likeSlogan = findViewById(R.id.like_slogan);
+        remark1 = findViewById(R.id.remark_text1);
+        remark2 = findViewById(R.id.remark_text2);
         remarkEdit = findViewById(R.id.remark_edit);
 
         //加入数据
@@ -87,21 +91,47 @@ public class ContentCard extends ConstraintLayout {
         if(images != null && images.size() != 0) {
             contentImage.initGrid(images.size());
             contentImage.showImages(images);
-            contentImage.setBackground(getResources().getDrawable(R.color.colorGreyForRepostBackground));
+            //contentImage.setBackground(getResources().getDrawable(R.color.colorGreyForRepostBackground));
         }
 
         //显示转发模块contentRepost
-        if(content.getRepost() == content.NO_REPOST)
-            contentRepost.setVisibility(GONE);
-        else {
-            Content repost = content.getRepostContent();
-            contentRepost.setContent(repost.getUser().getUsername(), repost.getContent());
-            if(repost.getImages() != null)
-                contentRepost.setImages(repost.getImages());
+//        if(content.getRepost() == content.NO_REPOST)
+//            contentRepost.setVisibility(GONE);
+//        else {
+//            Content repost = content.getRepostContent();
+//            contentRepost.setContent(repost.getUser().getUsername(), repost.getContent());
+//            if(repost.getImages() != null)
+//                contentRepost.setImages(repost.getImages());
+//        }
+
+        //显示评论
+        String[] remarks_content = content.getRemarks_content();
+        String[] remarks_username = content.getRemarks_username();
+        if(remarks_content != null && remarks_content.length != 0) {
+            remark1.setText(remarks_username[0] + "：" + remarks_content[0]);
+            if(remarks_content.length ==2)
+                remark2.setText(remarks_username[1] + "：" + remarks_content[1]);
+            else
+                remark2.setVisibility(GONE);
+        } else {
+            remark1.setVisibility(GONE);
+            remark2.setVisibility(GONE);
         }
 
         //设置按钮点击事件
-
+        //点赞
+        likeButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                like(view);
+            }
+        });
+        likeSlogan.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                like(view);
+            }
+        });
     }
 
     //事件源：userhead头像
@@ -125,13 +155,17 @@ public class ContentCard extends ConstraintLayout {
     //事件源：like_button + like_slogan
     //评论状态
     public void like(View view) {
-
+        boolean result = content.like();
+        if(result)
+            likeButton.setImageResource(R.mipmap.like_red);
+        else
+            likeButton.setImageResource(R.mipmap.like_grey);
     }
 
     //事件源：remark_edit（输入结束后按回车）
     //评论状态
-    public void submit_remark(View view) {
-
+    public void submit_remark(View view, String text) {
+        content.remark(text);
     }
 
 }

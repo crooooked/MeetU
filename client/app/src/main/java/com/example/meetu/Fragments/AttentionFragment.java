@@ -25,6 +25,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
 import com.example.meetu.Activities.FocusListActivity;
 import com.example.meetu.Activities.PersonalDataShowActivity;
+import com.example.meetu.Adapter.AttentionAdapter;
 import com.example.meetu.FocusClass.AnalyseJson;
 import com.example.meetu.FocusClass.FocusData;
 import com.example.meetu.FocusClass.Httprequest;
@@ -40,10 +41,15 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SearchView;
+
 import android.widget.TextView;
+
+import android.widget.TabHost;
+
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -53,11 +59,13 @@ import com.example.meetu.FocusClass.FocusData;
 import com.example.meetu.FocusClass.Httprequest;
 import com.example.meetu.R;
 import com.example.meetu.Tools.GlideCircleTransform;
+import com.google.android.material.tabs.TabLayout;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -165,6 +173,13 @@ public class AttentionFragment extends Fragment {
 
     java.util.List<FocusData> focusdatas;
 
+
+    private ViewPager mViewPager;
+    private TabLayout mTabLayout;
+    private List<Fragment> mFragments;
+    private List<String> mTitles;
+    private AttentionAdapter mAdapter;
+
     public AttentionFragment() {
         // Required empty public constructor
     }
@@ -196,11 +211,18 @@ public class AttentionFragment extends Fragment {
         }
     }
 
+
+
+    /*
+    控件初始化
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         setHasOptionsMenu(true);
+
+
         View view = inflater.inflate(R.layout.fragment_attention, container, false);
         tv_nick = view.findViewById(R.id.tv_nick_show);
         tv_gender = view.findViewById(R.id.tv_gender_show);
@@ -212,8 +234,52 @@ public class AttentionFragment extends Fragment {
         pop_up_box=view.findViewById(R.id.pop_up_box);
         search_image=view.findViewById(R.id.search_image);
         search_name=view.findViewById(R.id.search_name);
+
+        initView(view);
+        initData(view);
+        setData();
+
         return view;
     }
+
+    private  void  initData(View view){
+        mTitles=new ArrayList<>();
+        mTitles.add("关注");
+        mTitles.add("听众");
+        mFragments=new ArrayList<>();
+        for(int i=0;i<mTitles.size();i++){
+            if(i==0){
+                mFragments.add(new ListAttentionFragment());
+            }
+
+            if(i==1){
+                mFragments.add(new ListFansFragment());
+
+            }
+        }
+
+        mAdapter=new AttentionAdapter(getChildFragmentManager(),mFragments,mTitles);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    private void initView(View view){
+        mViewPager=(ViewPager)view.findViewById(R.id.vp_attentionpage_show);
+        mTabLayout=view.findViewById(R.id.tl_attention_navigation);
+    }
+
+    private void setData(){
+        mViewPager.setAdapter(mAdapter);
+        //设置Viewpager和Tablayout进行联动
+        mTabLayout.setupWithViewPager(mViewPager);
+
+    }
+
+
+
+
+
+
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -222,12 +288,6 @@ public class AttentionFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, android.view.View view, int position, long id) {
-                //用Intent进行跳转
-//                Intent intent = new Intent(getActivity(), PersonalDataShowActivity.class);
-//                intent.putExtra("Name", focusdatas.get(position).nick);
-//
-//                //1：表示已经关注,表示从listview点进去到个人资料界面
-//                intent.putExtra("flag", "1");
 //                startActivity(intent);
                 Intent intent = new Intent(getActivity(), PersonalDataShowActivity.class);
                 intent.putExtra("Name", focusdatas.get(position).nick);
@@ -243,18 +303,29 @@ public class AttentionFragment extends Fragment {
             }
         });
 
+        new ListViewAsyncTask().execute();
     }
+
+
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode==105){
-            new ListViewAsyncTask().execute();
-//            assert data != null;
-        }
+//        if(resultCode==105){
+//            new ListViewAsyncTask().execute();
+////            assert data != null;
+//        }
     }
+
+
+
+    /*
+    自定义活动写在这里
+     */
+
 
     //搜索框searchview
     public void Search() {
         searchView.setIconifiedByDefault(false);
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             //最终提交时触发
             @Override
@@ -276,7 +347,6 @@ public class AttentionFragment extends Fragment {
                     httprequest.handler = handler;
                     try {
                         pop_up_box.setVisibility(View.VISIBLE);
-                        listView.setVisibility(View.INVISIBLE);
                         httprequest.getRequest("http://" + ip + ":8080/get-information", "username=" + searchView.getQuery().toString(), 2);
                         search_name.setOnClickListener(new View.OnClickListener(){
                             @Override
@@ -291,7 +361,7 @@ public class AttentionFragment extends Fragment {
                                 EditText  textView = (EditText ) searchView.findViewById(id);
                                 textView.setText("");
                                 pop_up_box.setVisibility(View.GONE);
-                                listView.setVisibility(View.VISIBLE);
+                                listView.setVisibility(View.GONE);
                             }
                         });
                         System.out.println(searchView.getQuery().toString());
@@ -385,4 +455,5 @@ public class AttentionFragment extends Fragment {
             listView.setAdapter(new MyListAdapter(getContext(), focusdatas));
         }
     }
+
 }

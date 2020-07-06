@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragments.DynamicsFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -11,10 +12,55 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/test"
+            android:id="@+id/linear_layout_space"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" />
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/personal_space_header"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent">
+
+                <ImageView
+                    android:id="@+id/background_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:src="@mipmap/sample_background"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:scaleType="centerCrop" />
+
+                <ImageView
+                    android:id="@+id/zone_head_image"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@mipmap/sample_head"
+                    app:layout_constraintBottom_toBottomOf="@+id/background_image"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/zone_head_user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="@string/user_name_sample"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/zone_head_image"
+                    app:layout_constraintStart_toEndOf="@+id/zone_head_image"
+                    app:layout_constraintTop_toTopOf="@+id/zone_head_image"
+                    app:layout_constraintVertical_bias="0.75" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+        </LinearLayout>
     </ScrollView>
 
 </FrameLayout>

@@ -7,16 +7,29 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.StrictMode;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.meetu.Entities.Content;
+import com.example.meetu.Entities.User;
 import com.example.meetu.Layouts.ContentCard;
 import com.example.meetu.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,6 +46,9 @@ public class DynamicsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    int myId = 2;
+    String IP = "10.234.184.71";
 
     public DynamicsFragment() {
         // Required empty public constructor
@@ -70,8 +86,50 @@ public class DynamicsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_dynamics, container, false);
-        LinearLayout layout;
-        layout = view.findViewById(R.id.test);
+        LinearLayout layout = view.findViewById(R.id.linear_layout_space);
+
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+
+        //显示空间头
+        OkHttpClient client = new OkHttpClient();
+        String url = "http://" + IP + ":8080/get-zone-head?uid="+myId;
+        Log.i("url", url);
+        Request request = new Request.Builder()
+                .get()
+                .url(url)
+                .build();
+        Response response = null;
+        try {
+            response = client.newCall(request).execute();
+            String str = response.body().string();
+            Log.i("zone_head_res", str);
+
+            JSONObject json = new JSONObject(str);
+
+            TextView textView = view.findViewById(R.id.zone_head_user_name);
+            textView.setText(json.getString("username"));
+
+            String head_url = json.getString("head");
+            String background_url = json.getString("background");
+            User user = new User(myId);
+            user.setHead_url(head_url);
+            user.setBackground_url(background_url);
+            user.getHeadImage();
+            user.getBackgroundImage();
+
+            ImageView head = view.findViewById(R.id.zone_head_image);
+            head.setImageBitmap(user.getHead_image());
+            ImageView background = view.findViewById(R.id.background_image);
+            background.setImageBitmap(user.getBackground_image());
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        //测试用的数据
         Bitmap head = BitmapFactory.decodeResource(getResources(), R.mipmap.sample_head);
         //9张图
         ArrayList<Bitmap> images = new ArrayList<>();
@@ -84,27 +142,44 @@ public class DynamicsFragment extends Fragment {
         images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image7));
         images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image8));
         images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image9));
+        //评论
+        String[] remark_content = new String[] {"好的！", "知道了"};
+        String[] remark_username = new String[] {"小A", "小B"};
 
-        //测试无图片+无转发的状态
-        Content content1 = new Content(head, null);
-        layout.addView(new ContentCard(getContext(), content1));
 
-        //测试有图片+无转发的状态
-        Content content2 = new Content(head, null);
-        content2.setImages(images);
-        ContentCard contentCard2 = new ContentCard(getContext(), content2);
-        layout.addView(contentCard2);
+//        //测试无图片+无转发的状态
+//        Content content1 = new Content(head, null);
+//        layout.addView(new ContentCard(getContext(), content1));
+//
+//        //测试有图片+无转发的状态
+//        Content content2 = new Content(head, null);
+//        content2.setImages(images);
+//        ContentCard contentCard2 = new ContentCard(getContext(), content2);
+//        layout.addView(contentCard2);
+//
+//        //测试无图片+有转发的状态
+//        Content content3 = new Content(head, null);
+//        content3.setRepost(123);
+//        content3.setRepostContent(content1);
+//        layout.addView(new ContentCard(getContext(), content3));
+//
+//        //测试有图片+有评论的状态
+//        Content content4 = new Content(head, null);
+//        content4.setImages(images);
+//        content4.setRemarks_content(remark_content);
+//        content4.setRemarks_username(remark_username);
+//        ContentCard contentCard4 = new ContentCard(getContext(), content4);
+//        layout.addView(contentCard4);
 
-//        android.view.ViewGroup.LayoutParams lp = contentCard2.getLayoutParams();
-//        lp.height = contentCard2.getMeasuredWidth();
-//        Log.i("height", ""+lp.height);
-//        contentCard2.setLayoutParams(lp);
+        //测试从网络获取content
+        Content content5 = null;
+        try {
+            content5 = new Content(getContext(), 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        layout.addView(new ContentCard(getContext(), content5));
 
-        //测试无图片+有转发的状态
-        Content content3 = new Content(head, null);
-        content3.setRepost(123);
-        content3.setRepostContent(content1);
-        layout.addView(new ContentCard(getContext(), content3));
         return view;
 
 

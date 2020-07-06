@@ -1,10 +1,21 @@
 package com.example.meetu.Entities;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import com.bumptech.glide.Glide;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 //用户类
 public class User implements Parcelable{
@@ -65,12 +76,34 @@ public class User implements Parcelable{
 
     //已知head_url，获取head_image
     public void getHeadImage() {
-
+        try {
+            Log.i("head_url", head_url);
+            OkHttpClient client = new OkHttpClient();
+            Request request = new Request.Builder()
+                    .url(head_url)
+                    .build();
+            Response response = client.newCall(request).execute();
+            byte[] bytes = response.body().bytes();
+            head_image = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     //已知background_url，获取background_image
     public void getBackgroundImage() {
-
+        try {
+            Log.i("background_url", background_url);
+            OkHttpClient client = new OkHttpClient();
+            Request request = new Request.Builder()
+                    .url(background_url)
+                    .build();
+            Response response = client.newCall(request).execute();
+            byte[] bytes = response.body().bytes();
+            background_image = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public int getUid() {

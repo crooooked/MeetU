@@ -6,7 +6,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,16 +14,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NavUtils;
 
 import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
 import com.example.meetu.FocusClass.AnalyseJson;
 import com.example.meetu.FocusClass.Httprequest;
 import com.example.meetu.FocusClass.ToJson;
+import com.example.meetu.FocusClass.IP;
 import com.example.meetu.R;
 import com.example.meetu.Tools.GlideCircleTransform;
 
@@ -92,9 +90,13 @@ public class PersonalDataShowActivity extends AppCompatActivity {
     public ImageView image_head,image_background;
     public String focusText;
     Httprequest httprequest=new Httprequest();
-    public static String ip="10.234.184.71";
+    public  static String ip="10.234.184.71";
+
     String url_getInformation="http://"+ip+":8080/get-information";
-    String url_mangeAttention="http://10.234.184.71:8080/manage-attentions";
+
+
+
+    String url_mangeAttention="http://"+ip+":8080/manage-attentions";
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -125,7 +127,6 @@ public class PersonalDataShowActivity extends AppCompatActivity {
         }
 
     }
-
 
 
     //控件初始化
@@ -171,8 +172,6 @@ public class PersonalDataShowActivity extends AppCompatActivity {
             setResult(105,intent);
             this.finish();
 
-//        Intent intent=new Intent(this, FocusListActivity.class);
-//        startActivity(intent);
 
 
     }

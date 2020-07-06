@@ -28,6 +28,9 @@ import com.example.meetu.Layouts.InformationActivity;
 import com.example.meetu.Tools.OkHttpUtils;
 import com.example.meetu.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 /**
  * A simple {@link Fragment} subclass.
@@ -102,6 +105,7 @@ public class PersonalFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         String username=BodyActivity.key_username;
+
         String url="http://"+ip+":8080/get-information?username="+username;
         OkHttpUtils instance=OkHttpUtils.getInstance();
         instance.doGet(url, new OkHttpUtils.OkHttpCallBackLinener() {
@@ -115,6 +119,10 @@ public class PersonalFragment extends Fragment {
                 setView();
             }
         });
+
+        setImage(username);
+        setCount(username);
+
 
         //添加点击事件，进入修改信息页面
         ibInfo.setOnClickListener(new View.OnClickListener() {
@@ -144,6 +152,52 @@ public class PersonalFragment extends Fragment {
             }
         });
     }
+    //设置图片
+    private void setCount(String username) {
+        String url="http://"+ip+":8080/get-number?username="+username;
+        OkHttpUtils instance=OkHttpUtils.getInstance();
+        instance.doGet(url, new OkHttpUtils.OkHttpCallBackLinener() {
+            @Override
+            public void failure(Exception e) {
+                //Toast.makeText(getContext(),"访问失败！",Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void success(String json) {
+                try {
+                    JSONObject jsonObject=new JSONObject(json);
+                    String attention=jsonObject.getString("attention")+"关注";
+                    String audience=jsonObject.getString("audience")+"听众";
+
+                    tvAttention.setText(attention);
+                    tvFollow.setText(audience);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+    }
+
+    //设置关注听众数量
+    private void setImage(String username){
+        String url="http://"+ip+":8080/get-information?username="+username;
+        OkHttpUtils instance=OkHttpUtils.getInstance();
+        instance.doGet(url, new OkHttpUtils.OkHttpCallBackLinener() {
+            @Override
+            public void failure(Exception e) {
+                Toast.makeText(getContext(),"此人不存在",Toast.LENGTH_LONG).show();
+            }
+            @Override
+            public void success(String json) {
+                user= Convert.getUserFromStr(json);
+                setView();
+            }
+        });
+
+
+
+    }
 
     //从修改信息页面返回
     @Override
@@ -162,12 +216,12 @@ public class PersonalFragment extends Fragment {
         String bgUrl=user.getBackground_url();
         String hdUrl=user.getHead_url();
 
-        if(!bgUrl.equals("null")){
-            Glide.with(getContext()).load(user.getBackground_url()).into(ivBgImage);
-        }
-        if(!hdUrl.equals("null")){
-            Glide.with(getContext()).load(user.getHead_url()).into(ivHeadImage);
-        }
+//        if(!bgUrl.equals("null")){
+//            Glide.with(getContext()).load(user.getBackground_url()).into(ivBgImage);
+//        }
+//        if(!hdUrl.equals("null")){
+//            Glide.with(getContext()).load(user.getHead_url()).into(ivHeadImage);
+//        }
     }
     //设置的是更新后的图片
     private void setView(String mParam1,String mParam2){
