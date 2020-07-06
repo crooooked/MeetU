@@ -94,15 +94,15 @@ public class ContentCard extends ConstraintLayout {
             //contentImage.setBackground(getResources().getDrawable(R.color.colorGreyForRepostBackground));
         }
 
-        //显示转发模块contentRepost
-        if(content.getRepost() == content.NO_REPOST)
-            contentRepost.setVisibility(GONE);
-        else {
-            Content repost = content.getRepostContent();
-            contentRepost.setContent(repost.getUser().getUsername(), repost.getContent());
-            if(repost.getImages() != null)
-                contentRepost.setImages(repost.getImages());
-        }
+//        //显示转发模块contentRepost
+//        if(content.getRepost() == content.NO_REPOST)
+//            contentRepost.setVisibility(GONE);
+//        else {
+//            Content repost = content.getRepostContent();
+//            contentRepost.setContent(repost.getUser().getUsername(), repost.getContent());
+//            if(repost.getImages() != null)
+//                contentRepost.setImages(repost.getImages());
+//        }
 
         //显示评论
         String[] remarks_content = content.getRemarks_content();
