@@ -64,6 +64,9 @@ public class Httprequest {
                     message.what=1;
                 }
 
+                if (flag==2){
+                    message.what=2;
+                }
 
 
                 handler.sendMessage(message);

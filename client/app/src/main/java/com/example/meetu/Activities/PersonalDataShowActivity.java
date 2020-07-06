@@ -92,8 +92,9 @@ public class PersonalDataShowActivity extends AppCompatActivity {
     public ImageView image_head,image_background;
     public String focusText;
     Httprequest httprequest=new Httprequest();
-    String url_getInformation="http://10.234.184.24:8080/get-information";
-    String url_mangeAttention="http://10.234.184.24:8080/manage-attentions";
+    public static String ip="10.234.184.71";
+    String url_getInformation="http://"+ip+":8080/get-information";
+    String url_mangeAttention="http://10.234.184.71:8080/manage-attentions";
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override

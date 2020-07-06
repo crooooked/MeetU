@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.AttentionFragment">
+    tools:context=".Fragments.AttentionFragment"
+
+    >
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
@@ -11,10 +13,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         tools:context=".Activities.FocusListActivity">
-
-
 
         <SearchView
             android:layout_marginTop="@dimen/left"
@@ -22,16 +21,40 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:background="@drawable/shape"
-
             android:theme="?attr/actionBarStyle"
+            android:text=""
             android:queryHint="@string/search"
+            android:id="@+id/search" />
+        <LinearLayout
+            android:id="@+id/pop_up_box"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/rectangle"
+            android:visibility="gone">
+            <ImageView
+                android:id="@+id/search_image"
+                android:layout_width="@dimen/itemImage"
+                android:layout_height="@dimen/itemImage"
+                android:layout_margin="8dp"
+                />
 
-            android:id="@+id/search"/>
+            <TextView
+                android:id="@+id/search_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:textSize="@dimen/itemNick"
+                android:text=""
+                />
+        </LinearLayout>
 
         <ListView
-            android:layout_width="match_parent"
-            android:layout_height="500dp"
             android:id="@+id/listView_focus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+
 
             />
 

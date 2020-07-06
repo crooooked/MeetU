@@ -16,11 +16,16 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:background="@drawable/shape"
-
         android:theme="?attr/actionBarStyle"
         android:queryHint="@string/search"
-
         android:id="@+id/search"/>
+
+
+
+
+
+
+
 
  <ListView
      android:layout_width="match_parent"

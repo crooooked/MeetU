@@ -11,6 +11,9 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -21,12 +24,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.meetu.Entities.Convert;
+import com.example.meetu.Tools.CustomVideoView;
 import com.example.meetu.Tools.OkHttpUtils;
 import com.example.meetu.R;
 
 
 import java.util.Objects;
 import java.util.regex.Pattern;
+import com.example.meetu.Tools.CustomVideoView;
 
 public class RegisterActivity extends AppCompatActivity {
     private EditText userName;
@@ -36,6 +41,7 @@ public class RegisterActivity extends AppCompatActivity {
     private static final int SUCCESS = 100;
     private static final int FAILED = 110;
     private Button btnReg;
+    private CustomVideoView customVideoView;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -44,6 +50,7 @@ public class RegisterActivity extends AppCompatActivity {
         if(NavUtils.getParentActivityName(getParent())!=null){
             Objects.requireNonNull(getActionBar()).setDisplayHomeAsUpEnabled(true);
         }
+
     }
 
     @Override
@@ -60,15 +67,16 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
         userName = findViewById(R.id.ed_username_register);
         passWord = findViewById(R.id.ed_password_register);
         confirmPwd = findViewById(R.id.ed_password_register2);
         requestPermissions();
+        Objects.requireNonNull(getSupportActionBar()).hide();
     }
 
     private void requestPermissions() {
@@ -129,6 +137,9 @@ public class RegisterActivity extends AppCompatActivity {
                 if (logup(username, pswd, pswd2)) {
                     postSynchronize(username, pswd);
                 }
+                break;
+            case R.id.tv_login:
+                startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
                 break;
         }
     }

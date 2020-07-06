@@ -45,7 +45,7 @@ public class PersonalFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    public static String ip="10.234.184.71";
     public PersonalFragment() {
         // Required empty public constructor
     }
@@ -102,7 +102,7 @@ public class PersonalFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         String username=BodyActivity.key_username;
-        String url="http://10.234.184.24:8080/get-information?username="+username;
+        String url="http://"+ip+":8080/get-information?username="+username;
         OkHttpUtils instance=OkHttpUtils.getInstance();
         instance.doGet(url, new OkHttpUtils.OkHttpCallBackLinener() {
             @Override
