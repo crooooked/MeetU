@@ -42,6 +42,8 @@ public class ContentCard extends ConstraintLayout {
     ImageButton likeButton;
     TextView likeSlogan;
 
+    TextView remark1;
+    TextView remark2;
     EditText remarkEdit;
 
 
@@ -66,6 +68,8 @@ public class ContentCard extends ConstraintLayout {
         remarkSlogan = findViewById(R.id.remark_slogan);
         likeButton = findViewById(R.id.like_button);
         likeSlogan = findViewById(R.id.like_slogan);
+        remark1 = findViewById(R.id.remark_text1);
+        remark2 = findViewById(R.id.remark_text2);
         remarkEdit = findViewById(R.id.remark_edit);
 
         //加入数据
@@ -98,6 +102,20 @@ public class ContentCard extends ConstraintLayout {
             contentRepost.setContent(repost.getUser().getUsername(), repost.getContent());
             if(repost.getImages() != null)
                 contentRepost.setImages(repost.getImages());
+        }
+
+        //显示评论
+        String[] remarks_content = content.getRemarks_content();
+        String[] remarks_username = content.getRemarks_username();
+        if(remarks_content != null && remarks_content.length != 0) {
+            remark1.setText(remarks_username[0] + "：" + remarks_content[0]);
+            if(remarks_content.length ==2)
+                remark2.setText(remarks_username[1] + "：" + remarks_content[1]);
+            else
+                remark2.setVisibility(GONE);
+        } else {
+            remark1.setVisibility(GONE);
+            remark2.setVisibility(GONE);
         }
 
         //设置按钮点击事件

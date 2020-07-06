@@ -70,8 +70,9 @@ public class DynamicsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_dynamics, container, false);
-        LinearLayout layout;
-        layout = view.findViewById(R.id.test);
+        LinearLayout layout = view.findViewById(R.id.linear_layout_space);
+
+        //测试用的数据
         Bitmap head = BitmapFactory.decodeResource(getResources(), R.mipmap.sample_head);
         //9张图
         ArrayList<Bitmap> images = new ArrayList<>();
@@ -84,6 +85,10 @@ public class DynamicsFragment extends Fragment {
         images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image7));
         images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image8));
         images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image9));
+        //评论
+        String[] remark_content = new String[] {"好的！", "知道了"};
+        String[] remark_username = new String[] {"小A", "小B"};
+
 
         //测试无图片+无转发的状态
         Content content1 = new Content(head, null);
@@ -95,16 +100,25 @@ public class DynamicsFragment extends Fragment {
         ContentCard contentCard2 = new ContentCard(getContext(), content2);
         layout.addView(contentCard2);
 
-//        android.view.ViewGroup.LayoutParams lp = contentCard2.getLayoutParams();
-//        lp.height = contentCard2.getMeasuredWidth();
-//        Log.i("height", ""+lp.height);
-//        contentCard2.setLayoutParams(lp);
-
         //测试无图片+有转发的状态
         Content content3 = new Content(head, null);
         content3.setRepost(123);
         content3.setRepostContent(content1);
         layout.addView(new ContentCard(getContext(), content3));
+
+        //测试有图片+有评论的状态
+        Content content4 = new Content(head, null);
+        content4.setImages(images);
+        content4.setRemarks_content(remark_content);
+        content4.setRemarks_username(remark_username);
+        ContentCard contentCard4 = new ContentCard(getContext(), content4);
+        layout.addView(contentCard4);
+
+
+//        //测试从网络获取content
+//        Content content4 = new Content(this, 111);
+//        layout.addView(new ContentCard(this, content4));
+
         return view;
 
 

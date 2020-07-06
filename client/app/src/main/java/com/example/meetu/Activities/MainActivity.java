@@ -33,41 +33,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        LinearLayout layout = findViewById(R.id.linear_layout_space);
-
-        //测试用的数据
-        Bitmap head = BitmapFactory.decodeResource(getResources(), R.mipmap.sample_head);
-        //9张图
-        ArrayList<Bitmap> images = new ArrayList<>();
-        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image1));
-        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image2));
-        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image3));
-        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image4));
-        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image5));
-        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image6));
-        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image7));
-        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image8));
-        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image9));
-
-        //测试无图片+无转发的状态
-        Content content1 = new Content(head, null);
-        layout.addView(new ContentCard(this, content1));
-
-        //测试有图片+无转发的状态
-        Content content2 = new Content(head, null);
-        content2.setImages(images);
-        ContentCard contentCard2 = new ContentCard(this, content2);
-        layout.addView(contentCard2);
-
-        //测试无图片+有转发的状态
-        Content content3 = new Content(head, null);
-        content3.setRepost(123);
-        content3.setRepostContent(content1);
-        layout.addView(new ContentCard(this, content3));
-
-//        //测试从网络获取content
-//        Content content4 = new Content(this, 111);
-//        layout.addView(new ContentCard(this, content4));
     }
 
     //"<"箭头响应，回到关注页面

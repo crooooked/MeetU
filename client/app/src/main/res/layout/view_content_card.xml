@@ -151,6 +151,29 @@
 
     <!--第四部分：评论栏，包括两条示例评论和一个评论输入框-->
 
+    <TextView
+        android:id="@+id/remark_text1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:text="@string/remark_sample1"
+        app:layout_constraintTop_toBottomOf="@id/space_interact"/>
+
+    <TextView
+        android:id="@+id/remark_text2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:text="@string/remark_sample2"
+        app:layout_constraintTop_toBottomOf="@+id/remark_text1"/>
+
     <EditText
         android:id="@+id/remark_edit"
         android:layout_width="match_parent"
@@ -159,10 +182,11 @@
         android:ems="10"
         android:hint="@string/remark_hint"
         android:inputType="textPersonName"
+        android:layout_marginTop="5dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/space_interact"
+        app:layout_constraintTop_toBottomOf="@id/remark_text2"
         android:layout_marginBottom="10dp"/>
 
 

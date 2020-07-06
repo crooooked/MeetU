@@ -211,4 +211,52 @@ public class Content {
     public void setImages(ArrayList<Bitmap> images) {
         this.images = images;
     }
+
+    public String getIP() {
+        return IP;
+    }
+
+    public int getNO_REPOST() {
+        return NO_REPOST;
+    }
+
+    public String[] getRemarks_username() {
+        return remarks_username;
+    }
+
+    public void setRemarks_username(String[] remarks_username) {
+        this.remarks_username = remarks_username;
+    }
+
+    public String[] getRemarks_content() {
+        return remarks_content;
+    }
+
+    public void setRemarks_content(String[] remarks_content) {
+        this.remarks_content = remarks_content;
+    }
+
+    public int getLike_times() {
+        return like_times;
+    }
+
+    public void setLike_times(int like_times) {
+        this.like_times = like_times;
+    }
+
+    public int getRemark_times() {
+        return remark_times;
+    }
+
+    public void setRemark_times(int remark_times) {
+        this.remark_times = remark_times;
+    }
+
+    public int getRepost_times() {
+        return repost_times;
+    }
+
+    public void setRepost_times(int repost_times) {
+        this.repost_times = repost_times;
+    }
 }

@@ -10,6 +10,8 @@
     <string name="content_sample"> 今天吃了米线，很开心！\n还和朋友逛街买了一个玩偶。 </string>
     <string name="content_sample2"> 和小明一起逛街太快乐了吧！\n幸福~~ </string>
     <string name="name_and_content_sample"> 萌神张飞：和小明一起逛街太快乐了吧！\n幸福~~ </string>
+    <string name="remark_sample1"> 我爱学习：谢谢你！ </string>
+    <string name="remark_sample2"> 鱼儿罐头：知道了~ </string>
 
     <string name="like_slogan"> 点赞 </string>
     <string name="remark_slogan"> 评论 </string>
