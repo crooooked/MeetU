@@ -34,7 +34,7 @@
                     android:scaleType="centerCrop" />
 
                 <ImageView
-                    android:id="@+id/head_image"
+                    android:id="@+id/zone_head_image"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:src="@mipmap/sample_head"
@@ -44,16 +44,16 @@
                     app:layout_constraintStart_toStartOf="parent" />
 
                 <TextView
-                    android:id="@+id/user_name"
+                    android:id="@+id/zone_head_user_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:text="@string/user_name_sample"
                     android:textColor="#FFFFFF"
                     android:textSize="20dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/head_image"
-                    app:layout_constraintStart_toEndOf="@+id/head_image"
-                    app:layout_constraintTop_toTopOf="@+id/head_image"
+                    app:layout_constraintBottom_toBottomOf="@+id/zone_head_image"
+                    app:layout_constraintStart_toEndOf="@+id/zone_head_image"
+                    app:layout_constraintTop_toTopOf="@+id/zone_head_image"
                     app:layout_constraintVertical_bias="0.75" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
