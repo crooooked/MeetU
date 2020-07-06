@@ -139,7 +139,8 @@
         android:textSize="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/remark_slogan"
-        app:layout_constraintTop_toBottomOf="@+id/space_content" />
+        app:layout_constraintTop_toBottomOf="@+id/space_content"
+        android:clickable="true"/>
 
     <Space
         android:id="@+id/space_interact"

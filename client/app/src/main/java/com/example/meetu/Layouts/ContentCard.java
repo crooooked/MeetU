@@ -101,7 +101,19 @@ public class ContentCard extends ConstraintLayout {
         }
 
         //设置按钮点击事件
-
+        //点赞
+        likeButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                like(view);
+            }
+        });
+        likeSlogan.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                like(view);
+            }
+        });
     }
 
     //事件源：userhead头像
@@ -125,7 +137,7 @@ public class ContentCard extends ConstraintLayout {
     //事件源：like_button + like_slogan
     //评论状态
     public void like(View view) {
-
+        content.like();
     }
 
     //事件源：remark_edit（输入结束后按回车）

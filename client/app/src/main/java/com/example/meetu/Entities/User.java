@@ -1,10 +1,16 @@
 package com.example.meetu.Entities;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.bumptech.glide.Glide;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 
 //用户类
 public class User implements Parcelable{
@@ -65,7 +71,16 @@ public class User implements Parcelable{
 
     //已知head_url，获取head_image
     public void getHeadImage() {
-
+        try {
+            URL im_url = new URL(head_url);
+            URLConnection conn = im_url.openConnection();
+            conn.connect();
+            InputStream in;
+            in = conn.getInputStream();
+            head_image = BitmapFactory.decodeStream(in);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     //已知background_url，获取background_image
