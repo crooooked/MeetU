@@ -32,7 +32,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText userName;
     private EditText passWord;
     private EditText confirmPwd;
-    private String url = "http://10.234.184.96:8080/register";
+    private String url = "http://10.234.184.71:8080/register";
     private static final int SUCCESS = 100;
     private static final int FAILED = 110;
     private Button btnReg;

@@ -150,7 +150,7 @@ public class LoginActivity extends AppCompatActivity {
         return null;
     }
     //连接网络
-    private static final String url="http://10.234.184.24:8080/login";
+    private static final String url="http://10.234.184.71:8080/login";
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void PostLogin(final String name, final String pwd){
         final String json = Convert.strRegLog(name, pwd);

@@ -20,6 +20,7 @@ import com.example.meetu.Adapter.MyListAdapter;
 import com.example.meetu.FocusClass.AnalyseJson;
 import com.example.meetu.FocusClass.FocusData;
 import com.example.meetu.FocusClass.Httprequest;
+import com.example.meetu.FocusClass.IP;
 import com.example.meetu.R;
 
 import java.io.ByteArrayOutputStream;
@@ -130,6 +131,16 @@ public class FocusListActivity extends AppCompatActivity {
 
     java.util.List<FocusData> focusdatas;
 
+//    IP ip=new IP();
+//
+//    String url=ip.ip;
+//    String url_getAttention=url+"get-attentions?username=";
+
+    String url_getAttention="http://10.236.66.58:8080/get-attentions?username=";
+
+
+
+
     @Override
     protected void onCreate(android.os.Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -196,7 +207,7 @@ public class FocusListActivity extends AppCompatActivity {
         }
         //开启另一个线程，用于后台异步加载的工作
         protected String doInBackground(Void... voids) {
-            String result = request("http://10.234.184.24:8080/get-attentions?username=","lby");
+            String result = request(url_getAttention,"lby");
             //返回Json数据
             return result;
         }
