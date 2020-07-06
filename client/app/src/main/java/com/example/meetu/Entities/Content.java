@@ -3,6 +3,7 @@ package com.example.meetu.Entities;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Message;
 import android.util.Log;
 
 import com.bumptech.glide.Glide;
@@ -16,6 +17,8 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -28,6 +31,8 @@ import okhttp3.Response;
 public class Content {
     final String IP = "10.234.184.71";
     public final int NO_REPOST = -1;
+
+    int myId = 2;
 
     int content_id;     //id
     int uid;            //发布者id
@@ -57,7 +62,7 @@ public class Content {
     public Content(Context context, int content_id) throws IOException {
         //获取Content
         OkHttpClient client = new OkHttpClient();
-        String url = "http://" + IP + ":8080/get-specific-state?content_id=1";
+        String url = "http://" + IP + ":8080/get-specific-state?content_id="+content_id;
         Log.i("url", url);
         Request request = new Request.Builder()
                 .get()
@@ -83,11 +88,11 @@ public class Content {
             JSONArray image_list = res.getJSONArray("images");
             image_urls = new String[image_list.length()];
             for (int i = 0; i < image_list.length(); i++)
-                image_urls[i] = image_list.getString(i);
+                image_urls[i] = image_list.getJSONObject(i).getString("image");
 
             //remarks
             JSONArray remark_list = res.getJSONArray("remarks");
-            if (remark_list != null) {
+            if (remark_list != null && remark_list.length() != 0) {
                 remarks_username = new String[image_list.length()];
                 remarks_content = new String[image_list.length()];
                 for (int i = 0; i < image_list.length(); i++) {
@@ -118,27 +123,20 @@ public class Content {
             }
 
             //通过每张图片的url获取图片
-            user = new User(uid);
-            user.getHead_image();
+            user.getHeadImage();
             images = new ArrayList<Bitmap>();
-            if (image_urls != null) {
-                for (int i = 0; i < image_urls.length; i++) {
-                    Bitmap map = null;
-                    try {
-                        URL im_url = new URL(image_urls[i]);
-                        URLConnection conn = im_url.openConnection();
-                        conn.connect();
-                        InputStream in;
-                        in = conn.getInputStream();
-                        map = BitmapFactory.decodeStream(in);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    images.add(map);
+            if (image_urls != null && image_urls.length != 0) {
+                for(int i=0; i<image_urls.length; i++) {
+                    Log.i("image_url", image_urls[i]);
+                    request = new Request.Builder()
+                            .url(image_urls[i])
+                            .build();
+                    response = client.newCall(request).execute();
+                    byte[] bytes = response.body().bytes();
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    images.add(bitmap);
                 }
             }
-
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -146,12 +144,12 @@ public class Content {
 
         //点赞
     public boolean like() {
-        String url = "http://"+IP+":8080+/like";
+        String url = "http://"+IP+":8080/like";
         OkHttpClient okHttpClient = new OkHttpClient();
 
         RequestBody body = new FormBody.Builder()
                 .add("content_id", ""+content_id)
-                .add("uid", "值")
+                .add("uid", ""+myId)
                 .add("flag", "true")
                 .build();
 
@@ -163,7 +161,7 @@ public class Content {
         Call call = okHttpClient.newCall(request);
         try {
             Response response = call.execute();
-            System.out.println(response.body().string());
+            Log.i("like_response", response.body().string());
         } catch (IOException e) {
             e.printStackTrace();
             return false;

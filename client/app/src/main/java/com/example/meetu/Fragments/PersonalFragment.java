@@ -201,12 +201,12 @@ public class PersonalFragment extends Fragment {
         String bgUrl=user.getBackground_url();
         String hdUrl=user.getHead_url();
 
-        if(!bgUrl.equals("null")){
-            Glide.with(getContext()).load(user.getBackground_url()).into(ivBgImage);
-        }
-        if(!hdUrl.equals("null")){
-            Glide.with(getContext()).load(user.getHead_url()).into(ivHeadImage);
-        }
+//        if(!bgUrl.equals("null")){
+//            Glide.with(getContext()).load(user.getBackground_url()).into(ivBgImage);
+//        }
+//        if(!hdUrl.equals("null")){
+//            Glide.with(getContext()).load(user.getHead_url()).into(ivHeadImage);
+//        }
     }
     //设置的是更新后的图片
     private void setView(String mParam1,String mParam2){
