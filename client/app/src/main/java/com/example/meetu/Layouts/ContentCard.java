@@ -87,7 +87,7 @@ public class ContentCard extends ConstraintLayout {
         if(images != null && images.size() != 0) {
             contentImage.initGrid(images.size());
             contentImage.showImages(images);
-            contentImage.setBackground(getResources().getDrawable(R.color.colorGreyForRepostBackground));
+            //contentImage.setBackground(getResources().getDrawable(R.color.colorGreyForRepostBackground));
         }
 
         //显示转发模块contentRepost

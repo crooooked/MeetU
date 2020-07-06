@@ -3,6 +3,7 @@ package com.example.meetu.Layouts;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -38,13 +39,13 @@ public class ContentImage extends GridView {
     public void initGrid(int imageNumber) {
         this.imageNumber = imageNumber;
         //设置列数
-        if(imageNumber == 1) //1张图片：按图片大小显示，高度和宽度均有上限
+        if (imageNumber == 1) //1张图片：按图片大小显示，高度和宽度均有上限
             setNumColumns(1);
-        else if(imageNumber == 2 || imageNumber == 3) //2-3张图片：横向显示，图片均分屏幕宽度，尺寸固定（小于或大于这个尺寸，则被强行拉到这个尺寸）
+        else if (imageNumber == 2 || imageNumber == 3) //2-3张图片：横向显示，图片均分屏幕宽度，尺寸固定（小于或大于这个尺寸，则被强行拉到这个尺寸）
             setNumColumns(imageNumber);
-        else if(imageNumber == 4) //4张图片：2*2显示，图片大小相等，尺寸固定
+        else if (imageNumber == 4) //4张图片：2*2显示，图片大小相等，尺寸固定
             setNumColumns(2);
-        else if(imageNumber >= 5 && imageNumber <= 9) //5-9张图片：3列，高度是2或3
+        else if (imageNumber >= 5 && imageNumber <= 9) //5-9张图片：3列，高度是2或3
             setNumColumns(3);
         else { //9张图片以上：3*3显示，最后一张图片添加蒙版，例如"+18"表示剩余18张图未显示
 
@@ -63,6 +64,15 @@ public class ContentImage extends GridView {
 
     //查看大图
     public void checkBiggerImage(View view) {
+
+    }
+
+    @Override
+    public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+
+        int expandSpec = MeasureSpec.makeMeasureSpec(
+                Integer.MAX_VALUE >> 2, MeasureSpec.AT_MOST);
+        super.onMeasure(widthMeasureSpec, expandSpec);
 
     }
 }
@@ -113,48 +123,65 @@ class ContentImageItemAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         //设置图片源
-        View view = LayoutInflater.from(context).inflate(R.layout.content_image_item, parent, false);
-        final ImageView imageView = view.findViewById(R.id.image_item);
+        //View view = new ContentImageItem(context);
+        ContentImageItem imageView = new ContentImageItem(context);;
         imageViews.add(imageView);
         if(images != null && images.size() > position)
-            imageView.setImageBitmap(images.get(position));
-
-
-//        //图片显示时，设置图片宽高为正方形
-//        final ImageView mv = imageView;
-//        final ViewTreeObserver observer = mv.getViewTreeObserver();
-//
-//        final ViewTreeObserver.OnPreDrawListener preDrawListener = new ViewTreeObserver.OnPreDrawListener() {
-//            public boolean onPreDraw() {
-////                try {
-////                    Thread.sleep(100);
-////                } catch (InterruptedException e) {
-////                    e.printStackTrace();
-////                }
-//
-//                mv.setMaxHeight(360);
-//
-//                int width = mv.getMeasuredWidth();
-//                Log.i("w", ""+imageViews.get(0).getMeasuredWidth());
-//                Log.i("h", ""+imageViews.get(0).getMeasuredHeight());
-//                Log.i("w2", ""+imageViews.get(0).getLayoutParams().width);
-//                Log.i("h2", ""+imageViews.get(0).getLayoutParams().height);
-//
-//                android.view.ViewGroup.LayoutParams lp = mv.getLayoutParams();
-//                lp.height = width - imageView.getPaddingTop() - imageView.getPaddingBottom();
-//                lp.width = width - imageView.getPaddingLeft() - imageView.getPaddingRight();
-//                mv.setLayoutParams(lp);
-//
-//                //final ViewTreeObserver vto1 = mv.getViewTreeObserver();
-//                //vto1.removeOnPreDrawListener(this); //调用一次之后移除，不影响性能
-//                return true;
-//            }
-//        };
-//        observer.addOnPreDrawListener(preDrawListener);
+            imageView.setImage(images.get(position));
 
         //设置图片的点击事件
 
-        return view;
+        return imageView;
+    }
+
+}
+
+class ContentImageItem extends androidx.appcompat.widget.AppCompatImageView{
+    Bitmap image;
+    final int IMAGE_WIDTH = 400;
+
+    public ContentImageItem(Context context) {
+        super(context);
+        LayoutInflater.from(context).inflate(R.layout.content_image_item, null);
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        setMeasuredDimension(getDefaultSize(0, widthMeasureSpec), getDefaultSize(0, heightMeasureSpec));
+
+        int childWidthSize = getMeasuredWidth();
+        int childHeightSize = getMeasuredHeight();
+
+        heightMeasureSpec = widthMeasureSpec = MeasureSpec.makeMeasureSpec(childWidthSize, MeasureSpec.EXACTLY);
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    }
+
+    public void setImage(Bitmap image) {
+        this.image = image;
+
+        Bitmap result = image;
+        int widthOrg = image.getWidth();
+        int heightOrg = image.getHeight();
+
+        if(widthOrg > IMAGE_WIDTH && heightOrg > IMAGE_WIDTH)
+        {
+            //压缩到一个最小长度是edgeLength的bitmap
+            int longerEdge = (int)(IMAGE_WIDTH * Math.max(widthOrg, heightOrg) / Math.min(widthOrg, heightOrg));
+            int scaledWidth = widthOrg > heightOrg ? longerEdge : IMAGE_WIDTH;
+            int scaledHeight = widthOrg > heightOrg ? IMAGE_WIDTH : longerEdge;
+            Bitmap scaledBitmap;
+
+            scaledBitmap = Bitmap.createScaledBitmap(image, scaledWidth, scaledHeight, true);
+
+            //从图中截取正中间的正方形部分。
+            int xTopLeft = (scaledWidth - IMAGE_WIDTH) / 2;
+            int yTopLeft = (scaledHeight - IMAGE_WIDTH) / 2;
+
+            result = Bitmap.createBitmap(scaledBitmap, xTopLeft, yTopLeft, IMAGE_WIDTH, IMAGE_WIDTH);
+            scaledBitmap.recycle();
+        }
+
+        this.setImageBitmap(result);
     }
 
 }
