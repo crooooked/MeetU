@@ -82,68 +82,6 @@ public class AttentionFragment extends Fragment {
     public ImageView image_head, image_background;
     public ImageView image_show;
     private static int PERSONAL_DATA=105;
-    Httprequest httprequest = new Httprequest();
-    //httprequest.handler=handler;将Httprequest的handler与下面的handler关联在一起
-
-    Bitmap bitmap;
-    /*
-
-    上面的nick[]应该向后端请求，读数据库，读出图片和名称，然后将数据放到nick[]中
-
-     */
-
-    Handler handler = new Handler() {
-        @Override
-        public void handleMessage(@androidx.annotation.NonNull Message msg) {
-
-            super.handleMessage(msg);
-            int w = msg.what;
-            String getMsg = msg.obj.toString();
-            AnalyseJson analyseJson = new AnalyseJson();
-            if (w == 0) {
-                //get到服务器来的图片+string（昵称）,图片以字符串形式传过来
-                //w=0,显示在listview中的关注列表中
-                //这里不做处理，直接在listview的FocusPeopleShow修改
-
-                JSONArray jsonArray = JSONArray.parseArray(getMsg);
-                JSONObject jsonObject;
-
-                String attention;
-                Bitmap head;
-                int size = jsonArray.size();
-            }
-            if (w == 1) {
-                //json字符串转换为JSONObject对象
-                JSONObject jsonObject = JSONObject.parseObject(getMsg);
-                //解析JSONObject对象
-
-
-                //get到服务器的图片 name gender address ，
-                //w=1，显示在个人资料的iMAgeview和TextView中
-                //解析message
-                Bitmap head, background;
-                String headUrl, backgroundUrl;
-                String username, gender, address;
-                username = analyseJson.getUsername(jsonObject);
-                gender = analyseJson.getGender(jsonObject);
-                address = analyseJson.getAddress(jsonObject);
-                headUrl = analyseJson.getHeadUrl(jsonObject);
-                backgroundUrl = analyseJson.getBackgroundUrl(jsonObject);
-
-                //setContentView(R.layout.peopledata);
-                //设置个人资料
-                //image_head.setImageBitmap(head);
-                //image_background.setImageBitmap(background);
-                tv_nick.setText(username);
-                tv_gender.setText(gender);
-                tv_addr.setText(address);
-
-            }
-
-        }
-
-
-    };
 
 
     java.util.List<FocusData> focusdatas;
