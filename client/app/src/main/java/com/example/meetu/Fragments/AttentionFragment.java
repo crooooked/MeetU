@@ -21,6 +21,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.meetu.Activities.FocusListActivity;
 import com.example.meetu.Activities.PersonalDataShowActivity;
+import com.example.meetu.Adapter.AttentionAdapter;
 import com.example.meetu.FocusClass.AnalyseJson;
 import com.example.meetu.FocusClass.FocusData;
 import com.example.meetu.FocusClass.Httprequest;
@@ -36,9 +37,11 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SearchView;
+import android.widget.TabHost;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -47,10 +50,12 @@ import com.example.meetu.FocusClass.AnalyseJson;
 import com.example.meetu.FocusClass.FocusData;
 import com.example.meetu.FocusClass.Httprequest;
 import com.example.meetu.R;
+import com.google.android.material.tabs.TabLayout;
 
 import java.io.ByteArrayOutputStream;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -143,6 +148,13 @@ public class AttentionFragment extends Fragment {
 
     java.util.List<FocusData> focusdatas;
 
+
+    private ViewPager mViewPager;
+    private TabLayout mTabLayout;
+    private List<Fragment> mFragments;
+    private List<String> mTitles;
+    private AttentionAdapter mAdapter;
+
     public AttentionFragment() {
         // Required empty public constructor
     }
@@ -174,11 +186,18 @@ public class AttentionFragment extends Fragment {
         }
     }
 
+
+
+    /*
+    控件初始化
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         setHasOptionsMenu(true);
+
+
         View view = inflater.inflate(R.layout.fragment_attention, container, false);
         tv_nick = view.findViewById(R.id.tv_nick_show);
         tv_gender = view.findViewById(R.id.tv_gender_show);
@@ -187,43 +206,97 @@ public class AttentionFragment extends Fragment {
         searchView = view.findViewById(R.id.search);
         listView = view.findViewById(R.id.listView_focus);
         searchView = view.findViewById(R.id.search);
+
+        initView(view);
+        initData(view);
+        setData();
+
         return view;
     }
+
+    private  void  initData(View view){
+        mTitles=new ArrayList<>();
+        mTitles.add("关注");
+        mTitles.add("听众");
+        mFragments=new ArrayList<>();
+        for(int i=0;i<mTitles.size();i++){
+            if(i==0){
+                mFragments.add(new ListAttentionFragment());
+            }
+
+            if(i==1){
+                mFragments.add(new ListFansFragment());
+
+            }
+        }
+
+        mAdapter=new AttentionAdapter(getChildFragmentManager(),mFragments,mTitles);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    private void initView(View view){
+        mViewPager=(ViewPager)view.findViewById(R.id.vp_attentionpage_show);
+        mTabLayout=view.findViewById(R.id.tl_attention_navigation);
+    }
+
+    private void setData(){
+        mViewPager.setAdapter(mAdapter);
+        //设置Viewpager和Tablayout进行联动
+        mTabLayout.setupWithViewPager(mViewPager);
+
+    }
+
+
+
+
+
+
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, android.view.View view, int position, long id) {
-                //用Intent进行跳转
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, android.view.View view, int position, long id) {
+//                //用Intent进行跳转
+////                Intent intent = new Intent(getActivity(), PersonalDataShowActivity.class);
+////                intent.putExtra("Name", focusdatas.get(position).nick);
+////
+////                //1：表示已经关注,表示从listview点进去到个人资料界面
+////                intent.putExtra("flag", "1");
+////                startActivity(intent);
 //                Intent intent = new Intent(getActivity(), PersonalDataShowActivity.class);
 //                intent.putExtra("Name", focusdatas.get(position).nick);
-//
 //                //1：表示已经关注,表示从listview点进去到个人资料界面
 //                intent.putExtra("flag", "1");
-//                startActivity(intent);
-                Intent intent = new Intent(getActivity(), PersonalDataShowActivity.class);
-                intent.putExtra("Name", focusdatas.get(position).nick);
-                //1：表示已经关注,表示从listview点进去到个人资料界面
-                intent.putExtra("flag", "1");
-                startActivityForResult(intent, PERSONAL_DATA);
-            }
-        });
-        new ListViewAsyncTask().execute();
+//                startActivityForResult(intent, PERSONAL_DATA);
+//            }
+//        });
+//        new ListViewAsyncTask().execute();
         Search();
     }
+
+
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode==105){
-            new ListViewAsyncTask().execute();
-//            assert data != null;
-        }
+//        if(resultCode==105){
+//            new ListViewAsyncTask().execute();
+////            assert data != null;
+//        }
     }
+
+
+
+    /*
+    自定义活动写在这里
+     */
+
 
     //搜索框searchview
     public void Search() {
         searchView.setIconifiedByDefault(false);
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
             //最终提交时触发
@@ -247,84 +320,79 @@ public class AttentionFragment extends Fragment {
         });
     }
 
-    //自定义AsyncTask类，三个参数，第一个不定量入参，第二个：进度 第三个：结果
-    public class ListViewAsyncTask extends AsyncTask<Void, Void, String> {
-
-        //异步加载执行前所作的，可以用来Loading
-        protected void onPreExecute() {
-            super.onPreExecute();
-            //Loading
-        }
-
-        //开启另一个线程，用于后台异步加载的工作
-        protected String doInBackground(Void... voids) {
-            String result = request("http://10.234.184.24:8080/get-attentions?username=", "lby");
-            //返回Json数据
-            return result;
-        }
-
-        private String request(String url_data, String name) {
-            try {
-                //网络请求数据
-                String responsedata = null;
-                java.net.URL url = new java.net.URL(url_data + name);
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setRequestMethod("GET");
-                conn.setReadTimeout(6000);
-                if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                    java.io.InputStream in = conn.getInputStream();
-                    byte[] b = new byte[1024 * 512];
-                    int len;
-                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    while ((len = in.read(b)) > -1) {
-                        baos.write(b, 0, len);
-                    }
-                    responsedata = baos.toString();
-                    android.util.Log.e("TAG", responsedata);
-
-                } else {
-                    Toast.makeText(getContext(), "连接网络错误", Toast.LENGTH_SHORT).show();
-                }
-                return responsedata;
-            } catch (java.io.IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        protected void onPostExecute(String responsedata) {
-            super.onPostExecute(responsedata);
-            //Loading结束，处理数据
-
-
-            //由于数据中有Json数据 所以需要一个ArrayList来存储
-            focusdatas = new ArrayList<>();
-            JSONArray jsonArray = JSONArray.parseArray(responsedata);
-            JSONObject jsonObject;
-
-
-            String attention, head_url;
-            Bitmap head;
-            int size = jsonArray.size();
-            java.net.URL url = null;
-            for (int i = 0; i < size; i++) {
-                FocusData focusdata = new FocusData();
-
-                jsonObject = jsonArray.getJSONObject(i);
-                attention = jsonObject.getString("attention");
-                head_url = jsonObject.getString("head");
-                /*
-               根据head_url取得图片，转化为bitmap格式
-                 */
-                focusdata.setNick(attention);
-                //focusdata.setBitmap(head);
-
-                focusdata.setheadUrl(head_url);
-
-                focusdatas.add(focusdata);
-            }
-            //绑定数据
-            listView.setAdapter(new MyListAdapter(getContext(), focusdatas));
-        }
-    }
+//    //自定义AsyncTask类，三个参数，第一个不定量入参，第二个：进度 第三个：结果
+//    public class ListViewAsyncTask extends AsyncTask<Void, Void, String> {
+//
+//        //异步加载执行前所作的，可以用来Loading
+//        protected void onPreExecute() {
+//            super.onPreExecute();
+//            //Loading
+//        }
+//
+//        //开启另一个线程，用于后台异步加载的工作
+//        protected String doInBackground(Void... voids) {
+//
+//            String result = request("http://10.234.184.71:8080/get-attentions?username=", "lby");
+//            //返回Json数据
+//            return result;
+//        }
+//
+//        private String request(String url_data, String name) {
+//            try {
+//                //网络请求数据
+//                String responsedata = null;
+//                java.net.URL url = new java.net.URL(url_data + name);
+//                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+//                conn.setRequestMethod("GET");
+//                conn.setReadTimeout(6000);
+//                if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+//                    java.io.InputStream in = conn.getInputStream();
+//                    byte[] b = new byte[1024 * 512];
+//                    int len;
+//                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//                    while ((len = in.read(b)) > -1) {
+//                        baos.write(b, 0, len);
+//                    }
+//                    responsedata = baos.toString();
+//                    android.util.Log.e("TAG", responsedata);
+//
+//                } else {
+//                    Toast.makeText(getContext(), "连接网络错误", Toast.LENGTH_SHORT).show();
+//                }
+//                return responsedata;
+//            } catch (java.io.IOException e) {
+//                e.printStackTrace();
+//            }
+//            return null;
+//        }
+//
+//        protected void onPostExecute(String responsedata) {
+//            super.onPostExecute(responsedata);
+//            //Loading结束，处理数据
+//            //由于数据中有Json数据 所以需要一个ArrayList来存储
+//            focusdatas = new ArrayList<>();
+//            JSONArray jsonArray = JSONArray.parseArray(responsedata);
+//            JSONObject jsonObject;
+//            String attention, head_url;
+//            Bitmap head;
+//            int size = jsonArray.size();
+//            java.net.URL url = null;
+//            for (int i = 0; i < size; i++) {
+//                FocusData focusdata = new FocusData();
+//
+//                jsonObject = jsonArray.getJSONObject(i);
+//                attention = jsonObject.getString("attention");
+//                head_url = jsonObject.getString("head");
+//
+//                focusdata.setNick(attention);
+//
+//
+//                focusdata.setheadUrl(head_url);
+//
+//                focusdatas.add(focusdata);
+//            }
+//            //绑定数据
+//            listView.setAdapter(new MyListAdapter(getContext(), focusdatas));
+//        }
+//    }
 }

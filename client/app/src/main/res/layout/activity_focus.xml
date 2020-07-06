@@ -22,12 +22,20 @@
 
         android:id="@+id/search"/>
 
- <ListView
-     android:layout_width="match_parent"
-     android:layout_height="500dp"
-     android:id="@+id/listView_focus"
 
-     />
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:id="@+id/listView_focus"
+
+        />
+
+
+
+
+
+
+
 
 
 
