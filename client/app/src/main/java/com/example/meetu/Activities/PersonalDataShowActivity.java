@@ -176,8 +176,6 @@ public class PersonalDataShowActivity extends AppCompatActivity {
             setResult(105,intent);
             this.finish();
 
-
-
     }
 
 
@@ -207,9 +205,9 @@ public class PersonalDataShowActivity extends AppCompatActivity {
             flag=1;
             jsonString=json.setJsonObject(username,targetname,flag).toString();
 
+
             //向后台发送数据，此人的nick写入数据库
             //post:myName,targetName
-
             /**
              * url要改，根据后端提供的
              */
