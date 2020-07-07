@@ -21,14 +21,17 @@ import com.example.meetu.Entities.User;
 import com.example.meetu.Layouts.ContentCard;
 import com.example.meetu.R;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 /**
@@ -85,7 +88,7 @@ public class DynamicsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view=inflater.inflate(R.layout.fragment_dynamics, container, false);
+        View view = inflater.inflate(R.layout.fragment_dynamics, container, false);
         LinearLayout layout = view.findViewById(R.id.linear_layout_space);
 
         if (android.os.Build.VERSION.SDK_INT > 9) {
@@ -95,15 +98,14 @@ public class DynamicsFragment extends Fragment {
 
         //显示空间头
         OkHttpClient client = new OkHttpClient();
-        String url = "http://" + IP + ":8080/get-zone-head?uid="+myId;
+        String url = "http://" + IP + ":8080/get-zone-head?uid=" + myId;
         Log.i("url", url);
         Request request = new Request.Builder()
                 .get()
                 .url(url)
                 .build();
-        Response response = null;
         try {
-            response = client.newCall(request).execute();
+            Response response = client.newCall(request).execute();
             String str = response.body().string();
             Log.i("zone_head_res", str);
 
@@ -128,6 +130,53 @@ public class DynamicsFragment extends Fragment {
             e.printStackTrace();
         }
 
+        //获取要显示的状态列表
+        boolean getMyStateOnly = true;
+        client = new OkHttpClient();
+        JSONObject getStatePostJson = new JSONObject();
+        url = "http://" + IP + ":8080/get-state-list";
+        Log.i("url", url);
+        Response response = null;
+        String res = new String();
+        try {
+            getStatePostJson.put("begin_time", null);
+            getStatePostJson.put("end_time", null);
+            getStatePostJson.put("uid", myId);
+            getStatePostJson.put("get_friends", !getMyStateOnly);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        RequestBody body = RequestBody.create(JSON, getStatePostJson.toString());
+        request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .build();
+        try {
+            response = client.newCall(request).execute();
+            res = response.body().string();
+            Log.i("state_res", res);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //逐个显示卡片
+        try {
+            JSONArray cardsArray = new JSONArray(res);
+            for (int i = 0; i < cardsArray.length(); i++) {
+                int id = cardsArray.getJSONObject(i).getInt("content_id");
+                Log.i("content_id", ""+id);
+                Content content = new Content(getContext(), id);
+                layout.addView(new ContentCard(getContext(), content));
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (true) return view;
 
         //测试用的数据
         Bitmap head = BitmapFactory.decodeResource(getResources(), R.mipmap.sample_head);
@@ -143,8 +192,11 @@ public class DynamicsFragment extends Fragment {
         images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image8));
         images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image9));
         //评论
-        String[] remark_content = new String[] {"好的！", "知道了"};
-        String[] remark_username = new String[] {"小A", "小B"};
+        String[] remark_content = new String[]{"好的！", "知道了"};
+        String[] remark_username = new String[]{"小A", "小B"};
+
+        return view;
+    }
 
 
 //        //测试无图片+无转发的状态
@@ -170,19 +222,19 @@ public class DynamicsFragment extends Fragment {
 //        content4.setRemarks_username(remark_username);
 //        ContentCard contentCard4 = new ContentCard(getContext(), content4);
 //        layout.addView(contentCard4);
-
-        //测试从网络获取content
-        Content content5 = null;
-        try {
-            content5 = new Content(getContext(), 1);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        layout.addView(new ContentCard(getContext(), content5));
-
-        return view;
-
-
-    }
+//
+//        //测试从网络获取content
+//        Content content5 = null;
+//        try {
+//            content5 = new Content(getContext(), 1);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        layout.addView(new ContentCard(getContext(), content5));
+//
+//        return view;
+//
+//
+//    }
 
 }
