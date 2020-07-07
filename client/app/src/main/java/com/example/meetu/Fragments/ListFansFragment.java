@@ -51,78 +51,18 @@ public class ListFansFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public Button button;
+
     public android.widget.ListView listView;
     public SearchView searchView;
     public android.widget.TextView tv_nick, tv_gender, tv_addr;
-    public Button btn_focus, btn_watch;
-    public ImageButton return_iconButton;
-    public ImageView image_head, image_background;
-    public ImageView image_show;
+
+    public ImageView image_head;
+
     private static int PERSONAL_DATA=105;
-    Httprequest httprequest = new Httprequest();
-    //httprequest.handler=handler;将Httprequest的handler与下面的handler关联在一起
 
-
-
-    Handler handler = new Handler() {
-        @Override
-        public void handleMessage(@androidx.annotation.NonNull Message msg) {
-
-            super.handleMessage(msg);
-            int w = msg.what;
-            String getMsg = msg.obj.toString();
-            AnalyseJson analyseJson = new AnalyseJson();
-            if (w == 0) {
-                //get到服务器来的图片+string（昵称）,图片以字符串形式传过来
-                //w=0,显示在listview中的关注列表中
-                //这里不做处理，直接在listview的FocusPeopleShow修改
-
-                JSONArray jsonArray = JSONArray.parseArray(getMsg);
-                JSONObject jsonObject;
-
-                String attention;
-                Bitmap head;
-                int size = jsonArray.size();
-            }
-            if (w == 1) {
-                //json字符串转换为JSONObject对象
-                JSONObject jsonObject = JSONObject.parseObject(getMsg);
-                //解析JSONObject对象
-
-
-                //get到服务器的图片 name gender address ，
-                //w=1，显示在个人资料的iMAgeview和TextView中
-                //解析message
-                Bitmap head, background;
-                String headUrl, backgroundUrl;
-                String username, gender, address;
-                username = analyseJson.getUsername(jsonObject);
-                gender = analyseJson.getGender(jsonObject);
-                address = analyseJson.getAddress(jsonObject);
-                headUrl = analyseJson.getHeadUrl(jsonObject);
-                backgroundUrl = analyseJson.getBackgroundUrl(jsonObject);
-
-                //setContentView(R.layout.peopledata);
-                //设置个人资料
-                //image_head.setImageBitmap(head);
-                //image_background.setImageBitmap(background);
-                tv_nick.setText(username);
-                tv_gender.setText(gender);
-                tv_addr.setText(address);
-
-            }
-
-        }
-
-
-    };
-
-    String ip="10.234.184.71";
+    String ip="10.236.66.58";
     String url_getAudiences="http://"+ip+":8080/get-audiences?username=";
-
     String myName= BodyActivity.key_username;
-
     List<FocusData> focusdatas;
 
     public ListFansFragment() {
@@ -189,13 +129,7 @@ public class ListFansFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //用Intent进行跳转
-//                Intent intent = new Intent(getActivity(), PersonalDataShowActivity.class);
-//                intent.putExtra("Name", focusdatas.get(position).nick);
-//
-//                //1：表示已经关注,表示从listview点进去到个人资料界面
-//                intent.putExtra("flag", "1");
-//                startActivity(intent);
+
                 Intent intent = new Intent(getActivity(), PersonalDataShowActivity.class);
                 intent.putExtra("Name", focusdatas.get(position).nick);
                 //1：表示已经关注,表示从listview点进去到个人资料界面
@@ -218,37 +152,7 @@ public class ListFansFragment extends Fragment {
 
 
 
-    /*
-    自定义活动写在这里
-     */
 
-
-//    //搜索框searchview
-//    public void Search() {
-//        searchView.setIconifiedByDefault(false);
-//
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//
-//            //最终提交时触发
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                //要判断一下，判断是否有这个用户
-//                //用Intent进行跳转
-//                Intent intent = new Intent(getContext(), PersonalDataShowActivity.class);
-//                //0：表示从搜索框到个人资料界面
-//                intent.putExtra("flag", "0");
-//                intent.putExtra("Name", query);
-//                startActivityForResult(intent,PERSONAL_DATA);
-//                return false;
-//            }
-//
-//            //搜索框中文本改变时触发
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//                return false;
-//            }
-//        });
-//    }
 
     //自定义AsyncTask类，三个参数，第一个不定量入参，第二个：进度 第三个：结果
     public class ListViewAsyncTask extends AsyncTask<Void, Void, String> {

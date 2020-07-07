@@ -95,7 +95,7 @@ public class AttentionFragment extends Fragment {
     public LinearLayout pop_up_box;
     public ImageView search_image;
     public TextView search_name;
-    public static String ip="10.234.184.71";
+    public static String ip="10.236.66.58";
     Httprequest httprequest = new Httprequest();
     //httprequest.handler=handler;将Httprequest的handler与下面的handler关联在一起
 
@@ -238,7 +238,6 @@ public class AttentionFragment extends Fragment {
         initView(view);
         initData(view);
         setData();
-
         return view;
     }
 
@@ -273,8 +272,6 @@ public class AttentionFragment extends Fragment {
         mTabLayout.setupWithViewPager(mViewPager);
 
     }
-
-
 
 
 

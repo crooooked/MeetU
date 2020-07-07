@@ -49,7 +49,7 @@ public class ContentCard extends ConstraintLayout {
 
     public ContentCard(Context context, Content content) {
         super(context);
-        initView(context, content);
+   //    initView(context, content);
     }
 
     public void initView(Context context, Content content) {
@@ -95,15 +95,14 @@ public class ContentCard extends ConstraintLayout {
         }
 
         //显示转发模块contentRepost
-//        //显示转发模块contentRepost
-//        if(content.getRepost() == content.NO_REPOST)
-//            contentRepost.setVisibility(GONE);
-//        else {
-//            Content repost = content.getRepostContent();
-//            contentRepost.setContent(repost.getUser().getUsername(), repost.getContent());
-//            if(repost.getImages() != null)
-//                contentRepost.setImages(repost.getImages());
-//        }
+        if(content.getRepost() == content.NO_REPOST)
+            contentRepost.setVisibility(GONE);
+        else {
+            Content repost = content.getRepostContent();
+            contentRepost.setContent(repost.getUser().getUsername(), repost.getContent());
+            if(repost.getImages() != null)
+                contentRepost.setImages(repost.getImages());
+        }
 
         //显示评论
         String[] remarks_content = content.getRemarks_content();

@@ -48,7 +48,7 @@ public class PersonalFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    public static String ip="10.234.184.71";
+
     public PersonalFragment() {
         // Required empty public constructor
     }
@@ -106,23 +106,8 @@ public class PersonalFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         String username=BodyActivity.key_username;
 
-        String url="http://"+ip+":8080/get-information?username="+username;
-        OkHttpUtils instance=OkHttpUtils.getInstance();
-        instance.doGet(url, new OkHttpUtils.OkHttpCallBackLinener() {
-            @Override
-            public void failure(Exception e) {
-                Toast.makeText(getContext(),"此人不存在",Toast.LENGTH_LONG).show();
-            }
-            @Override
-            public void success(String json) {
-                user= Convert.getUserFromStr(json);
-                setView();
-            }
-        });
-
         setImage(username);
         setCount(username);
-
 
         //添加点击事件，进入修改信息页面
         ibInfo.setOnClickListener(new View.OnClickListener() {
@@ -154,7 +139,7 @@ public class PersonalFragment extends Fragment {
     }
     //设置图片
     private void setCount(String username) {
-        String url="http://"+ip+":8080/get-number?username="+username;
+        String url="http://172.20.10.2:8080/get-number?username="+username;
         OkHttpUtils instance=OkHttpUtils.getInstance();
         instance.doGet(url, new OkHttpUtils.OkHttpCallBackLinener() {
             @Override
@@ -181,7 +166,7 @@ public class PersonalFragment extends Fragment {
 
     //设置关注听众数量
     private void setImage(String username){
-        String url="http://"+ip+":8080/get-information?username="+username;
+        String url="http://10.236.66.58:8080/get-information?username="+username;
         OkHttpUtils instance=OkHttpUtils.getInstance();
         instance.doGet(url, new OkHttpUtils.OkHttpCallBackLinener() {
             @Override

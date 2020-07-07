@@ -34,10 +34,10 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:padding="30dp"
-        android:textAlignment="center"
-        android:gravity="center_vertical"
+
+        android:gravity="center_vertical|center_horizontal"
         android:textSize="40sp"
-        android:text="MeetU"
+        android:text="@string/meetu"
         android:textColor="@color/colorWhite"
         app:layout_constraintBottom_toTopOf="@+id/ed_username"
         app:layout_constraintTop_toTopOf="parent"
@@ -49,6 +49,7 @@
         android:layout_height="68dp"
         android:layout_marginLeft="25dp"
         android:labelFor="@+id/ed_username"
+        android:contentDescription="@string/loginimage"
         android:src="@drawable/icons_head"
 
 
@@ -108,7 +109,7 @@
         android:hint=" 密码"
         android:inputType="textPassword"
         android:textSize="14sp"
-
+        
         app:layout_constraintBottom_toTopOf="@+id/btn_login"
         app:layout_constraintEnd_toEndOf="@+id/ed_username"
         app:layout_constraintStart_toEndOf="@+id/iv_icon_key"

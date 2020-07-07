@@ -41,8 +41,10 @@
             app:tabTextColor="@color/colorGrey"
             app:tabSelectedTextColor="@color/colorPrimary"
             app:tabIndicatorColor="@color/colorPrimary"
+
             app:tabMode="fixed"
             app:tabIndicatorGravity="top">
+
         </com.google.android.material.tabs.TabLayout>
     </LinearLayout>
 

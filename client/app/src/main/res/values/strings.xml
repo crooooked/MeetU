@@ -32,6 +32,9 @@
     <string name="gender">性别:</string>
     <string name="address">地址:</string>
     <string name="search">搜索</string>
+    <string name="navigation_icon">导航图标</string>
+    <string name="meetu">MeetU</string>
+    <string name="loginimage">loginImage</string>
 
 
 </resources>
