@@ -4,16 +4,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NavUtils;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.PersistableBundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,8 +26,8 @@ import com.example.meetu.Tools.FileUtil;
 import com.example.meetu.Tools.OkHttpUtils;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
+import java.io.File;
 import java.io.IOException;
-import java.util.Objects;
 
 public class InformationActivity extends AppCompatActivity {
 
@@ -55,7 +57,8 @@ public class InformationActivity extends AppCompatActivity {
         edaddress=findViewById(R.id.tv_address_content);
         edgender=findViewById(R.id.tv_gender_content);
 
-        String username=intent.getStringExtra("username");
+        String username="cql";
+//                intent.getStringExtra("username");
         getInformationMethod(username);
     }
 
@@ -81,8 +84,7 @@ public class InformationActivity extends AppCompatActivity {
     public void onClickChangeInformation(View view){
         switch (view.getId()){
             case R.id.tv_head:
-                getImage(0);
-                break;
+                getImage(0);break;
             case R.id.tv_address_content:
                 break;
             case R.id.tv_gender_content:
@@ -94,13 +96,38 @@ public class InformationActivity extends AppCompatActivity {
     }
 
     //出现底部选择栏
-//    private void getImageOptions(int select){
+//    private void getImageOptions(final int select){
 //        BottomSheetDialog bottomSheetDialog=new BottomSheetDialog(this);
 //        bottomSheetDialog.setCancelable(true);
 //        bottomSheetDialog.setContentView(R.layout.view_getimage_bottom);
 //        bottomSheetDialog.show();
+//        View view=View.inflate(getApplicationContext(),R.layout.view_getimage_bottom,null);
+//        btnSelectCamera=view.findViewById(R.id.btn_select_camera);
+//        btnSelectPhoto=view.findViewById(R.id.tv_select_photo);
+//        bottomSheetDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+//            @Override
+//            public boolean onKey(DialogInterface dialogInterface, int i, KeyEvent keyEvent) {
+//                return false;
+//            }
+//        });
 //
+//        btnSelectCamera.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Log.e("!!!!!", "onClick: ");
+//                capturePhoto(select);
+//            }
+//        });
+//
+//        btnSelectPhoto.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                getImage(select);
+//            }
+//        });
 //    }
+//    Button btnSelectCamera;
+//    Button btnSelectPhoto;
 //    //顶栏返回父activity
 //    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
 //    @Override
@@ -157,6 +184,7 @@ public class InformationActivity extends AppCompatActivity {
     //拍照
     private void capturePhoto(int index){
         Intent intent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//       File fileDir=new File(Environment.getExternalStoragePublicDirectory()+File.separator+"photo"+File.separator);
         startActivityForResult(intent, IMAGE_SELECT_OBJ[index]);
     }
 
@@ -170,17 +198,20 @@ public class InformationActivity extends AppCompatActivity {
     //获取本地图片路径
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        int index=0;
+        switch (requestCode){
+            case 114:
+                if(resultCode==RESULT_OK)
+                    index=0;
+                break;
+            case 115:
+                if(RESULT_OK==resultCode)
+                    index=1;
+                break;
+        }
         if (data != null&&data.getData()!=null) {
             String filePath = FileUtil.getFilePathByUri(this, data.getData());
-            int index=0;
-            switch (requestCode) {
-                case 114:
-                    index=0;
-                    break;
-                case 115:
-                    index=1;
-                    break;
-            }
+
             try {
                 postImage(filePath,index);
             } catch (IOException e) {

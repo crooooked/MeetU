@@ -1,34 +1,38 @@
 package com.example.meetu.Entities;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+//import org.json.JSONArray;
+//import org.json.JSONException;
+//import org.json.JSONObject;
+import com.alibaba.fastjson.*;
 
 public class Convert {
+    public static String getStrContentFromContent(Content content){
+        JSONObject jsonObject=new JSONObject();
+        try {
+            jsonObject.put("uid",content.getUid());
+            jsonObject.put("content",content.getContent());
+            JSONArray jsonArray=new JSONArray();
+            if(content.getImage_urls()!=null) {
+                for (String url : content.getImage_urls()) {
+                    JSONObject jsonObject1=new JSONObject();
+                    jsonObject1.put("image", url);
+                    jsonArray.add(jsonObject1);
+                }
+            }
+            jsonObject.put("images",jsonArray);
+            jsonObject.put("repost",content.getRepost());
 
-//    public static User userObject(String user,String password){
-//        User user1;
-//        try {
-//            JSONObject jsonObject=new JSONObject(user);
-//            String uid=jsonObject.getString("uid");
-//            String username=jsonObject.getString("username");
-//
-//            String gender=jsonObject.getString("gender");
-//            String address=jsonObject.getString("address");
-//            String head=jsonObject.getString("head");
-//            String background=jsonObject.getString("background");
-//
-//            user1=new User(uid.);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//
-//
-//    }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject.toString();
+    }
     public static User getUserFromStr(String str){
         User user=new User(-1);
         try {
-            JSONObject jsonObject=new JSONObject(str);
-            user.setUid(jsonObject.getInt("uid"));
+            JSONObject jsonObject=JSONObject.parseObject(str);
+//            JSONObject jsonObject=new JSONObject(str);
+            user.setUid(jsonObject.getInteger("uid"));
             user.setInfo(jsonObject.getString("username"),
                     jsonObject.getString("password"),
                     jsonObject.getString("address"),
@@ -89,6 +93,4 @@ public class Convert {
         }
         return jsonObject.toString();
     }
-
-
 }

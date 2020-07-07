@@ -21,26 +21,29 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Activities.ReleaseContentActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".Layouts.InformationActivity"
-            android:parentActivityName=".Activities.BodyActivity" />
+            android:parentActivityName=".Activities.BodyActivity" >
+
+        </activity>
         <activity
             android:name=".Activities.BodyActivity"
             android:launchMode="singleTop"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme">
+
+        </activity>
         <activity
             android:name=".Activities.RegisterActivity"
             android:parentActivityName=".Activities.LoginActivity" />
         <activity
             android:name=".Activities.LoginActivity"
             android:launchMode="singleTop">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".Activities.MainActivity"

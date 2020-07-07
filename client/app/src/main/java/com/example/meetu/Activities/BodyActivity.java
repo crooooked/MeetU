@@ -25,7 +25,6 @@ import com.example.meetu.Entities.Convert;
 import com.example.meetu.Entities.User;
 import com.example.meetu.Fragments.AttentionFragment;
 import com.example.meetu.Fragments.DynamicsFragment;
-import com.example.meetu.Fragments.NewsFragment;
 import com.example.meetu.Fragments.PersonalFragment;
 import com.example.meetu.R;
 import com.example.meetu.Tools.OkHttpUtils;
