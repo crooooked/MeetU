@@ -59,7 +59,7 @@ public class ContentCard extends ConstraintLayout {
 
     public ContentCard(Context context, Content content) {
         super(context);
-   //    initView(context, content);
+        initView(context, content);
     }
 
     public void initView(Context context, Content content) {

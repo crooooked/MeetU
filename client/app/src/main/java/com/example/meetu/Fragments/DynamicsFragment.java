@@ -167,7 +167,10 @@ public class DynamicsFragment extends Fragment {
                 int id = cardsArray.getJSONObject(i).getInt("content_id");
                 Log.i("content_id", ""+id);
                 Content content = new Content(getContext(), id);
-                layout.addView(new ContentCard(getContext(), content));
+                ContentCard card = new ContentCard(getContext(), content);
+
+                layout.addView(card);
+                Log.i("addView", "success");
             }
 
         } catch (JSONException e) {
@@ -176,24 +179,29 @@ public class DynamicsFragment extends Fragment {
             e.printStackTrace();
         }
 
-        if (true) return view;
+//                //测试无图片+无转发的状态
+//        Bitmap head = BitmapFactory.decodeResource(getResources(), R.mipmap.sample_head);
+//        Content content1 = new Content(head, null);
+//        layout.addView(new ContentCard(getContext(), content1));
 
-        //测试用的数据
-        Bitmap head = BitmapFactory.decodeResource(getResources(), R.mipmap.sample_head);
-        //9张图
-        ArrayList<Bitmap> images = new ArrayList<>();
-        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image1));
-        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image2));
-        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image3));
-        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image4));
-        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image5));
-        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image6));
-        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image7));
-        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image8));
-        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image9));
-        //评论
-        String[] remark_content = new String[]{"好的！", "知道了"};
-        String[] remark_username = new String[]{"小A", "小B"};
+//        if (true) return view;
+
+//        //测试用的数据
+//        Bitmap head = BitmapFactory.decodeResource(getResources(), R.mipmap.sample_head);
+//        //9张图
+//        ArrayList<Bitmap> images = new ArrayList<>();
+//        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image1));
+//        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image2));
+//        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image3));
+//        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image4));
+//        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image5));
+//        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image6));
+//        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image7));
+//        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image8));
+//        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image9));
+//        //评论
+//        String[] remark_content = new String[]{"好的！", "知道了"};
+//        String[] remark_username = new String[]{"小A", "小B"};
 
         return view;
     }

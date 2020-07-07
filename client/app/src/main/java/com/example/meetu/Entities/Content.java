@@ -103,18 +103,20 @@ public class Content {
             user.setHead_url(poster.getString("head"));
 
             //images
+            Log.i("image", "null");
             JSONArray image_list = res.getJSONArray("images");
             image_urls = new String[image_list.length()];
             for (int i = 0; i < image_list.length(); i++)
                 image_urls[i] = image_list.getJSONObject(i).getString("image");
+            user.getHeadImage();
 
             //remarks
             //获取简单状态时不解析此项
             if(!isSimple) {
                 JSONArray remark_list = res.getJSONArray("remarks");
                 if (remark_list != null && remark_list.length() != 0) {
-                    remarks_username = new String[image_list.length()];
-                    remarks_content = new String[image_list.length()];
+                    remarks_username = new String[remark_list.length()];
+                    remarks_content = new String[remark_list.length()];
                     Log.i("remarks", remark_list.toString());
                     for (int i = 0; i < remark_list.length(); i++) {
                         remarks_username[i] = remark_list.getJSONObject(i).getString("username");
