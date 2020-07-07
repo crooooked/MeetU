@@ -30,7 +30,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class Content {
-    final String IP = "10.236.66.58";
+    final String IP = "10.234.184.71";
     public final int NO_REPOST = -1;
 
     int myId = 2;
@@ -72,7 +72,7 @@ public class Content {
             Log.i("repost", "have repost!");
             Log.i("repost", "" + repost);
             repostContent = new Content(repost);
-            String repost_url = "http://" + IP + ":8080/get-simple-state?content_id="+content_id;
+            String repost_url = "http://" + IP + ":8080/get-simple-state?content_id="+repost;
             repostContent.init(repost_url, true);
         }
     }
@@ -132,7 +132,8 @@ public class Content {
 
             //获取简单状态时不解析此项
             if(!isSimple) {
-                time = res.getInt("time");
+                time = res.getLong("time");
+                Log.i("time", time+"");
                 like_times = res.getInt("like_times");
                 remark_times = res.getInt("remark_times");
                 repost_times = res.getInt("repost_times");

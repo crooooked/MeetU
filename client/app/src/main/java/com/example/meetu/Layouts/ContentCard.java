@@ -202,6 +202,8 @@ public class ContentCard extends ConstraintLayout {
     //事件源：remark_edit（输入结束后按回车）
     //评论状态
     public void submit_remark(String text) {
+        if(remarkEdit.getText().length() == 0)
+            return;
         //发表评论
         if(editTextForRemark) {
             Log.i("remark", text);
@@ -213,6 +215,7 @@ public class ContentCard extends ConstraintLayout {
             repostButton.setImageResource(R.mipmap.repost_red);
             content.repost(text);
         }
+        remarkEdit.setText("");
     }
 
 }

@@ -51,7 +51,7 @@ public class DynamicsFragment extends Fragment {
     private String mParam2;
 
     int myId = 2;
-    String IP = "10.236.66.58";
+    String IP = "10.234.184.71";
 
     public DynamicsFragment() {
         // Required empty public constructor
