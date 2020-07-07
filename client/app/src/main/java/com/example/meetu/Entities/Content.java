@@ -65,7 +65,6 @@ public class Content {
     }
 
     //通过网络获取Content
-    //通过网络获取Content
     public Content(Context context, int content_id) throws IOException {
         this.content_id = content_id;
         String url = "http://" + IP + ":8080/get-specific-state?content_id="+content_id;
@@ -81,10 +80,12 @@ public class Content {
     public void init(String url, boolean isSimple) throws IOException {
         //获取Content
         OkHttpClient client = new OkHttpClient();
+        String url = "http://" + IP + ":8080/get-specific-state?content_id="+content_id;
         Log.i("url", url);
         Request request = new Request.Builder()
                 .get()
                 .url(url)
+                //.header("content_id", ""+content_id)
                 .build();
         Response response = client.newCall(request).execute();
         String str = response.body().string();
@@ -94,14 +95,15 @@ public class Content {
             JSONObject res = new JSONObject(str);
             content = res.getString("content");
             Log.i("content", content);
+
             //poster
             JSONObject poster = res.getJSONObject("poster");
             uid = poster.getInt("uid");
             user = new User(uid);
             user.setUsername(poster.getString("username"));
             user.setHead_url(poster.getString("head"));
+
             //images
-            Log.i("image", "null");
             JSONArray image_list = res.getJSONArray("images");
             image_urls = new String[image_list.length()];
             for (int i = 0; i < image_list.length(); i++)
@@ -123,11 +125,10 @@ public class Content {
                     }
                 }
             }
-            this.repost = res.getInt("repost");
-            Log.i("repost", "" + this.repost);
 
             //获取简单状态时不解析此项
             if(!isSimple) {
+                time = res.getInt("time");
                 time = res.getLong("time");
                 Log.i("time", time+"");
                 like_times = res.getInt("like_times");
@@ -138,6 +139,7 @@ public class Content {
             e.printStackTrace();
         }
     }
+
     //点赞
     public boolean like() {
         String url = "http://"+IP+":8080/like";
@@ -157,13 +159,15 @@ public class Content {
                 .post(body)
                 .build();
         try {
-            Response response = client.newCall(request).execute();
-            Log.i("like_res", response.body().string());
+            Response response = call.execute();
+            Log.i("like_response", response.body().string());
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
         return true;
     }
+
     //评论
     public void remark(String text) {
         String url = "http://"+IP+":8080/remark";
@@ -189,6 +193,7 @@ public class Content {
             e.printStackTrace();
         }
     }
+
     //转发
     public void repost(String text) {
         String url = "http://"+IP+":8080/repost-state";
@@ -218,90 +223,119 @@ public class Content {
     public int getContent_id() {
         return content_id;
     }
+
     public void setContent_id(int content_id) {
         this.content_id = content_id;
     }
+
     public int getUid() {
         return uid;
     }
+
     public void setUid(int uid) {
         this.uid = uid;
     }
+
     public User getUser() {
         return user;
     }
+
     public void setUser(User user) {
         this.user = user;
     }
+
     public long getTime() {
         return time;
     }
+
     public void setTime(long time) {
         this.time = time;
     }
+
     public String getContent() {
         return content;
     }
+
     public void setContent(String content) {
         this.content = content;
     }
+
     public int getRepost() {
         return repost;
     }
+
     public void setRepost(int repost) {
         this.repost = repost;
     }
+
     public Content getRepostContent() {
         return repostContent;
     }
+
     public void setRepostContent(Content repostContent) {
         this.repostContent = repostContent;
     }
+
     public String[] getImage_urls() {
         return image_urls;
     }
+
     public void setImage_urls(String[] image_urls) {
         this.image_urls = image_urls;
     }
+
     public ArrayList<Bitmap> getImages() {
         return images;
     }
+
     public void setImages(ArrayList<Bitmap> images) {
         this.images = images;
     }
+
     public String getIP() {
         return IP;
     }
+
     public int getNO_REPOST() {
         return NO_REPOST;
     }
+
     public String[] getRemarks_username() {
         return remarks_username;
     }
+
     public void setRemarks_username(String[] remarks_username) {
         this.remarks_username = remarks_username;
     }
+
     public String[] getRemarks_content() {
         return remarks_content;
     }
+
     public void setRemarks_content(String[] remarks_content) {
         this.remarks_content = remarks_content;
     }
+
     public int getLike_times() {
         return like_times;
     }
+
     public void setLike_times(int like_times) {
         this.like_times = like_times;
     }
+
     public int getRemark_times() {
         return remark_times;
     }
+
     public void setRemark_times(int remark_times) {
         this.remark_times = remark_times;
     }
+
     public int getRepost_times() {
         return repost_times;
     }
+
     public void setRepost_times(int repost_times) {
         this.repost_times = repost_times;
     }

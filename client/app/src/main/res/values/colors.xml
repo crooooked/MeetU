@@ -6,8 +6,11 @@
     <color name="colorContentBackground">#0D47BAFE</color>
     <color name="colorGrey">#C1B9B9</color>
     <color name="colorWhite">#FFFFFF</color>
+    <color name="bottomicon">#46BAFE</color>
     <color name="colorBackground">#CCFFFF</color>
     <color name="colorBlack">#000000</color>
     <color name="colorBray">#EEEEEE</color>
     <color name="colorGreyForRepostBackground">#EEEEEE</color>
+    <color name="colorMask">#54111111</color>
+    <color name="colorTransparent">#00000000</color>
 </resources>

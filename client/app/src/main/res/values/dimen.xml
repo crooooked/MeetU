@@ -6,7 +6,7 @@
     <dimen name="left">12dp</dimen>
     <dimen name="itemImage">50dp</dimen>
     <dimen name="itemNick">22sp</dimen>
-    <dimen name="bottomTab">20sp</dimen>
+    <dimen name="bottomTab">17sp</dimen>
 
 
 </resources>

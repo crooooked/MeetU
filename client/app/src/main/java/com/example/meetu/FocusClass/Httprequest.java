@@ -19,6 +19,10 @@ public class Httprequest {
 
     public Handler handler=new Handler();
 
+    int GETList=5;
+
+
+
 
     public static final MediaType JSON
             = MediaType.parse("application/json; charset=utf-8");
@@ -68,7 +72,6 @@ public class Httprequest {
                     message.what=2;
                 }
 
-
                 handler.sendMessage(message);
 
                 Log.d("TAG","onSuccess->"+json);
@@ -86,7 +89,34 @@ public class Httprequest {
 
 
 
-
+    /*
+    关注列表，听众列表的get
+     */
+    //flag=3
+//    public void getListRequset(String url,String name){
+//        String requestUrl= String.format("%s?%s",url,name);
+//        OkHttpClient client = new OkHttpClient.Builder()
+//                .build();
+//        final Request request = new Request.Builder()
+//                .get()
+//                .url(requestUrl)
+//                .build();
+//        okhttp3.Call task=client.newCall(request);
+//        task.enqueue(new Callback() {
+//            @Override
+//            public void onFailure(okhttp3.Call call, IOException e) {
+//                Log.d("TAG","onListFailure->"+e.toString());
+//            }
+//            @Override
+//            public void onResponse(okhttp3.Call call, Response response) throws IOException {
+//                Message message=handler.obtainMessage();
+//                String json=response.body().string();   //json格式数据转换为String类型
+//                message.obj=json;
+//                message.what=GETList;
+//                handler.sendMessage(message);
+//            }
+//        });
+//    }
 
 
     /*
