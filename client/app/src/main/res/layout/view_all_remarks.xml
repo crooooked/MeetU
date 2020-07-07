@@ -3,13 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/colorMask">
+    >
 
     <Space
         android:id="@+id/mask"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:clickable="true"/>
+        android:clickable="true"
+        android:background="@color/colorMask"/>
 
     <ScrollView
         android:layout_height="0dp"
@@ -28,6 +29,23 @@
             android:layout_width="match_parent"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/all_remarks_slogan"
+                android:gravity="center"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:id="@+id/no_remark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="还没有评论哦！"
+                android:textSize="20dp"
+                android:gravity="center"
+                android:layout_marginTop="30dp"/>
         </LinearLayout>
     </ScrollView>
 

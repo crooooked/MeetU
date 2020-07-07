@@ -199,8 +199,8 @@ public class ContentCard extends ConstraintLayout {
     //查看该状态的所有评论
     public void remark(View view) {
         RemarkUnfold remarkUnfold = new RemarkUnfold(getContext());
-        remarkUnfold.setInfo("http://" + content.getIP() + ":8080/get-remark?content_id="+content.getContent_id());
         remarkUnfold.show();
+        remarkUnfold.setInfo("http://" + content.getIP() + ":8080/get-remark?content_id="+content.getContent_id());
     }
 
     //事件源：like_button + like_slogan

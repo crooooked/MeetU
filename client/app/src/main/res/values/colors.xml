@@ -12,4 +12,5 @@
     <color name="colorBray">#EEEEEE</color>
     <color name="colorGreyForRepostBackground">#EEEEEE</color>
     <color name="colorMask">#54111111</color>
+    <color name="colorTransparent">#00000000</color>
 </resources>
