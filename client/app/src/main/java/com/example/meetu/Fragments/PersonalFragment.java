@@ -9,6 +9,7 @@ import androidx.annotation.RequiresApi;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 
 import android.view.View;
@@ -48,7 +49,7 @@ public class PersonalFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    public static String ip="10.234.184.71";
+    String ip=LoginActivity.ip;
     public PersonalFragment() {
         // Required empty public constructor
     }
@@ -104,9 +105,9 @@ public class PersonalFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        String username=BodyActivity.key_username;
+        final String username=BodyActivity.key_username;
 
-        String url="http://"+ip+":8080/get-information?username="+username;
+        String url="/get-information?username="+username;
         OkHttpUtils instance=OkHttpUtils.getInstance();
         instance.doGet(url, new OkHttpUtils.OkHttpCallBackLinener() {
             @Override
@@ -129,7 +130,7 @@ public class PersonalFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), InformationActivity.class);
-                intent.putExtra("user",user);
+                intent.putExtra("username",username);
                 startActivityForResult(intent, CHANGE_INFORMATION);
             }
         });
@@ -152,36 +153,43 @@ public class PersonalFragment extends Fragment {
             }
         });
     }
-    //设置图片
+    //设置关注听众数量
     private void setCount(String username) {
-        String url="http://"+ip+":8080/get-number?username="+username;
+//<<<<<<< Updated upstream
+//        String url="http://"+ip+":8080/get-number?username="+username;
+//=======
+        String url="/get-number?username="+username;
+//
+//>>>>>>> Stashed changes
         OkHttpUtils instance=OkHttpUtils.getInstance();
         instance.doGet(url, new OkHttpUtils.OkHttpCallBackLinener() {
             @Override
             public void failure(Exception e) {
-                //Toast.makeText(getContext(),"访问失败！",Toast.LENGTH_LONG).show();
             }
-
             @Override
             public void success(String json) {
                 try {
                     JSONObject jsonObject=new JSONObject(json);
-                    String attention=jsonObject.getString("attention")+"关注";
-                    String audience=jsonObject.getString("audience")+"听众";
+                    String attention=jsonObject.getInt("follower")+"关注";
+                    String audience=jsonObject.getInt("audience")+"听众";
 
                     tvAttention.setText(attention);
                     tvFollow.setText(audience);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
         });
     }
-
-    //设置关注听众数量
+    //设置图片
     private void setImage(String username){
-        String url="http://"+ip+":8080/get-information?username="+username;
+//<<<<<<< Updated upstream
+//        String url="http://"+ip+":8080/get-information?username="+username;
+//=======
+
+        String url="/get-information?username="+username;
+//
+//>>>>>>> Stashed changes
         OkHttpUtils instance=OkHttpUtils.getInstance();
         instance.doGet(url, new OkHttpUtils.OkHttpCallBackLinener() {
             @Override
@@ -190,13 +198,11 @@ public class PersonalFragment extends Fragment {
             }
             @Override
             public void success(String json) {
+                Log.e("!!!!", json );
                 user= Convert.getUserFromStr(json);
                 setView();
             }
         });
-
-
-
     }
 
     //从修改信息页面返回
@@ -204,9 +210,7 @@ public class PersonalFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if((requestCode==CHANGE_INFORMATION)&&(resultCode==104)){
-            assert data != null;
-            user=data.getParcelableExtra("user");
-            setView(data.getStringExtra("head"),data.getStringExtra("background"));
+            setImage(BodyActivity.key_username);
         }
     }
 
@@ -215,21 +219,27 @@ public class PersonalFragment extends Fragment {
         tvName.setText(user.getUsername());
         String bgUrl=user.getBackground_url();
         String hdUrl=user.getHead_url();
+//<<<<<<< Updated upstream
+        Log.e("!!!!!", "setView: "+hdUrl );
 
-//        if(!bgUrl.equals("null")){
-//            Glide.with(getContext()).load(user.getBackground_url()).into(ivBgImage);
-//        }
-//        if(!hdUrl.equals("null")){
-//            Glide.with(getContext()).load(user.getHead_url()).into(ivHeadImage);
-//        }
+        if(bgUrl!=null){
+            Glide.with(getContext()).load(user.getBackground_url()).into(ivBgImage);
+        }
+        if(hdUrl!=null){
+            Glide.with(getContext()).load(user.getHead_url()).into(ivHeadImage);
+        }
     }
     //设置的是更新后的图片
-    private void setView(String mParam1,String mParam2){
-        if(mParam1!=null){
-            Glide.with(getActivity()).load(new File(mParam1)).into(ivHeadImage);
-        }
-        if(mParam2!=null){
-            Glide.with(getActivity()).load(new File(mParam1)).into(ivBgImage);
-        }
-    }
+//    private void setView(String mParam1,String mParam2){
+//        if(mParam1!=null){
+////            Glide.with(getActivity()).load(new File(mParam1)).into(ivHeadImage);
+////=======
+//        if(bgUrl!=null){
+//            Glide.with(getContext()).load(bgUrl).centerCrop().into(ivBgImage);
+//>>>>>>> Stashed changes
+//        }
+//        if(hdUrl!=null){
+//            Glide.with(getContext()).load(hdUrl).centerCrop().into(ivHeadImage);
+//        }
+//    }
 }

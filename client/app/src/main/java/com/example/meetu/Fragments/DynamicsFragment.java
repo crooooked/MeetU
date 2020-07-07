@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.meetu.Activities.LoginActivity;
 import com.example.meetu.Entities.Content;
 import com.example.meetu.Entities.User;
 import com.example.meetu.Layouts.ContentCard;
@@ -48,7 +49,7 @@ public class DynamicsFragment extends Fragment {
     private String mParam2;
 
     int myId = 2;
-    String IP = "10.234.184.71";
+    String IP = LoginActivity.ip;
 
     public DynamicsFragment() {
         // Required empty public constructor
@@ -96,6 +97,7 @@ public class DynamicsFragment extends Fragment {
         //显示空间头
         OkHttpClient client = new OkHttpClient();
         String url = "http://" + IP + ":8080/get-zone-head?uid="+myId;
+
         Log.i("url", url);
         Request request = new Request.Builder()
                 .get()
@@ -181,6 +183,7 @@ public class DynamicsFragment extends Fragment {
         layout.addView(new ContentCard(getContext(), content5));
 
         return view;
+
 
 
     }

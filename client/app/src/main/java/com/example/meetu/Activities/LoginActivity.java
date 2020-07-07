@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText edPassword;
 
     private User mainUser;
-    public static String ip="10.234.184.71";
+    public static String ip="10.236.66.58";
     private CustomVideoView customVideoView;
     private MediaPlayer mp1;
 
@@ -197,13 +197,18 @@ public class LoginActivity extends AppCompatActivity {
         }
         return null;
     }
-    //连接网络
-    private static final String url="http://"+ip+":8080/login";
+//    //连接网络
+//<<<<<<< Updated upstream
+//    private static final String url="http://"+ip+":8080/login";
+//=======
+    //相关IP可在OkhttpUtils进行修改
+    private static final String urlTail="/login";
+
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void PostLogin(final String name, final String pwd){
         final String json = Convert.strRegLog(name, pwd);
         OkHttpUtils instance = OkHttpUtils.getInstance();
-        instance.doPost(url, json, new OkHttpUtils.OkHttpCallBackLinener() {
+        instance.doPost(urlTail, json, new OkHttpUtils.OkHttpCallBackLinener() {
             @Override
             public void failure(Exception e) {
                 Toast.makeText(LoginActivity.this, "网络请求错误", Toast.LENGTH_SHORT).show();

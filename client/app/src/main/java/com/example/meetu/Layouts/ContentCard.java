@@ -93,7 +93,6 @@ public class ContentCard extends ConstraintLayout {
             contentImage.showImages(images);
             //contentImage.setBackground(getResources().getDrawable(R.color.colorGreyForRepostBackground));
         }
-
         //显示转发模块contentRepost
 //        //显示转发模块contentRepost
 //        if(content.getRepost() == content.NO_REPOST)

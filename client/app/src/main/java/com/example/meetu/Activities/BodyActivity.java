@@ -33,6 +33,7 @@ import java.util.Objects;
 public class BodyActivity extends AppCompatActivity {
 
     public static String key_username;
+    public static int key_id;
     private static String key_password;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -44,12 +45,12 @@ public class BodyActivity extends AppCompatActivity {
         Intent intent=getIntent();
         key_username =intent.getStringExtra("userName");
         key_password=intent.getStringExtra("passWord");
-        requestPermissions();
+//        requestPermissions();
         initView();
     }
 
-    //private String []tabTitles={"关注","动态","个人"};
-    private String []tabTitles={"关注","动态","消息","个人"};
+    private String []tabTitles={"关注","动态","个人"};
+//    private String []tabTitles={"关注","动态","消息","个人"};
     private int []icon_bottom={};
     //此处初始化开始为进入动态fragment
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -65,7 +66,6 @@ public class BodyActivity extends AppCompatActivity {
         viewPager.setCurrentItem(1);
         //tablayout与viewpage连接
         tabGroup.setupWithViewPager(viewPager);
-
     }
 
     private void requestPermissions() {
@@ -124,28 +124,15 @@ public class BodyActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             Fragment fragment;
             switch (position){
-//                case 0:
-//                    fragment=new AttentionFragment();
-//                    break;
-//                case 2:
-//                    fragment=new PersonalFragment();
-//                    break;
-//                case 1:
-//                default:
-//                    fragment=new DynamicsFragment();
-//                    break;
                 case 0:
                     fragment=new AttentionFragment();
                     break;
-                case 1:
-                    fragment=new DynamicsFragment();
-                    break;
                 case 2:
-                    fragment=new NewsFragment();
+                    fragment=new PersonalFragment();
                     break;
-
+                case 1:
                 default:
-                    fragment=new  PersonalFragment();
+                    fragment=new DynamicsFragment();
                     break;
             }
             return fragment;

@@ -15,7 +15,7 @@
         app:layout_constraintVertical_weight="1"
         android:gravity="center_vertical"
         android:textSize="20sp"
-        android:layout_marginLeft="40dp"
+        android:layout_marginLeft="60dp"
 
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/tv_gender"
@@ -25,23 +25,23 @@
         android:id="@+id/tv_gender"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginLeft="60dp"
+        android:gravity="center_vertical"
         android:onClick="onClickChangeInformation"
         android:text="性别"
-        android:gravity="center_vertical"
         android:textSize="20sp"
-        android:layout_marginLeft="40dp"
 
-
-        app:layout_constraintVertical_weight="1"
-        app:layout_constraintHorizontal_weight="1"
 
         app:layout_constraintBottom_toTopOf="@+id/tv_address"
-        app:layout_constraintEnd_toStartOf="@+id/ed_gender"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_head" />
+        app:layout_constraintEnd_toStartOf="@+id/tv_gender_content"
 
-    <EditText
-        android:id="@+id/ed_gender"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_head"
+        app:layout_constraintVertical_weight="1" />
+
+    <TextView
+        android:id="@+id/tv_gender_content"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center"
@@ -53,7 +53,7 @@
         app:layout_constraintVertical_weight="1"
         app:layout_constraintHorizontal_weight="1"
 
-        app:layout_constraintBottom_toTopOf="@+id/ed_address"
+        app:layout_constraintBottom_toTopOf="@+id/tv_address_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_head"
         app:layout_constraintStart_toEndOf="@+id/tv_gender"/>
@@ -67,18 +67,18 @@
         app:layout_constraintHorizontal_weight="1"
         android:gravity="center_vertical"
         android:textSize="20sp"
-        android:layout_marginLeft="40dp"
+        android:layout_marginLeft="60dp"
 
 
 
         app:layout_constraintTop_toBottomOf="@+id/tv_gender"
         app:layout_constraintBottom_toTopOf="@+id/tv_background"
-        app:layout_constraintRight_toLeftOf="@+id/ed_address"
+        app:layout_constraintRight_toLeftOf="@+id/tv_address_content"
         app:layout_constraintLeft_toLeftOf="parent"
         />
 
-    <EditText
-        android:id="@+id/ed_address"
+    <TextView
+        android:id="@+id/tv_address_content"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center"
@@ -91,7 +91,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toEndOf="@+id/tv_address"
-        app:layout_constraintTop_toBottomOf="@+id/ed_gender"
+        app:layout_constraintTop_toBottomOf="@+id/tv_gender_content"
         app:layout_constraintVertical_weight="1" />
 
     <TextView
@@ -102,7 +102,7 @@
         android:onClick="onClickChangeInformation"
         android:gravity="center_vertical"
         android:textSize="20sp"
-        android:layout_marginLeft="40dp"
+        android:layout_marginLeft="60dp"
 
 
 
@@ -120,11 +120,51 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_background"
         app:layout_constraintBottom_toBottomOf="parent"
         />
-    <androidx.constraintlayout.widget.Barrier
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/barrier"
-        app:barrierDirection="left"
-        app:constraint_referenced_ids="tv_head,tv_gender,tv_address,tv_background"
-        />
+<!--    <androidx.constraintlayout.widget.Barrier-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:id="@+id/barrier"-->
+<!--        app:barrierDirection="left"-->
+<!--        app:constraint_referenced_ids="tv_head,tv_gender,tv_address,tv_background"-->
+<!--        />-->
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_head"
+        app:layout_constraintEnd_toStartOf="@+id/tv_head"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_head"
+        app:srcCompat="@drawable/default_head" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_gender"
+        app:layout_constraintEnd_toStartOf="@+id/tv_gender"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_gender"
+        app:srcCompat="@drawable/icon_information_gender" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_address"
+        app:layout_constraintEnd_toStartOf="@+id/tv_address"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_gender"
+        app:srcCompat="@drawable/icon_information_address" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_background"
+        app:layout_constraintEnd_toStartOf="@+id/tv_background"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_background"
+        app:srcCompat="@drawable/icon_information_background" />
 </androidx.constraintlayout.widget.ConstraintLayout>

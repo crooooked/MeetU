@@ -41,6 +41,10 @@
         <activity
             android:name=".Activities.LoginActivity"
             android:launchMode="singleTop">
+<!--<<<<<<< Updated upstream-->
+<!--=======-->
+
+<!--&gt;>>>>>> Stashed changes-->
              <intent-filter>
              <action android:name="android.intent.action.MAIN" />
              <category android:name="android.intent.category.LAUNCHER" />
@@ -51,11 +55,6 @@
             android:parentActivityName=".Activities.BodyActivity" />
         <activity android:name=".Activities.PersonalDataShowActivity" />
         <activity android:name=".Activities.FocusListActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

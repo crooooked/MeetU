@@ -21,6 +21,7 @@
         android:id="@+id/videoview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         />
 
     <FrameLayout
@@ -34,8 +35,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:padding="30dp"
-        android:textAlignment="center"
-        android:gravity="center_vertical"
+
+        android:gravity="center_vertical|center_horizontal"
         android:textSize="40sp"
         android:text="MeetU"
         android:textColor="@color/colorWhite"

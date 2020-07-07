@@ -23,6 +23,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.meetu.Activities.BodyActivity;
+import com.example.meetu.Activities.LoginActivity;
 import com.example.meetu.Activities.PersonalDataShowActivity;
 import com.example.meetu.Adapter.AttentionAdapter;
 import com.example.meetu.Adapter.MyListAdapter;
@@ -124,7 +125,7 @@ public class ListAttentionFragment extends Fragment {
 
     };
 
-    String ip="10.234.184.71";
+    String ip= LoginActivity.ip;
     String url_getAttention="http://"+ip+":8080/get-attentions?username=";
 
     List<FocusData> focusdatas;

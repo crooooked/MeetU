@@ -37,9 +37,9 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText userName;
     private EditText passWord;
     private EditText confirmPwd;
-    private String url = "http://10.234.184.71:8080/register";
-    private static final int SUCCESS = 100;
-    private static final int FAILED = 110;
+    //相关IP可在OkhttpUtils进行修改
+    private String url = "/register";
+
     private Button btnReg;
     private CustomVideoView customVideoView;
 
@@ -75,8 +75,12 @@ public class RegisterActivity extends AppCompatActivity {
         userName = findViewById(R.id.ed_username_register);
         passWord = findViewById(R.id.ed_password_register);
         confirmPwd = findViewById(R.id.ed_password_register2);
-        requestPermissions();
+//<<<<<<< Updated upstream
+//        requestPermissions();
         Objects.requireNonNull(getSupportActionBar()).hide();
+//=======
+////        requestPermissions();
+//>>>>>>> Stashed changes
     }
 
     private void requestPermissions() {
@@ -131,7 +135,6 @@ public class RegisterActivity extends AppCompatActivity {
         String username = userName.getText().toString();
         String pswd = passWord.getText().toString();
         String pswd2 = confirmPwd.getText().toString();
-
         switch (view.getId()) {
             case R.id.btn_logup:
                 if (logup(username, pswd, pswd2)) {
@@ -144,6 +147,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
     //注册实现
+
     private boolean logup(String username, String password1, String password2) {
         boolean flag = true;
         String[] cueWords = {

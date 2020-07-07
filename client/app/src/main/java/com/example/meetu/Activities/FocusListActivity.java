@@ -40,7 +40,7 @@ public class FocusListActivity extends AppCompatActivity {
     public ImageButton return_iconButton;
     public ImageView image_head,image_background;
     public ImageView image_show;
-
+    private String IP="http://10.234.184.71:8080";
     Httprequest httprequest=new Httprequest();
     //httprequest.handler=handler;将Httprequest的handler与下面的handler关联在一起
 
@@ -129,14 +129,16 @@ public class FocusListActivity extends AppCompatActivity {
    };
 
 
+    String url_getAttention=IP+"/get-attentions?username=";
+
     java.util.List<FocusData> focusdatas;
 
-//    IP ip=new IP();
-//
-//    String url=ip.ip;
+////    IP ip=new IP();
+////
+////    String url=ip.ip;
 //    String url_getAttention=url+"get-attentions?username=";
-
-    String url_getAttention="http://10.236.66.58:8080/get-attentions?username=";
+//
+//    String url_getAttention="http://10.236.66.58:8080/get-attentions?username=";
 
 
 
