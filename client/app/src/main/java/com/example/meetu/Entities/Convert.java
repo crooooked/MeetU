@@ -52,6 +52,19 @@ public class Convert {
         return jsonObject.toString();
     }
 
+    public static String strJsonObject(String []keys,String []values){
+        JSONObject jsonObject=new JSONObject();
+        try {
+            for(int i=0;i<keys.length;i++){
+                jsonObject.put(keys[i],values[i]);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject.toString();
+    }
+
     public static String strRegLog(String username,String password){
         JSONObject jsonObject=new JSONObject();
         try {

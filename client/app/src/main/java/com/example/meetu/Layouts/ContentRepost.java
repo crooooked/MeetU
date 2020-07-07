@@ -8,12 +8,14 @@ import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.example.meetu.Entities.Content;
 import com.example.meetu.R;
 
 import java.util.ArrayList;
 
 //此类用于显示状态中的转发栏
 public class ContentRepost extends ConstraintLayout {
+    Content content;
     TextView repostContent;
     ContentImage repostContentImage;
 
@@ -32,6 +34,7 @@ public class ContentRepost extends ConstraintLayout {
     public void init() {
         repostContent = findViewById(R.id.repost_text);
         repostContentImage = findViewById(R.id.repost_content_image);
+
     }
 
     public void setContent(String username, String content) {

@@ -17,7 +17,7 @@
             android:layout_height="0dp"
             android:scaleType="fitXY"
 
-            android:src="@drawable/my_color"
+            android:src="@drawable/default_background"
             app:layout_constraintBottom_toBottomOf="@+id/tv_name"
 
             app:layout_constraintBottom_toTopOf="@+id/tv_name"
@@ -31,7 +31,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#00000000"
-            android:onClick="clicking"
             android:src="@drawable/icon_change_information"
 
             app:layout_constraintRight_toRightOf="parent"

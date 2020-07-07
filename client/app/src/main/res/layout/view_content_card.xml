@@ -6,8 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    android:paddingTop="10dp"
-    android:background="@color/colorContentBackground">
+    android:paddingTop="10dp">
 
     <!--第一部分：状态头部，包括头像、用户名、发布日期-->
 
@@ -28,6 +27,7 @@
         android:layout_alignParentTop="true"
         android:text="@string/user_name_sample"
         android:textSize="18dp"
+        android:layout_marginLeft="5dp"
         app:layout_constraintStart_toEndOf="@+id/user_head"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -35,6 +35,7 @@
         android:id="@+id/post_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
         android:text="@string/post_time_sample"
         app:layout_constraintStart_toEndOf="@+id/user_head"
         app:layout_constraintTop_toBottomOf="@+id/user_name" />
