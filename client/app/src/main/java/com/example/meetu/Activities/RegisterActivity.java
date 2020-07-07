@@ -135,6 +135,7 @@ public class RegisterActivity extends AppCompatActivity {
         String username = userName.getText().toString();
         String pswd = passWord.getText().toString();
         String pswd2 = confirmPwd.getText().toString();
+
         switch (view.getId()) {
             case R.id.btn_logup:
                 if (logup(username, pswd, pswd2)) {
@@ -147,7 +148,6 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
     //注册实现
-
     private boolean logup(String username, String password1, String password2) {
         boolean flag = true;
         String[] cueWords = {

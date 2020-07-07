@@ -1,11 +1,17 @@
 package com.example.meetu.Layouts;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Rect;
 import android.os.Build;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
@@ -22,6 +28,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import static android.content.Context.INPUT_METHOD_SERVICE;
 
 //此类用于显示状态中的图片
 public class ContentCard extends ConstraintLayout {
@@ -46,10 +54,12 @@ public class ContentCard extends ConstraintLayout {
     TextView remark2;
     EditText remarkEdit;
 
+    boolean editTextForRemark = true;
+
 
     public ContentCard(Context context, Content content) {
         super(context);
-   //    initView(context, content);
+        initView(context, content);
     }
 
     public void initView(Context context, Content content) {
@@ -108,7 +118,7 @@ public class ContentCard extends ConstraintLayout {
         String[] remarks_username = content.getRemarks_username();
         if(remarks_content != null && remarks_content.length != 0) {
             remark1.setText(remarks_username[0] + "：" + remarks_content[0]);
-            if(remarks_content.length ==2)
+            if(remarks_content.length ==2 && remarks_content[1] != null)
                 remark2.setText(remarks_username[1] + "：" + remarks_content[1]);
             else
                 remark2.setVisibility(GONE);
@@ -131,6 +141,29 @@ public class ContentCard extends ConstraintLayout {
                 like(view);
             }
         });
+        //转发
+        repostButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                repost(view);
+            }
+        });
+        repostSlogan.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                repost(view);
+            }
+        });
+
+        //评论回车监听
+        remarkEdit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                Log.i("OnEditorAction", "executed");
+                InputMethodManager imm = (InputMethodManager) getContext().getSystemService(INPUT_METHOD_SERVICE);
+                imm.showSoftInput(remarkEdit, InputMethodManager.HIDE_IMPLICIT_ONLY);
+                submit_remark(remarkEdit.getText().toString());
+                return true;
+            }});
     }
 
     //事件源：userhead头像
@@ -141,8 +174,12 @@ public class ContentCard extends ConstraintLayout {
 
     //事件源：repost_button + repost_slogan
     //转发状态
+    //点击弹出键盘
     public void repost(View view) {
-
+        remarkEdit.requestFocus();
+        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(INPUT_METHOD_SERVICE);
+        imm.showSoftInput(remarkEdit, InputMethodManager.SHOW_IMPLICIT);
+        editTextForRemark = false;
     }
 
     //事件源：remark_button + remark_slogan
@@ -163,8 +200,22 @@ public class ContentCard extends ConstraintLayout {
 
     //事件源：remark_edit（输入结束后按回车）
     //评论状态
-    public void submit_remark(View view, String text) {
-        content.remark(text);
+    public void submit_remark(String text) {
+        if(remarkEdit.getText().length() == 0)
+            return;
+        //发表评论
+        if(editTextForRemark) {
+            Log.i("remark", text);
+            content.remark(text);
+        }
+        //转发
+        else {
+            Log.i("repost", text);
+            repostButton.setImageResource(R.mipmap.repost_red);
+            content.repost(text);
+        }
+        remarkEdit.setText("");
     }
 
 }
+
