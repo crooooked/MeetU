@@ -166,19 +166,17 @@ public class OkHttpUtils {
     public void postImage(String url_tail, String filepath,String username, final OkHttpCallBackLinener callback) throws IOException {
             //构造表单数据
             String url=IP+url_tail;
-            FileInputStream inputStream=new FileInputStream(filepath);
             File file=new File(filepath);
             if(!file.exists()){
                 file.createNewFile();
             }
-
             RequestBody fileBody=RequestBody.create(file,IMAGE);
             RequestBody requestBody=new MultipartBody.Builder()
                     .setType(MultipartBody.FORM)
-                    .addFormDataPart("file",file.getName(),fileBody)
+                    .addFormDataPart("file",file.getPath(),fileBody)
                     .addFormDataPart("username",username)
                     .build();
-
+        Log.e("!!!!!", file.getPath());
             final Request request=new Request.Builder()
                     .url(url)
                     .post(requestBody)
@@ -196,10 +194,11 @@ public class OkHttpUtils {
                         }
                     });
                 }
+                @RequiresApi(api = Build.VERSION_CODES.KITKAT)
                 @Override
                 public void onResponse(@NotNull Call call, @NotNull final Response response) throws IOException {
                     if (response.isSuccessful()) {
-                        final String json = response.body().string();
+                        final String json = Objects.requireNonNull(response.body()).string();
                         mHandler.post(new Runnable() {
                             @Override
                             public void run() {
@@ -211,8 +210,53 @@ public class OkHttpUtils {
             });
 
         Logger.getLogger(OkHttpClient.class.getName()).setLevel(Level.FINE);
-
-
     }
 
+    public void postImage(String url_tail, String filepath, final OkHttpCallBackLinener callback) throws IOException {
+        //构造表单数据
+        String url=IP+url_tail;
+        File file=new File(filepath);
+        if(!file.exists()){
+            file.createNewFile();
+        }
+        RequestBody fileBody=RequestBody.create(file,IMAGE);
+        RequestBody requestBody=new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("file",file.getName(),fileBody)
+                .build();
+        Log.e("!!!!!", file.getPath());
+        final Request request=new Request.Builder()
+                .url(url)
+                .post(requestBody)
+                .header("Content-Type","multipart/form-data")
+                .build();
+
+        Call call=mClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull final IOException e) {
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        callback.failure(e);
+                    }
+                });
+            }
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull final Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    final String json = Objects.requireNonNull(response.body()).string();
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            callback.success(json);
+                        }
+                    });
+                }
+            }
+        });
+
+        Logger.getLogger(OkHttpClient.class.getName()).setLevel(Level.FINE);
+    }
 }

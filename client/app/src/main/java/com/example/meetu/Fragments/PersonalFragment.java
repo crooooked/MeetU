@@ -44,8 +44,8 @@ public class PersonalFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private static final int CHANGE_INFORMATION=103;
-    private static final int MAIN_ACTIVITY=106;
+    private static final int CHANGE_INFORMATION=111;
+    private static final int MAIN_ACTIVITY=110;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -183,13 +183,9 @@ public class PersonalFragment extends Fragment {
     }
     //设置图片
     private void setImage(String username){
-//<<<<<<< Updated upstream
-//        String url="http://"+ip+":8080/get-information?username="+username;
-//=======
 
         String url="/get-information?username="+username;
-//
-//>>>>>>> Stashed changes
+
         OkHttpUtils instance=OkHttpUtils.getInstance();
         instance.doGet(url, new OkHttpUtils.OkHttpCallBackLinener() {
             @Override
@@ -209,8 +205,20 @@ public class PersonalFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if((requestCode==CHANGE_INFORMATION)&&(resultCode==104)){
-            setImage(BodyActivity.key_username);
+
+        switch (requestCode){
+            case CHANGE_INFORMATION:
+                if(resultCode==112){
+                    onResume();
+                    setImage(BodyActivity.key_username);
+                }
+                break;
+
+            case MAIN_ACTIVITY:
+                if(resultCode==110){
+                    onResume();
+                }
+                break;
         }
     }
 

@@ -34,7 +34,7 @@ public class InformationActivity extends AppCompatActivity {
     private TextView edaddress;
     private TextView tvbg;
 
-    private static final int [] IMAGE_SELECT_OBJ ={101,102};
+    private static final int [] IMAGE_SELECT_OBJ ={114,115};
     private String []url={"/upload-head","/upload-background"};
 
     //初始化
@@ -81,35 +81,35 @@ public class InformationActivity extends AppCompatActivity {
     public void onClickChangeInformation(View view){
         switch (view.getId()){
             case R.id.tv_head:
-                getImageOptions(0);
+                getImage(0);
                 break;
             case R.id.tv_address_content:
                 break;
             case R.id.tv_gender_content:
                 break;
             case R.id.tv_background:
-                getImageOptions(1);
+                getImage(1);
                 break;
         }
     }
 
     //出现底部选择栏
-    private void getImageOptions(int select){
-        BottomSheetDialog bottomSheetDialog=new BottomSheetDialog(this);
-        bottomSheetDialog.setCancelable(true);
-        bottomSheetDialog.setContentView(R.layout.view_getimage_bottom);
-        bottomSheetDialog.show();
-
-    }
-    //顶栏返回父activity
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
-        if(NavUtils.getParentActivityName(getParent())!=null){
-            Objects.requireNonNull(getActionBar()).setDisplayHomeAsUpEnabled(true);
-        }
-    }
+//    private void getImageOptions(int select){
+//        BottomSheetDialog bottomSheetDialog=new BottomSheetDialog(this);
+//        bottomSheetDialog.setCancelable(true);
+//        bottomSheetDialog.setContentView(R.layout.view_getimage_bottom);
+//        bottomSheetDialog.show();
+//
+//    }
+//    //顶栏返回父activity
+//    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+//    @Override
+//    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
+//        super.onCreate(savedInstanceState, persistentState);
+//        if(NavUtils.getParentActivityName(getParent())!=null){
+//            Objects.requireNonNull(getActionBar()).setDisplayHomeAsUpEnabled(true);
+//        }
+//    }
     //通过顶栏返回键返回父activity
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -120,7 +120,7 @@ public class InformationActivity extends AppCompatActivity {
             default:
                 Intent intent=new Intent();
                 refresh();
-                setResult(104,intent);
+                setResult(112,intent);
                 this.finish();
                 return super.onOptionsItemSelected(item);
         }
@@ -174,10 +174,10 @@ public class InformationActivity extends AppCompatActivity {
             String filePath = FileUtil.getFilePathByUri(this, data.getData());
             int index=0;
             switch (requestCode) {
-                case 101:
+                case 114:
                     index=0;
                     break;
-                case 102:
+                case 115:
                     index=1;
                     break;
             }

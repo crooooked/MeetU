@@ -26,7 +26,9 @@ import com.example.meetu.R;
 
 import java.util.ArrayList;
 import java.util.Objects;
-
+/*
+* code 110
+* */
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -40,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         if(NavUtils.getParentActivityName(getParent())!=null) {
             Intent intent = new Intent();
             Log.e("!!!!!", " 执行了返回intent");
-            setResult(106, intent);
+            setResult(110, intent);
             this.finish();
         }
     }

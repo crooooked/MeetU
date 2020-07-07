@@ -31,14 +31,18 @@ import com.example.meetu.Tools.CustomVideoView;
 
 import java.io.File;
 import java.util.Objects;
-
+/**
+ * code 100-110
+ *
+ *
+ */
 public class LoginActivity extends AppCompatActivity {
 
     private EditText edUserName;
     private EditText edPassword;
 
     private User mainUser;
-    public static String ip="10.236.66.58";
+    public static String ip="10.234.184.71";
     private CustomVideoView customVideoView;
     private MediaPlayer mp1;
 

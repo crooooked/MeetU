@@ -21,11 +21,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.meetu.Entities.Convert;
+import com.example.meetu.Entities.User;
 import com.example.meetu.Fragments.AttentionFragment;
 import com.example.meetu.Fragments.DynamicsFragment;
 import com.example.meetu.Fragments.NewsFragment;
 import com.example.meetu.Fragments.PersonalFragment;
 import com.example.meetu.R;
+import com.example.meetu.Tools.OkHttpUtils;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.Objects;
@@ -66,54 +69,74 @@ public class BodyActivity extends AppCompatActivity {
         viewPager.setCurrentItem(1);
         //tablayout与viewpage连接
         tabGroup.setupWithViewPager(viewPager);
+        getInformation();
     }
 
-    private void requestPermissions() {
-        String[] permissions = new String[]{
-                Manifest.permission.INTERNET,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.ACCESS_NETWORK_STATE};
+//    private void requestPermissions() {
+//        String[] permissions = new String[]{
+//                Manifest.permission.INTERNET,
+//                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+//                Manifest.permission.READ_EXTERNAL_STORAGE,
+//                Manifest.permission.ACCESS_NETWORK_STATE};
+//
+//        int[] permissionCode = new int[]{100, 101, 102, 103};
+//        for (int i = 0; i < permissions.length; i++) {
+//            if (ContextCompat.checkSelfPermission(this,
+//                    permissions[i]) !=
+//                    PackageManager.PERMISSION_GRANTED) {
+//                ActivityCompat.requestPermissions(this, new String[]{
+//                        permissions[i]
+//                }, permissionCode[i]);
+//            }
+//        }
+//    }
+//
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        switch (requestCode) {
+//            case 100:
+//                if (grantResults.length == 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+//                    Toast.makeText(getApplicationContext(), "你未获取网络权限！", Toast.LENGTH_SHORT).show();
+//                }
+//                break;
+//            case 101:
+//                if (grantResults.length == 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+//                    Toast.makeText(getApplicationContext(), "你未获取存储权限！", Toast.LENGTH_SHORT).show();
+//                }
+//                break;
+//            case 102:
+//                if (grantResults.length == 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+//                    Toast.makeText(getApplicationContext(), "你未获取读取权限！", Toast.LENGTH_SHORT).show();
+//                }
+//                break;
+//            case 103:
+//                if (grantResults.length == 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+//                    Toast.makeText(getApplicationContext(), "你未获取读取网络状态权限！", Toast.LENGTH_SHORT).show();
+//                }
+//                break;
+//            default:
+//        }
+//    }
 
-        int[] permissionCode = new int[]{100, 101, 102, 103};
-        for (int i = 0; i < permissions.length; i++) {
-            if (ContextCompat.checkSelfPermission(this,
-                    permissions[i]) !=
-                    PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, new String[]{
-                        permissions[i]
-                }, permissionCode[i]);
+    private void getInformation(){
+        String urlTail="/get-information?username="+key_username;
+        OkHttpUtils instance=OkHttpUtils.getInstance();
+        instance.doGet(urlTail, new OkHttpUtils.OkHttpCallBackLinener() {
+            @Override
+            public void failure(Exception e) {
+
             }
-        }
+
+            @Override
+            public void success(String json) {
+                User user = Convert.getUserFromStr(json);
+                key_id=user.getUid();
+            }
+        });
+
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case 100:
-                if (grantResults.length == 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(getApplicationContext(), "你未获取网络权限！", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            case 101:
-                if (grantResults.length == 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(getApplicationContext(), "你未获取存储权限！", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            case 102:
-                if (grantResults.length == 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(getApplicationContext(), "你未获取读取权限！", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            case 103:
-                if (grantResults.length == 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(getApplicationContext(), "你未获取读取网络状态权限！", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            default:
-        }
-    }
     //fragment适配器
     private class FragmentAdapter extends FragmentStatePagerAdapter{
         public FragmentAdapter(@NonNull FragmentManager fm) {

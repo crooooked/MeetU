@@ -7,6 +7,7 @@ import android.os.Message;
 import android.util.Log;
 
 import com.bumptech.glide.Glide;
+import com.example.meetu.Activities.BodyActivity;
 import com.example.meetu.Activities.LoginActivity;
 
 import org.json.JSONArray;
@@ -33,7 +34,7 @@ public class Content {
     final String IP = LoginActivity.ip;
     public final int NO_REPOST = -1;
 
-    int myId = 2;
+    int myId = BodyActivity.key_id;
 
     int content_id;     //id
     int uid;            //发布者id

@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.meetu.Activities.BodyActivity;
 import com.example.meetu.Activities.LoginActivity;
 import com.example.meetu.Entities.Content;
 import com.example.meetu.Entities.User;
@@ -48,7 +49,7 @@ public class DynamicsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    int myId = 2;
+    int myId = BodyActivity.key_id;
     String IP = LoginActivity.ip;
 
     public DynamicsFragment() {
@@ -183,8 +184,6 @@ public class DynamicsFragment extends Fragment {
         layout.addView(new ContentCard(getContext(), content5));
 
         return view;
-
-
 
     }
 
