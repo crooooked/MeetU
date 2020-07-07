@@ -194,6 +194,31 @@ public class Content {
         }
     }
 
+    //评论
+    public void repost(String text) {
+        String url = "http://\"+IP+\":8080/repost";
+        OkHttpClient okHttpClient = new OkHttpClient();
+
+        RequestBody body = new FormBody.Builder()
+                .add("content_id", ""+content_id)
+                .add("uid", "值")
+                .add("content", text)
+                .build();
+
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .build();
+
+        Call call = okHttpClient.newCall(request);
+        try {
+            Response response = call.execute();
+            System.out.println(response.body().string());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public int getContent_id() {
         return content_id;
     }

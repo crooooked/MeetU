@@ -198,7 +198,9 @@ public class ContentCard extends ConstraintLayout {
     //事件源：remark_button + remark_slogan
     //查看该状态的所有评论
     public void remark(View view) {
-
+        RemarkUnfold remarkUnfold = new RemarkUnfold(getContext());
+        remarkUnfold.setInfo("http://" + content.getIP() + ":8080/get-remark?content_id="+content.getContent_id());
+        remarkUnfold.show();
     }
 
     //事件源：like_button + like_slogan
@@ -225,7 +227,7 @@ public class ContentCard extends ConstraintLayout {
         else {
             Log.i("repost", text);
             repostButton.setImageResource(R.mipmap.repost_red);
-            content.repost(text);
+            //content.repost(text);
         }
         remarkEdit.setText("");
     }
