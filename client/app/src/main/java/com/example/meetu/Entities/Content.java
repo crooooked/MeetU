@@ -29,7 +29,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class Content {
-    final String IP = "10.236.66.58";
+    final String IP = "10.234.184.71";
     public final int NO_REPOST = -1;
 
     int myId = 2;

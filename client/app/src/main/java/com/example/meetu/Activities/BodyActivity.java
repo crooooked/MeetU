@@ -15,6 +15,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -53,7 +54,7 @@ public class BodyActivity extends AppCompatActivity {
         initView();
     }
 
-    private String []tabTitles={"关注","动态","个人"};
+    private String []tabTitles={"       关注","       动态","       个人"};
 
 //    private int []icon_bottom={};
 
@@ -84,6 +85,22 @@ public class BodyActivity extends AppCompatActivity {
         }
 
 
+        tabGroup.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                // TODO Auto-generated method stub
+                changeTabNormal(tab);
+            }
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                changeTabSelect(tab);
+            }
+            @Override
+            public void onTabReselected(TabLayout.Tab arg0) {
+            }
+        });
+
+
     }
 
 
@@ -93,10 +110,50 @@ public class BodyActivity extends AppCompatActivity {
         View v = LayoutInflater.from(mContext).inflate(R.layout.bottom_tab_item, null);
         TextView textView = (TextView) v.findViewById(R.id.tab_textview);
         textView.setText(tabTitle);
+
+        ImageView imageViewNull=(ImageView) v.findViewById(R.id.tab_imageviewNull);
         ImageView imageView = (ImageView) v.findViewById(R.id.tab_imageview);
+        imageViewNull.setImageResource(R.drawable.my_icon);
+        imageViewNull.setVisibility(View.INVISIBLE);
         imageView.setImageResource(src);
         return v;
 
+    }
+
+
+    private void changeTabSelect(TabLayout.Tab tab) {
+
+        ViewPager viewPager=findViewById(R.id.view_above);
+        View view = tab.getCustomView();
+        ImageView img_title = (ImageView) view.findViewById(R.id.tab_imageview);
+        TextView txt_title = (TextView) view.findViewById(R.id.tab_textview);
+        txt_title.setTextColor(Color.parseColor("#47bafe"));
+        if (txt_title.getText().toString().equals("       关注")) {
+                  img_title.setImageResource(R.drawable.focus_icon);
+                  viewPager.setCurrentItem(0);
+        } else if (txt_title.getText().toString().equals("       动态")) {
+            img_title.setImageResource(R.drawable.dynamic_icon);
+            viewPager.setCurrentItem(1);
+
+        }  else if (txt_title.getText().toString().equals("       个人")) {
+            img_title.setImageResource(R.drawable.my_icon);
+            viewPager.setCurrentItem(2);
+        }
+    }
+
+    private void changeTabNormal(TabLayout.Tab tab) {
+        View view = tab.getCustomView();
+        ImageView img_title = (ImageView) view.findViewById(R.id.tab_imageview);
+        TextView txt_title = (TextView) view.findViewById(R.id.tab_textview);
+        txt_title.setTextColor(Color.parseColor("#C1B9B9"));
+        if (txt_title.getText().toString().equals("       关注")) {
+            img_title.setImageResource(R.drawable.unfocus_icon);
+        } else if (txt_title.getText().toString().equals("       动态")) {
+            img_title.setImageResource(R.drawable.undynamic_icon);
+        }
+        else if (txt_title.getText().toString().equals("       个人")) {
+            img_title.setImageResource(R.drawable.unmy_icon);
+        }
     }
 
 

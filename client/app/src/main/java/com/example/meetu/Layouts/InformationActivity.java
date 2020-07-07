@@ -47,7 +47,7 @@ public class InformationActivity extends AppCompatActivity {
     private EditText edgender;
     private EditText edaddress;
     private TextView tvbg;
-    private String ip="http://10.236.66.58:8080";
+    private String ip="http://10.234.184.71:8080";
 
     private static final int []RC_SELECT={101,102};
     private String []url={ip+"/upload-head",ip+"/upload-background"};

@@ -17,72 +17,39 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
 import com.example.meetu.FocusClass.AnalyseJson;
+import com.example.meetu.FocusClass.FocusData;
 import com.example.meetu.FocusClass.Httprequest;
 import com.example.meetu.FocusClass.ToJson;
 import com.example.meetu.FocusClass.IP;
+import com.example.meetu.Fragments.AttentionFragment;
 import com.example.meetu.R;
 import com.example.meetu.Tools.GlideCircleTransform;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /*
 先别写，等关注列表显示出来了再写这个
  */
 public class PersonalDataShowActivity extends AppCompatActivity {
 
-    Handler handler=new Handler(){
-        @Override
-        public void handleMessage(@NonNull Message msg) {
-
-            super.handleMessage(msg);
-            int w = msg.what;
-            String getMsg= msg.obj.toString();
-            AnalyseJson analyseJson=new AnalyseJson();
-
-            tv_nick=findViewById(R.id.tv_nick_show);
-            tv_gender=findViewById(R.id.tv_gender_show);
-            tv_addr=findViewById(R.id.tv_addr_show);
-
-            image_head=findViewById(R.id.image_person_head);
-            image_background=findViewById(R.id.image_background_show);
-            btn_focus=findViewById(R.id.btn_focus);
-
-            if (w==1){
-                //json字符串转换为JSONObject对象
-                JSONObject jsonObject=JSONObject.parseObject(getMsg);
-                //解析JSONObject对象
-
-                //get到服务器的图片 name gender address ，
-                //w=1，显示在个人资料的iMAgeview和TextView中
-                //解析message
-                Bitmap head,background;
-                String headUrl,backgroundUrl;
-                String username,gender,address;
-                username=analyseJson.getUsername(jsonObject);
-                gender=analyseJson.getGender(jsonObject);
-                address=analyseJson.getAddress(jsonObject);
-                headUrl=analyseJson.getHeadUrl(jsonObject);
-                backgroundUrl=analyseJson.getBackgroundUrl(jsonObject);
-                Glide.with(PersonalDataShowActivity.this).load(headUrl).transform(new GlideCircleTransform(PersonalDataShowActivity.this)).into(image_head);
-                Glide.with(PersonalDataShowActivity.this).load(backgroundUrl).centerCrop().into(image_background);
 
 
-                tv_nick.setText(username);
-                tv_gender.setText(gender);
-                tv_addr.setText(address);
 
-            }
-
-        }
-
-
-    };
 
     public TextView tv_nick,tv_gender,tv_addr;
     public Button btn_focus,btn_watch;
@@ -93,14 +60,17 @@ public class PersonalDataShowActivity extends AppCompatActivity {
     public  static String ip="10.234.184.71";
 
     String url_getInformation="http://"+ip+":8080/get-information";
-
-
     String url_mangeAttention="http://"+ip+":8080/manage-attentions";
+
+    String url_getAttention="http://"+ip+":8080/get-attentions?username=";
+
 
 //    String url_getInformation="http://10.234.184.71:8080/get-information";
 //    String url_mangeAttention="http://10.234.184.71:8080/manage-attentions";
 
     String myName= BodyActivity.key_username;
+
+    static  List<String> listAttention;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -111,8 +81,86 @@ public class PersonalDataShowActivity extends AppCompatActivity {
         setContentView(R.layout.peopledata);
         Init();
         Intent intent=getIntent();
-       String Name=intent.getStringExtra("Name");
+        final String Name=intent.getStringExtra("Name");
         String flag=intent.getStringExtra("flag");
+
+        Log.d("Tag","关注的人===="+ AttentionFragment.list_attentionName);
+
+
+        Handler handler=new Handler(){
+            @Override
+            public void handleMessage(@NonNull Message msg) {
+
+                super.handleMessage(msg);
+                int w = msg.what;
+                String getMsg= msg.obj.toString();
+                AnalyseJson analyseJson=new AnalyseJson();
+
+                tv_nick=findViewById(R.id.tv_nick_show);
+                tv_gender=findViewById(R.id.tv_gender_show);
+                tv_addr=findViewById(R.id.tv_addr_show);
+
+                image_head=findViewById(R.id.image_person_head);
+                image_background=findViewById(R.id.image_background_show);
+                btn_focus=findViewById(R.id.btn_focus);
+
+                if(w==0){
+                    JSONArray jsonArray = JSONArray.parseArray(getMsg);
+                    JSONObject jsonObject;
+
+                    int size = jsonArray.size();
+
+                    boolean  ishave=false;
+                    for (int i = 0; i < size; i++) {
+
+                        jsonObject = jsonArray.getJSONObject(i);
+                       listAttention.add(jsonObject.getString("attention")) ;
+
+                    }
+
+
+                }
+
+                if (w==1){
+                    //json字符串转换为JSONObject对象
+                    JSONObject jsonObject=JSONObject.parseObject(getMsg);
+
+                    String headUrl,backgroundUrl;
+                    String username,gender,address;
+                    username=analyseJson.getUsername(jsonObject);
+                    gender=analyseJson.getGender(jsonObject);
+                    address=analyseJson.getAddress(jsonObject);
+                    headUrl=analyseJson.getHeadUrl(jsonObject);
+                    backgroundUrl=analyseJson.getBackgroundUrl(jsonObject);
+                    Glide.with(PersonalDataShowActivity.this).load(headUrl).transform(new GlideCircleTransform(PersonalDataShowActivity.this)).into(image_head);
+                    Glide.with(PersonalDataShowActivity.this).load(backgroundUrl).centerCrop().into(image_background);
+
+                    for(String name:AttentionFragment.list_attentionName){
+                        if(Name.equals(name)){
+                            btn_focus.setText("取消关注");
+                        }
+                    }
+
+                    tv_nick.setText(username);
+                    tv_gender.setText(gender);
+                    tv_addr.setText(address);
+
+                }
+
+
+
+            }
+
+
+        };
+
+        httprequest.handler=handler;
+
+//        try {
+//            httprequest.getRequest(url_getAttention,myName,0);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
 
         //关注列表触发
@@ -120,17 +168,28 @@ public class PersonalDataShowActivity extends AppCompatActivity {
             btn_focus=findViewById(R.id.btn_focus);
             btn_focus.setText("取消关注");
         }
+//        else {
+//            //flag==0  ==2 从搜索框和听众列表点进去
+//            //先get到自己关注的所有人，把这个名字与自己关注的人进行比较
+//            //如果此人不在自己关注的名单中，设置按钮为“添加关注”
+//
+//        }
 
         Log.d("Tag","搜索的人是"+Name);
 
-        httprequest.handler=handler;
+
         try {
             httprequest.getRequest(url_getInformation,"username="+Name,1);
+           // httprequest.getRequest(url_getAttention,myName,0);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
+
+
+
+
 
 
     //控件初始化
@@ -167,7 +226,7 @@ public class PersonalDataShowActivity extends AppCompatActivity {
     public void Return_Last_Page(View view) {
             Intent intent=new Intent();
             Log.e("!!!!!", " 执行了返回intent");
-            setResult(105,intent);
+            setResult(225,intent);
             this.finish();
 
     }

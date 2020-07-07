@@ -136,7 +136,7 @@ public class FocusListActivity extends AppCompatActivity {
 //    String url=ip.ip;
 //    String url_getAttention=url+"get-attentions?username=";
 
-    String url_getAttention="http://10.236.66.58:8080/get-attentions?username=";
+    String url_getAttention="http://10.234.184.71:8080/get-attentions?username=";
 
 
 
