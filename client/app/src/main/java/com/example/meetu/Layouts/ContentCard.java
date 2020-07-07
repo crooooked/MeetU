@@ -155,6 +155,19 @@ public class ContentCard extends ConstraintLayout {
                 repost(view);
             }
         });
+        //查看评论
+        remarkButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                remark(view);
+            }
+        });
+        remarkSlogan.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                remark(view);
+            }
+        });
 
         //评论回车监听
         remarkEdit.setOnEditorActionListener(new TextView.OnEditorActionListener() {

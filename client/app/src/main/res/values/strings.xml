@@ -18,6 +18,7 @@
     <string name="repost_slogan"> 转发 </string>
     <string name="remark_hint"> 发表评论 </string>
     <string name="new_content_hint"> 说点什么吧... </string>
+    <string name="new_content_slogan"> 发布 </string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

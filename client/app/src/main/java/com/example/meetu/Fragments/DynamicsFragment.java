@@ -1,5 +1,6 @@
 package com.example.meetu.Fragments;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.meetu.Activities.NewContentActivity;
 import com.example.meetu.Entities.Content;
 import com.example.meetu.Entities.User;
 import com.example.meetu.Layouts.ContentCard;
@@ -131,7 +133,8 @@ public class DynamicsFragment extends Fragment {
         }
 
         //获取要显示的状态列表
-        boolean getMyStateOnly = true;
+        Intent intent = getActivity().getIntent();
+        boolean getMyStateOnly = intent.getBooleanExtra("isPersonalSpace", true);
         client = new OkHttpClient();
         JSONObject getStatePostJson = new JSONObject();
         url = "http://" + IP + ":8080/get-state-list";
@@ -179,7 +182,17 @@ public class DynamicsFragment extends Fragment {
             e.printStackTrace();
         }
 
-//                //测试无图片+无转发的状态
+        return view;
+    }
+
+    //添加状态跳转
+    public void newContent(View view) {
+        Intent intent=new Intent(getActivity(), NewContentActivity.class);
+        startActivity(intent);
+    }
+
+    public void test() {
+        //                //测试无图片+无转发的状态
 //        Bitmap head = BitmapFactory.decodeResource(getResources(), R.mipmap.sample_head);
 //        Content content1 = new Content(head, null);
 //        layout.addView(new ContentCard(getContext(), content1));
@@ -202,10 +215,6 @@ public class DynamicsFragment extends Fragment {
 //        //评论
 //        String[] remark_content = new String[]{"好的！", "知道了"};
 //        String[] remark_username = new String[]{"小A", "小B"};
-
-        return view;
-    }
-
 
 //        //测试无图片+无转发的状态
 //        Content content1 = new Content(head, null);
@@ -242,7 +251,9 @@ public class DynamicsFragment extends Fragment {
 //
 //        return view;
 //
-//
-//    }
+    }
+
+
+
 
 }
