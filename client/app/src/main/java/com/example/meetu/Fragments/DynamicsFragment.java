@@ -48,8 +48,8 @@ public class DynamicsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    int myId = 2;
-    String IP = "10.234.184.71";
+    int myId;
+    String IP = "10.236.66.58";
 
     public DynamicsFragment() {
         // Required empty public constructor
@@ -80,6 +80,7 @@ public class DynamicsFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        myId =
     }
 
     @Override
@@ -129,23 +130,41 @@ public class DynamicsFragment extends Fragment {
             e.printStackTrace();
         }
 
+        //获取自己的状态
 
-        //测试用的数据
-        Bitmap head = BitmapFactory.decodeResource(getResources(), R.mipmap.sample_head);
-        //9张图
-        ArrayList<Bitmap> images = new ArrayList<>();
-        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image1));
-        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image2));
-        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image3));
-        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image4));
-        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image5));
-        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image6));
-        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image7));
-        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image8));
-        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image9));
-        //评论
-        String[] remark_content = new String[] {"好的！", "知道了"};
-        String[] remark_username = new String[] {"小A", "小B"};
+
+
+
+        //测试从网络获取content
+        Content content5 = null;
+        try {
+            content5 = new Content(getContext(), 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        layout.addView(new ContentCard(getContext(), content5));
+
+        return view;
+
+//
+//
+//
+//        //测试用的数据
+//        Bitmap head = BitmapFactory.decodeResource(getResources(), R.mipmap.sample_head);
+//        //9张图
+//        ArrayList<Bitmap> images = new ArrayList<>();
+//        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image1));
+//        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image2));
+//        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image3));
+//        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image4));
+//        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image5));
+//        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image6));
+//        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image7));
+//        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image8));
+//        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image9));
+//        //评论
+//        String[] remark_content = new String[] {"好的！", "知道了"};
+//        String[] remark_username = new String[] {"小A", "小B"};
 
 
 //        //测试无图片+无转发的状态
@@ -172,16 +191,7 @@ public class DynamicsFragment extends Fragment {
 //        ContentCard contentCard4 = new ContentCard(getContext(), content4);
 //        layout.addView(contentCard4);
 
-        //测试从网络获取content
-        Content content5 = null;
-        try {
-            content5 = new Content(getContext(), 1);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        layout.addView(new ContentCard(getContext(), content5));
 
-        return view;
 
 
     }

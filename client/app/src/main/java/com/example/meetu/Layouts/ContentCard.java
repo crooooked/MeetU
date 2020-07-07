@@ -119,7 +119,7 @@ public class ContentCard extends ConstraintLayout {
         String[] remarks_username = content.getRemarks_username();
         if(remarks_content != null && remarks_content.length != 0) {
             remark1.setText(remarks_username[0] + "：" + remarks_content[0]);
-            if(remarks_content.length ==2)
+            if(remarks_content.length ==2 && remarks_content[1] != null)
                 remark2.setText(remarks_username[1] + "：" + remarks_content[1]);
             else
                 remark2.setVisibility(GONE);
@@ -160,6 +160,8 @@ public class ContentCard extends ConstraintLayout {
         remarkEdit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 Log.i("OnEditorAction", "executed");
+                InputMethodManager imm = (InputMethodManager) getContext().getSystemService(INPUT_METHOD_SERVICE);
+                imm.showSoftInput(remarkEdit, InputMethodManager.HIDE_IMPLICIT_ONLY);
                 submit_remark(remarkEdit.getText().toString());
                 return true;
             }});

@@ -30,7 +30,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class Content {
-    final String IP = "10.234.184.71";
+    final String IP = "10.236.66.58";
     public final int NO_REPOST = -1;
 
     int myId = 2;
@@ -40,7 +40,7 @@ public class Content {
     User user;          //发布者信息（通过uid获取）
     long time;           //发布时间戳
     String content;     //状态内容
-    int repost;         //转发，不是转发则为NO_REPOST，是转发则为被转发状态的content_id
+    int repost=-1;         //转发，不是转发则为NO_REPOST，是转发则为被转发状态的content_id
     Content repostContent;  //转发内容（通过repost获取）
     String[] image_urls;    //图片的url，没有图片则为null
     ArrayList<Bitmap> images;    //图片，没有则为null（通过image_urls获取）
@@ -59,21 +59,37 @@ public class Content {
         user = new User(head, background);
     }
 
+    public Content(int content_id) {
+        this.content_id = content_id;
+    }
+
     //通过网络获取Content
     public Content(Context context, int content_id) throws IOException {
         this.content_id = content_id;
+        String url = "http://" + IP + ":8080/get-specific-state?content_id="+content_id;
+        init(url, false);
+        if(repost != NO_REPOST) {
+            Log.i("repost", "have repost!");
+            Log.i("repost", "" + repost);
+            repostContent = new Content(repost);
+            String repost_url = "http://" + IP + ":8080/get-simple-state?content_id="+content_id;
+            repostContent.init(repost_url, true);
+        }
+    }
+
+    public void init(String url, boolean isSimple) throws IOException {
         //获取Content
         OkHttpClient client = new OkHttpClient();
-        String url = "http://" + IP + ":8080/get-specific-state?content_id="+content_id;
         Log.i("url", url);
         Request request = new Request.Builder()
                 .get()
                 .url(url)
-                //.header("content_id", ""+content_id)
                 .build();
         Response response = client.newCall(request).execute();
         String str = response.body().string();
         Log.i("res", str);
+
+        //解析JSON
         try {
             JSONObject res = new JSONObject(str);
             content = res.getString("content");
@@ -93,52 +109,33 @@ public class Content {
                 image_urls[i] = image_list.getJSONObject(i).getString("image");
 
             //remarks
-            JSONArray remark_list = res.getJSONArray("remarks");
-            if (remark_list != null && remark_list.length() != 0) {
-                remarks_username = new String[image_list.length()];
-                remarks_content = new String[image_list.length()];
-                for (int i = 0; i < image_list.length(); i++) {
-                    remarks_username[i] = image_list.getJSONObject(i).getString("username");
-                    remarks_content[i] = image_list.getJSONObject(i).getString("content");
+            //获取简单状态时不解析此项
+            if(!isSimple) {
+                JSONArray remark_list = res.getJSONArray("remarks");
+                if (remark_list != null && remark_list.length() != 0) {
+                    remarks_username = new String[image_list.length()];
+                    remarks_content = new String[image_list.length()];
+                    Log.i("remarks", remark_list.toString());
+                    for (int i = 0; i < remark_list.length(); i++) {
+                        remarks_username[i] = remark_list.getJSONObject(i).getString("username");
+                        Log.i("remark_username", remarks_username[i]);
+                        remarks_content[i] = remark_list.getJSONObject(i).getString("remark");
+                        Log.i("remark_content", remarks_content[i]);
+                    }
                 }
             }
 
-            repost = res.getInt("repost");
-            Log.i("repost", ""+repost);
-            time = res.getInt("time");
-            like_times = res.getInt("like_times");
-            remark_times = res.getInt("remark_times");
-            repost_times = res.getInt("repost_times");
+            this.repost = res.getInt("repost");
+            Log.i("repost", "" + this.repost);
 
-            //获取repost
-            if (repost != NO_REPOST) {
-                url = "http://"+IP+":8080/get-simple-state?content_id=1";
-                Log.i("url", url);
-//                Request request = new Request.Builder()
-//                        .get()
-//                        .url(url)
-//                        //.header("content_id", ""+content_id)
-//                        .build();
-//                Response response = client.newCall(request).execute();
-//                String str = response.body().string();
-//                Log.i("res", str);
+            //获取简单状态时不解析此项
+            if(!isSimple) {
+                time = res.getInt("time");
+                like_times = res.getInt("like_times");
+                remark_times = res.getInt("remark_times");
+                repost_times = res.getInt("repost_times");
             }
 
-            //通过每张图片的url获取图片
-            user.getHeadImage();
-            images = new ArrayList<Bitmap>();
-            if (image_urls != null && image_urls.length != 0) {
-                for(int i=0; i<image_urls.length; i++) {
-                    Log.i("image_url", image_urls[i]);
-                    request = new Request.Builder()
-                            .url(image_urls[i])
-                            .build();
-                    response = client.newCall(request).execute();
-                    byte[] bytes = response.body().bytes();
-                    Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                    images.add(bitmap);
-                }
-            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -200,6 +197,7 @@ public class Content {
         }
     }
 
+    //转发
     public void repost(String text) {
         String url = "http://"+IP+":8080/repost-state";
 
