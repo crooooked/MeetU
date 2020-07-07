@@ -90,17 +90,17 @@ public class PersonalDataShowActivity extends AppCompatActivity {
     public ImageView image_head,image_background;
     public String focusText;
     Httprequest httprequest=new Httprequest();
+    public  static String ip="10.234.184.71";
+
+    String url_getInformation="http://"+ip+":8080/get-information";
 
 
-    //IP ip=new IP();
-    //String url=ip.setIp("http://172.20.10.2:8080/");
-//      String url=ip.ip;
-//
-//    String url_getInformation=url+"get-information";
-//   String url_mangeAttention=url+"manage-attentions";
+    String url_mangeAttention="http://"+ip+":8080/manage-attentions";
 
-    String url_getInformation="http://10.234.184.71:8080/get-information";
-    String url_mangeAttention="http://10.234.184.71:8080/manage-attentions";
+//    String url_getInformation="http://10.234.184.71:8080/get-information";
+//    String url_mangeAttention="http://10.234.184.71:8080/manage-attentions";
+
+    String myName= BodyActivity.key_username;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -150,12 +150,6 @@ public class PersonalDataShowActivity extends AppCompatActivity {
 
     }
 
-    //根据搜索的人显示相关个人信息
-    public void DataShow(String name) throws IOException {
-
-    }
-
-
 
 
     //为查看空间按钮添加响应事件
@@ -176,8 +170,6 @@ public class PersonalDataShowActivity extends AppCompatActivity {
             setResult(105,intent);
             this.finish();
 
-
-
     }
 
 
@@ -190,12 +182,11 @@ public class PersonalDataShowActivity extends AppCompatActivity {
 
         ToJson json=new ToJson();
         //JSONObject jsonObject;
-
         String targetname=tv_nick.getText().toString();
         Log.d("Tag","====targername==="+targetname);
 
         //这里要取得自己的昵称
-        String username="lby";
+        String username=myName;
 
         //flag:1-添加关注    0-取消关注
         int flag;
@@ -203,40 +194,24 @@ public class PersonalDataShowActivity extends AppCompatActivity {
 
         //添加关注---->已关注
         if(focusText.equals("添加关注")){
-
             flag=1;
             jsonString=json.setJsonObject(username,targetname,flag).toString();
 
             //向后台发送数据，此人的nick写入数据库
             //post:myName,targetName
-
-            /**
-             * url要改，根据后端提供的
-             */
             httprequest.post(url_mangeAttention,jsonString);
-
-
             //点击“添加关注”，按钮变为“已关注”
             btn_focus.setText("取消关注");
-
             Log.d("Tag","关注成功==="+jsonString);
 
         }
 
         if(focusText.equals("取消关注")){
-
-
             flag=0;
             jsonString=json.setJsonObject(username,targetname,flag).toString();
-
             btn_focus.setText("添加关注");
-
             //向后台发送数据，删除一条数据
-            /**
-             * url要改，根据后端提供的
-             */
             httprequest.post(url_mangeAttention,jsonString);
-
             Log.d("Tag","取消关注成功==="+jsonString);
 
         }

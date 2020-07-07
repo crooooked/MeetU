@@ -2,10 +2,11 @@
 <resources>
    <dimen name="bigSize">25sp</dimen>
     <dimen name="idSize">22sp</dimen>
-    <dimen name="head"></dimen>
+
     <dimen name="left">12dp</dimen>
     <dimen name="itemImage">50dp</dimen>
     <dimen name="itemNick">22sp</dimen>
+    <dimen name="bottomTab">20sp</dimen>
 
 
 </resources>

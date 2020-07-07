@@ -12,17 +12,23 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.meetu.Fragments.AttentionFragment;
 import com.example.meetu.Fragments.DynamicsFragment;
+import com.example.meetu.Fragments.NewsFragment;
 import com.example.meetu.Fragments.PersonalFragment;
 import com.example.meetu.R;
 import com.google.android.material.tabs.TabLayout;
@@ -48,7 +54,11 @@ public class BodyActivity extends AppCompatActivity {
     }
 
     private String []tabTitles={"关注","动态","个人"};
-    private int []icon_bottom={};
+
+//    private int []icon_bottom={};
+
+    private int []icon_bottom={R.drawable.focus_icon,R.drawable.dynamic_icon,R.drawable.my_icon};
+
     //此处初始化开始为进入动态fragment
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void initView(){
@@ -56,6 +66,7 @@ public class BodyActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).hide();
         //连接容器
         TabLayout tabGroup =findViewById(R.id.tl_bottom_nav);
+
         ViewPager viewPager=findViewById(R.id.view_above);
         //绑定viewpager与fragment
         FragmentAdapter fragmentAdapter=new FragmentAdapter(getSupportFragmentManager());
@@ -64,7 +75,30 @@ public class BodyActivity extends AppCompatActivity {
         //tablayout与viewpage连接
         tabGroup.setupWithViewPager(viewPager);
 
+
+        for(int i=0;i<tabGroup.getTabCount();i++){
+            TabLayout.Tab tab=tabGroup.getTabAt(i);
+            if(tab!=null){
+                tab.setCustomView(getTabView(tabTitles[i],icon_bottom[i]));
+            }
+        }
+
+
     }
+
+
+
+    private View getTabView(String tabTitle, int src) {
+        Context mContext=getApplicationContext();
+        View v = LayoutInflater.from(mContext).inflate(R.layout.bottom_tab_item, null);
+        TextView textView = (TextView) v.findViewById(R.id.tab_textview);
+        textView.setText(tabTitle);
+        ImageView imageView = (ImageView) v.findViewById(R.id.tab_imageview);
+        imageView.setImageResource(src);
+        return v;
+
+    }
+
 
     private void requestPermissions() {
         String[] permissions = new String[]{
@@ -112,8 +146,11 @@ public class BodyActivity extends AppCompatActivity {
             default:
         }
     }
+
+
     //fragment适配器
     private class FragmentAdapter extends FragmentStatePagerAdapter{
+
         public FragmentAdapter(@NonNull FragmentManager fm) {
             super(fm,BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         }
@@ -132,6 +169,19 @@ public class BodyActivity extends AppCompatActivity {
                 default:
                     fragment=new DynamicsFragment();
                     break;
+//                case 0:
+//                    fragment=new AttentionFragment();
+//                    break;
+//                case 1:
+//                    fragment=new DynamicsFragment();
+//                    break;
+//                case 2:
+//                    fragment=new NewsFragment();
+//                    break;
+//
+//                default:
+//                    fragment=new  PersonalFragment();
+//                    break;
             }
             return fragment;
         }
@@ -146,6 +196,12 @@ public class BodyActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             return tabTitles[position];
         }
+
+
+
+
+
+
 
     }
 

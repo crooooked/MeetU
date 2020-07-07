@@ -139,7 +139,7 @@ public class PersonalFragment extends Fragment {
     }
     //设置图片
     private void setCount(String username) {
-        String url="http://10.234.184.71:8080/get-number?username="+username;
+        String url="http://172.20.10.2:8080/get-number?username="+username;
         OkHttpUtils instance=OkHttpUtils.getInstance();
         instance.doGet(url, new OkHttpUtils.OkHttpCallBackLinener() {
             @Override
@@ -166,7 +166,7 @@ public class PersonalFragment extends Fragment {
 
     //设置关注听众数量
     private void setImage(String username){
-        String url="http://10.234.184.71:8080/get-information?username="+username;
+        String url="http://10.236.66.58:8080/get-information?username="+username;
         OkHttpUtils instance=OkHttpUtils.getInstance();
         instance.doGet(url, new OkHttpUtils.OkHttpCallBackLinener() {
             @Override

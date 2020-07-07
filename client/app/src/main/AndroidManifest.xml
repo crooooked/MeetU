@@ -17,21 +17,23 @@
         android:networkSecurityConfig="@xml/net_secury"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:largeHeap="true"
+        android:hardwareAccelerated="false">
+        <activity android:name=".Layouts.InformationActivity"
+            android:parentActivityName=".Activities.BodyActivity"
+            />
+        <activity android:name=".Activities.BodyActivity"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.NewContentActivity"></activity>
-        <activity
-            android:name=".Layouts.InformationActivity"
-            android:parentActivityName=".Activities.BodyActivity" />
-        <activity
-            android:name=".Activities.BodyActivity"
-            android:launchMode="singleTop"
-            android:configChanges="keyboardHidden"
-            android:windowSoftInputMode="adjustPan|stateHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
         <activity
             android:name=".Activities.RegisterActivity"
@@ -39,11 +41,10 @@
         <activity
             android:name=".Activities.LoginActivity"
             android:launchMode="singleTop">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
+             <intent-filter>
+             <action android:name="android.intent.action.MAIN" />
+             <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
         </activity>
         <activity
             android:name=".Activities.MainActivity"
