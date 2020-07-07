@@ -22,7 +22,7 @@ import com.bumptech.glide.Glide;
 import com.example.meetu.FocusClass.AnalyseJson;
 import com.example.meetu.FocusClass.Httprequest;
 import com.example.meetu.FocusClass.ToJson;
-import com.example.meetu.FocusClass.IP;
+
 import com.example.meetu.R;
 import com.example.meetu.Tools.GlideCircleTransform;
 
@@ -90,17 +90,30 @@ public class PersonalDataShowActivity extends AppCompatActivity {
     public ImageView image_head,image_background;
     public String focusText;
     Httprequest httprequest=new Httprequest();
-    public  static String ip="10.234.184.71";
+    String ip=LoginActivity.ip;
 
     String url_getInformation="http://"+ip+":8080/get-information";
 
 
     String url_mangeAttention="http://"+ip+":8080/manage-attentions";
+//=======
+//    private String IP="http://10.234.184.71:8080";
+//    String url_getInformation=IP+"/get-information";
+//    String url_mangeAttention=IP+"/manage-attentions";
+
+//<<<<<<< Updated upstream
+//
+//    String ip="10.234.184.71";
+//    String url_getInformation="http://"+ip+":8080/get-information";
+//    String url_mangeAttention="http://"+ip+":8080/manage-attentions";
+
 
 //    String url_getInformation="http://10.234.184.71:8080/get-information";
 //    String url_mangeAttention="http://10.234.184.71:8080/manage-attentions";
 
     String myName= BodyActivity.key_username;
+//=======
+//>>>>>>> Stashed changes
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override

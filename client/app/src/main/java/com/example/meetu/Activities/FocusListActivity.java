@@ -40,7 +40,7 @@ public class FocusListActivity extends AppCompatActivity {
     public ImageButton return_iconButton;
     public ImageView image_head,image_background;
     public ImageView image_show;
-
+    private String IP=LoginActivity.ip;
     Httprequest httprequest=new Httprequest();
     //httprequest.handler=handler;将Httprequest的handler与下面的handler关联在一起
 
@@ -129,14 +129,16 @@ public class FocusListActivity extends AppCompatActivity {
    };
 
 
+    String url_getAttention=IP+"/get-attentions?username=";
+
     java.util.List<FocusData> focusdatas;
 
-//    IP ip=new IP();
-//
-//    String url=ip.ip;
+////    IP ip=new IP();
+////
+////    String url=ip.ip;
 //    String url_getAttention=url+"get-attentions?username=";
-
-    String url_getAttention="http://10.236.66.58:8080/get-attentions?username=";
+//
+//    String url_getAttention="http://10.236.66.58:8080/get-attentions?username=";
 
 
 
@@ -207,7 +209,7 @@ public class FocusListActivity extends AppCompatActivity {
         }
         //开启另一个线程，用于后台异步加载的工作
         protected String doInBackground(Void... voids) {
-            String result = request(url_getAttention,"lby");
+            String result = request(url_getAttention,BodyActivity.key_username);
             //返回Json数据
             return result;
         }

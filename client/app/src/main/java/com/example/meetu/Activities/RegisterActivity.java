@@ -37,9 +37,9 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText userName;
     private EditText passWord;
     private EditText confirmPwd;
-    private String url = "http://10.234.184.71:8080/register";
-    private static final int SUCCESS = 100;
-    private static final int FAILED = 110;
+    //相关IP可在OkhttpUtils进行修改
+    private String url = "/register";
+
     private Button btnReg;
     private CustomVideoView customVideoView;
 
@@ -75,56 +75,60 @@ public class RegisterActivity extends AppCompatActivity {
         userName = findViewById(R.id.ed_username_register);
         passWord = findViewById(R.id.ed_password_register);
         confirmPwd = findViewById(R.id.ed_password_register2);
-        requestPermissions();
+//<<<<<<< Updated upstream
+//        requestPermissions();
         Objects.requireNonNull(getSupportActionBar()).hide();
+//=======
+////        requestPermissions();
+//>>>>>>> Stashed changes
     }
 
-    private void requestPermissions() {
-        String[] permissions = new String[]{
-                Manifest.permission.INTERNET,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.ACCESS_NETWORK_STATE};
-
-        int[] permissionCode = new int[]{100, 101, 102, 103};
-        for (int i = 0; i < permissions.length; i++) {
-            if (ContextCompat.checkSelfPermission(this,
-                    permissions[i]) !=
-                    PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, new String[]{
-                        permissions[i]
-                }, permissionCode[i]);
-            }
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case 100:
-                if (grantResults.length == 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(getApplicationContext(), "你未获取网络权限！", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            case 101:
-                if (grantResults.length == 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(getApplicationContext(), "你未获取存储权限！", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            case 102:
-                if (grantResults.length == 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(getApplicationContext(), "你未获取读取权限！", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            case 103:
-                if (grantResults.length == 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(getApplicationContext(), "你未获取读取网络状态权限！", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            default:
-        }
-    }
+//    private void requestPermissions() {
+//        String[] permissions = new String[]{
+//                Manifest.permission.INTERNET,
+//                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+//                Manifest.permission.READ_EXTERNAL_STORAGE,
+//                Manifest.permission.ACCESS_NETWORK_STATE};
+//
+//        int[] permissionCode = new int[]{100, 101, 102, 103};
+//        for (int i = 0; i < permissions.length; i++) {
+//            if (ContextCompat.checkSelfPermission(this,
+//                    permissions[i]) !=
+//                    PackageManager.PERMISSION_GRANTED) {
+//                ActivityCompat.requestPermissions(this, new String[]{
+//                        permissions[i]
+//                }, permissionCode[i]);
+//            }
+//        }
+//    }
+//
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        switch (requestCode) {
+//            case 100:
+//                if (grantResults.length == 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+//                    Toast.makeText(getApplicationContext(), "你未获取网络权限！", Toast.LENGTH_SHORT).show();
+//                }
+//                break;
+//            case 101:
+//                if (grantResults.length == 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+//                    Toast.makeText(getApplicationContext(), "你未获取存储权限！", Toast.LENGTH_SHORT).show();
+//                }
+//                break;
+//            case 102:
+//                if (grantResults.length == 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+//                    Toast.makeText(getApplicationContext(), "你未获取读取权限！", Toast.LENGTH_SHORT).show();
+//                }
+//                break;
+//            case 103:
+//                if (grantResults.length == 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+//                    Toast.makeText(getApplicationContext(), "你未获取读取网络状态权限！", Toast.LENGTH_SHORT).show();
+//                }
+//                break;
+//            default:
+//        }
+//    }
     //按钮点击事件
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void onclick(View view) {

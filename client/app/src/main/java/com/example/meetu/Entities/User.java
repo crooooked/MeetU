@@ -18,7 +18,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 //用户类
-public class User implements Parcelable{
+public class User {
     int uid;            //id
     String username;    //用户名
     String password;    //密码
@@ -40,30 +40,6 @@ public class User implements Parcelable{
         head_image = head;
         background_image = background;
     }
-
-    protected User(Parcel in) {
-        uid = in.readInt();
-        username = in.readString();
-        password = in.readString();
-        address = in.readString();
-        gender = in.readString();
-        head_url = in.readString();
-        head_image = in.readParcelable(Bitmap.class.getClassLoader());
-        background_url = in.readString();
-        background_image = in.readParcelable(Bitmap.class.getClassLoader());
-    }
-
-    public static final Creator<User> CREATOR = new Creator<User>() {
-        @Override
-        public User createFromParcel(Parcel in) {
-            return new User(in);
-        }
-
-        @Override
-        public User[] newArray(int size) {
-            return new User[size];
-        }
-    };
 
     public void setInfo(String username, String password, String address, String gender, String head_url, String background_url) {
         this.username = username;
@@ -179,22 +155,4 @@ public class User implements Parcelable{
         this.username = username;
     }
 
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(uid);
-        parcel.writeString(username);
-        parcel.writeString(password);
-        parcel.writeString(address);
-        parcel.writeString(gender);
-        parcel.writeString(head_url);
-        parcel.writeParcelable(head_image, i);
-        parcel.writeString(background_url);
-        parcel.writeParcelable(background_image, i);
-    }
 }

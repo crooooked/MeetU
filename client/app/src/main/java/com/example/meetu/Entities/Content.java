@@ -23,14 +23,13 @@ import java.util.logging.LogRecord;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class Content {
-    final String IP = "10.234.184.71";
+    final String IP = "10.236.66.58";
     public final int NO_REPOST = -1;
 
     int myId = 2;
@@ -40,7 +39,7 @@ public class Content {
     User user;          //发布者信息（通过uid获取）
     long time;           //发布时间戳
     String content;     //状态内容
-    int repost=-1;         //转发，不是转发则为NO_REPOST，是转发则为被转发状态的content_id
+    int repost;         //转发，不是转发则为NO_REPOST，是转发则为被转发状态的content_id
     Content repostContent;  //转发内容（通过repost获取）
     String[] image_urls;    //图片的url，没有图片则为null
     ArrayList<Bitmap> images;    //图片，没有则为null（通过image_urls获取）
@@ -59,37 +58,20 @@ public class Content {
         user = new User(head, background);
     }
 
-    public Content(int content_id) {
-        this.content_id = content_id;
-    }
-
     //通过网络获取Content
     public Content(Context context, int content_id) throws IOException {
-        this.content_id = content_id;
-        String url = "http://" + IP + ":8080/get-specific-state?content_id="+content_id;
-        init(url, false);
-        if(repost != NO_REPOST) {
-            Log.i("repost", "have repost!");
-            Log.i("repost", "" + repost);
-            repostContent = new Content(repost);
-            String repost_url = "http://" + IP + ":8080/get-simple-state?content_id="+repost;
-            repostContent.init(repost_url, true);
-        }
-    }
-
-    public void init(String url, boolean isSimple) throws IOException {
         //获取Content
         OkHttpClient client = new OkHttpClient();
+        String url = "http://" + IP + ":8080/get-specific-state?content_id="+content_id;
         Log.i("url", url);
         Request request = new Request.Builder()
                 .get()
                 .url(url)
+                //.header("content_id", ""+content_id)
                 .build();
         Response response = client.newCall(request).execute();
         String str = response.body().string();
         Log.i("res", str);
-
-        //解析JSON
         try {
             JSONObject res = new JSONObject(str);
             content = res.getString("content");
@@ -103,126 +85,110 @@ public class Content {
             user.setHead_url(poster.getString("head"));
 
             //images
-            Log.i("image", "null");
             JSONArray image_list = res.getJSONArray("images");
             image_urls = new String[image_list.length()];
             for (int i = 0; i < image_list.length(); i++)
                 image_urls[i] = image_list.getJSONObject(i).getString("image");
-            user.getHeadImage();
 
             //remarks
-            //获取简单状态时不解析此项
-            if(!isSimple) {
-                JSONArray remark_list = res.getJSONArray("remarks");
-                if (remark_list != null && remark_list.length() != 0) {
-                    remarks_username = new String[remark_list.length()];
-                    remarks_content = new String[remark_list.length()];
-                    Log.i("remarks", remark_list.toString());
-                    for (int i = 0; i < remark_list.length(); i++) {
-                        remarks_username[i] = remark_list.getJSONObject(i).getString("username");
-                        Log.i("remark_username", remarks_username[i]);
-                        remarks_content[i] = remark_list.getJSONObject(i).getString("remark");
-                        Log.i("remark_content", remarks_content[i]);
-                    }
+            JSONArray remark_list = res.getJSONArray("remarks");
+            if (remark_list != null && remark_list.length() != 0) {
+                remarks_username = new String[image_list.length()];
+                remarks_content = new String[image_list.length()];
+                for (int i = 0; i < image_list.length(); i++) {
+                    remarks_username[i] = image_list.getJSONObject(i).getString("username");
+                    remarks_content[i] = image_list.getJSONObject(i).getString("content");
                 }
             }
 
-            this.repost = res.getInt("repost");
-            Log.i("repost", "" + this.repost);
+            repost = res.getInt("repost");
+            Log.i("repost", ""+repost);
+            time = res.getInt("time");
+            like_times = res.getInt("like_times");
+            remark_times = res.getInt("remark_times");
+            repost_times = res.getInt("repost_times");
 
-            //获取简单状态时不解析此项
-            if(!isSimple) {
-                time = res.getLong("time");
-                Log.i("time", time+"");
-                like_times = res.getInt("like_times");
-                remark_times = res.getInt("remark_times");
-                repost_times = res.getInt("repost_times");
+            //获取repost
+            if (repost != NO_REPOST) {
+                url = "http://"+IP+":8080/get-simple-state?content_id=1";
+                Log.i("url", url);
+//                Request request = new Request.Builder()
+//                        .get()
+//                        .url(url)
+//                        //.header("content_id", ""+content_id)
+//                        .build();
+//                Response response = client.newCall(request).execute();
+//                String str = response.body().string();
+//                Log.i("res", str);
             }
 
+            //通过每张图片的url获取图片
+            user.getHeadImage();
+            images = new ArrayList<Bitmap>();
+            if (image_urls != null && image_urls.length != 0) {
+                for(int i=0; i<image_urls.length; i++) {
+                    Log.i("image_url", image_urls[i]);
+                    request = new Request.Builder()
+                            .url(image_urls[i])
+                            .build();
+                    response = client.newCall(request).execute();
+                    byte[] bytes = response.body().bytes();
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    images.add(bitmap);
+                }
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    //点赞
+        //点赞
     public boolean like() {
         String url = "http://"+IP+":8080/like";
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("content_id", ""+content_id);
-            jsonObject.put("uid", ""+myId);
-            jsonObject.put("flag", "true");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        OkHttpClient okHttpClient = new OkHttpClient();
 
-        final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-        OkHttpClient client = new OkHttpClient();
-        RequestBody body = RequestBody.create(JSON, jsonObject.toString());
+        RequestBody body = new FormBody.Builder()
+                .add("content_id", ""+content_id)
+                .add("uid", ""+myId)
+                .add("flag", "true")
+                .build();
+
         Request request = new Request.Builder()
                 .url(url)
                 .post(body)
                 .build();
+
+        Call call = okHttpClient.newCall(request);
         try {
-            Response response = client.newCall(request).execute();
-            Log.i("like_res", response.body().string());
+            Response response = call.execute();
+            Log.i("like_response", response.body().string());
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
         return true;
     }
 
     //评论
     public void remark(String text) {
-        String url = "http://"+IP+":8080/remark";
+        String url = "http://\"+IP+\":8080/remark";
+        OkHttpClient okHttpClient = new OkHttpClient();
 
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("content_id", ""+content_id);
-            jsonObject.put("uid", ""+myId);
-            jsonObject.put("content", text);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        RequestBody body = new FormBody.Builder()
+                .add("content_id", ""+content_id)
+                .add("uid", "值")
+                .add("content", text)
+                .build();
 
-        final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-        OkHttpClient client = new OkHttpClient();
-        RequestBody body = RequestBody.create(JSON, jsonObject.toString());
         Request request = new Request.Builder()
                 .url(url)
                 .post(body)
                 .build();
-        try {
-            Response response = client.newCall(request).execute();
-            Log.i("Remark_res", response.body().string());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
-    //转发
-    public void repost(String text) {
-        String url = "http://"+IP+":8080/repost-state";
-
-        JSONObject jsonObject = new JSONObject();
+        Call call = okHttpClient.newCall(request);
         try {
-            jsonObject.put("content_id", ""+content_id);
-            jsonObject.put("uid", ""+myId);
-            jsonObject.put("content", text);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-        OkHttpClient client = new OkHttpClient();
-        RequestBody body = RequestBody.create(JSON, jsonObject.toString());
-        Request request = new Request.Builder()
-                .url(url)
-                .post(body)
-                .build();
-        try {
-            Response response = client.newCall(request).execute();
-            Log.i("Repost_res", response.body().string());
+            Response response = call.execute();
+            System.out.println(response.body().string());
         } catch (IOException e) {
             e.printStackTrace();
         }

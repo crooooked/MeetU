@@ -24,6 +24,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
 import com.example.meetu.Activities.FocusListActivity;
+import com.example.meetu.Activities.LoginActivity;
 import com.example.meetu.Activities.PersonalDataShowActivity;
 import com.example.meetu.Adapter.AttentionAdapter;
 import com.example.meetu.FocusClass.AnalyseJson;
@@ -79,6 +80,7 @@ public class AttentionFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -95,7 +97,7 @@ public class AttentionFragment extends Fragment {
     public LinearLayout pop_up_box;
     public ImageView search_image;
     public TextView search_name;
-    public static String ip="10.236.66.58";
+    String ip= LoginActivity.ip;
     Httprequest httprequest = new Httprequest();
     //httprequest.handler=handler;将Httprequest的handler与下面的handler关联在一起
 
@@ -238,6 +240,7 @@ public class AttentionFragment extends Fragment {
         initView(view);
         initData(view);
         setData();
+
         return view;
     }
 
@@ -272,6 +275,8 @@ public class AttentionFragment extends Fragment {
         mTabLayout.setupWithViewPager(mViewPager);
 
     }
+
+
 
 
 
@@ -376,8 +381,12 @@ public class AttentionFragment extends Fragment {
 
         //开启另一个线程，用于后台异步加载的工作
         protected String doInBackground(Void... voids) {
+//<<<<<<< Updated upstream
             String result = request("http://"+ip+":8080/get-attentions?username=", "lby");
-            //返回Json数据
+//=======
+//            String result = request(IP+"/get-attentions?username=", "lby");
+//>>>>>>> Stashed changes
+//            //返回Json数据
             return result;
         }
 
