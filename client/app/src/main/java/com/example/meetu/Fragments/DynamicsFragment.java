@@ -54,6 +54,7 @@ public class DynamicsFragment extends Fragment {
 
     int myId = 2;
     String IP = "10.234.184.71";
+    LinearLayout layout;
 
     public DynamicsFragment() {
         // Required empty public constructor
@@ -91,7 +92,7 @@ public class DynamicsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_dynamics, container, false);
-        LinearLayout layout = view.findViewById(R.id.linear_layout_space);
+        layout = view.findViewById(R.id.linear_layout_space);
 
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -132,12 +133,24 @@ public class DynamicsFragment extends Fragment {
             e.printStackTrace();
         }
 
+        load();
+
+        return view;
+    }
+
+    //添加状态跳转
+    public void newContent(View view) {
+        Intent intent=new Intent(getActivity(), NewContentActivity.class);
+        startActivity(intent);
+    }
+
+    public void load() {
         //获取要显示的状态列表
         Intent intent = getActivity().getIntent();
         boolean getMyStateOnly = intent.getBooleanExtra("isPersonalSpace", true);
-        client = new OkHttpClient();
+        OkHttpClient client = new OkHttpClient();
         JSONObject getStatePostJson = new JSONObject();
-        url = "http://" + IP + ":8080/get-state-list";
+        String url = "http://" + IP + ":8080/get-state-list";
         Log.i("url", url);
         Response response = null;
         String res = new String();
@@ -151,7 +164,7 @@ public class DynamicsFragment extends Fragment {
         }
         final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
         RequestBody body = RequestBody.create(JSON, getStatePostJson.toString());
-        request = new Request.Builder()
+        Request request = new Request.Builder()
                 .url(url)
                 .post(body)
                 .build();
@@ -181,14 +194,6 @@ public class DynamicsFragment extends Fragment {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        return view;
-    }
-
-    //添加状态跳转
-    public void newContent(View view) {
-        Intent intent=new Intent(getActivity(), NewContentActivity.class);
-        startActivity(intent);
     }
 
     public void test() {
