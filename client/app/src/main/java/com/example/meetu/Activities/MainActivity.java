@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.example.meetu.Entities.Content;
+import com.example.meetu.Fragments.DynamicsFragment;
 import com.example.meetu.Fragments.PersonalSpaceFragment;
 import com.example.meetu.Layouts.ContentCard;
 import com.example.meetu.Layouts.ContentImage;
@@ -45,8 +46,10 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 
+//        getSupportFragmentManager().beginTransaction().replace(R.id.framelayout_space_personal,
+//                new PersonalSpaceFragment()).commit();
         getSupportFragmentManager().beginTransaction().replace(R.id.framelayout_space_personal,
-                new PersonalSpaceFragment()).commit();
+                new DynamicsFragment()).commit();
     }
 
     //"<"箭头响应，回到关注页面

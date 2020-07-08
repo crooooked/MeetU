@@ -173,23 +173,23 @@ public class PersonalSpaceFragment extends Fragment {
             e.printStackTrace();
         }
 
-        //逐个显示卡片
-        try {
-            JSONArray cardsArray = new JSONArray(res);
-            for (int i = 0; i < cardsArray.length(); i++) {
-                int id = cardsArray.getJSONObject(i).getInt("content_id");
-                Log.i("content_id", ""+id);
-                Content content = new Content(getContext(), id);
-                ContentCard card = new ContentCard(getContext(), content);
-
-                layout.addView(card);
-                Log.i("addView", "success");
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        //逐个显示卡片
+//        try {
+//            JSONArray cardsArray = new JSONArray(res);
+//            for (int i = 0; i < cardsArray.length(); i++) {
+//                int id = cardsArray.getJSONObject(i).getInt("content_id");
+//                Log.i("content_id", ""+id);
+//                Content content = new Content(getContext(), id, this);
+//                ContentCard card = new ContentCard(getContext(), content);
+//
+//                layout.addView(card);
+//                Log.i("addView", "success");
+//            }
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
         //添加动态
         ImageButton btnRelease=view.findViewById(R.id.new_repost_personal_button);
         btnRelease.setOnClickListener(new View.OnClickListener() {
