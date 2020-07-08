@@ -23,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.meetu.FocusClass.AnalyseJson;
 import com.example.meetu.FocusClass.FocusData;
 import com.example.meetu.FocusClass.Httprequest;
@@ -135,8 +136,12 @@ public class PersonalDataShowActivity extends AppCompatActivity {
                     address=analyseJson.getAddress(jsonObject);
                     headUrl=analyseJson.getHeadUrl(jsonObject);
                     backgroundUrl=analyseJson.getBackgroundUrl(jsonObject);
-                    Glide.with(PersonalDataShowActivity.this).load(headUrl).transform(new GlideCircleTransform(PersonalDataShowActivity.this)).into(image_head);
-                    Glide.with(PersonalDataShowActivity.this).load(backgroundUrl).centerCrop().into(image_background);
+                    Glide.with(PersonalDataShowActivity.this).load(headUrl).skipMemoryCache(true)
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .transform(new GlideCircleTransform(PersonalDataShowActivity.this)).into(image_head);
+                    Glide.with(PersonalDataShowActivity.this).load(backgroundUrl).skipMemoryCache(true)
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .centerCrop().into(image_background);
 
                     for(String name:AttentionFragment.list_attentionName){
                         if(Name.equals(name)){

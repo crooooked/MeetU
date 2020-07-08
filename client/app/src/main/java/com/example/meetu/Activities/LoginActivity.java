@@ -214,6 +214,7 @@ public class LoginActivity extends AppCompatActivity {
     private void PostLogin(final String name, final String pwd){
         final String json = Convert.strRegLog(name, pwd);
         OkHttpUtils instance = OkHttpUtils.getInstance();
+        Log.i("json", json);
         instance.doPost(urlTail, json, new OkHttpUtils.OkHttpCallBackLinener() {
             @Override
             public void failure(Exception e) {

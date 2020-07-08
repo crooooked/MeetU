@@ -62,6 +62,8 @@ public class MyListAdapter extends BaseAdapter {
 
         Glide.with(mContext)
                 .load(mfocusList.get(position).getheadUrl())
+                .skipMemoryCache(true)
+                 .diskCacheStrategy(DiskCacheStrategy.NONE)
 
                 .transform(new GlideCircleTransform(mContext))
 

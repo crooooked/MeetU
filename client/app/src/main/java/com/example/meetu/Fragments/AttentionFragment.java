@@ -24,6 +24,7 @@ import android.widget.SearchView;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.meetu.Activities.BodyActivity;
 import com.example.meetu.Activities.FocusListActivity;
 import com.example.meetu.Activities.LoginActivity;
@@ -125,7 +126,11 @@ public class AttentionFragment extends Fragment {
                 String username;
                 username=analyseJson.getUsername(jsonObject);
                 headUrl=analyseJson.getHeadUrl(jsonObject);
-                Glide.with(getActivity()).load(headUrl).transform(new GlideCircleTransform(getActivity())).into(search_image);
+                Glide.with(getActivity()).load(headUrl)
+                        .skipMemoryCache(true)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .transform(new GlideCircleTransform(getActivity()))
+                        .into(search_image);
                 search_name.setText(username);
             }
 
