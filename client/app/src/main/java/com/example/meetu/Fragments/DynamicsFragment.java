@@ -54,14 +54,13 @@ public class DynamicsFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private boolean mParam1;
+    private String mParam1;
     private String mParam2;
 
     int myId = BodyActivity.key_id;
     String IP = LoginActivity.ip;
 
-    boolean getMyStateOnly = false;
-
+    boolean getMyStateOnly=false;
     int ID;
     long lastTime;
     View view;
@@ -94,10 +93,9 @@ public class DynamicsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             getMyStateOnly = getArguments().getBoolean(ARG_PARAM1);
-            Log.i("getstate", ""+getMyStateOnly);
+
         }
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -111,8 +109,8 @@ public class DynamicsFragment extends Fragment {
         }
 
         Intent intent = getActivity().getIntent();
+//        getMyStateOnly = intent.getBooleanExtra("isPersonalSpace", true);
         ID = intent.getIntExtra("id", this.myId);
-        Log.i("getstate2", ""+getMyStateOnly);
 
         //显示空间头
         OkHttpClient client = new OkHttpClient();
@@ -187,7 +185,6 @@ public class DynamicsFragment extends Fragment {
                 getStatePostJson.put("begin_time", beginTime);
             getStatePostJson.put("uid", ID);
             getStatePostJson.put("get_friends", !getMyStateOnly);
-            //getStatePostJson.put("get_friends", true);
         } catch (JSONException e) {
             e.printStackTrace();
         }
