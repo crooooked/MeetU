@@ -214,7 +214,7 @@ public class PersonalFragment extends Fragment {
                 break;
 
             case MAIN_ACTIVITY:
-                if(resultCode==110){
+                if(resultCode==160){
                     onResume();
                 }
                 break;

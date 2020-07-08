@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 //        getSupportFragmentManager().beginTransaction().replace(R.id.framelayout_space_personal,
 //                new PersonalSpaceFragment()).commit();
         getSupportFragmentManager().beginTransaction().replace(R.id.framelayout_space_personal,
-                new DynamicsFragment()).commit();
+                DynamicsFragment.newInstance(true)).commit();
     }
 
     //"<"箭头响应，回到关注页面
