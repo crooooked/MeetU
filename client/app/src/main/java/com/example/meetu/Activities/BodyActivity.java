@@ -27,10 +27,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.meetu.Entities.Convert;
+import com.example.meetu.Entities.User;
 import com.example.meetu.Fragments.AttentionFragment;
 import com.example.meetu.Fragments.DynamicsFragment;
 import com.example.meetu.Fragments.PersonalFragment;
 import com.example.meetu.R;
+import com.example.meetu.Tools.OkHttpUtils;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.Objects;
@@ -38,7 +41,7 @@ import java.util.Objects;
 public class BodyActivity extends AppCompatActivity {
 
     public static String key_username;
-    private static String key_password;
+    public static int key_id;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -48,7 +51,7 @@ public class BodyActivity extends AppCompatActivity {
 
         Intent intent=getIntent();
         key_username =intent.getStringExtra("userName");
-        key_password=intent.getStringExtra("passWord");
+        setKeyId();
         requestPermissions();
         initView();
     }
@@ -102,6 +105,24 @@ public class BodyActivity extends AppCompatActivity {
 
     }
 
+    private void setKeyId() {
+        String urlTail="/get-information?username="+key_username;
+
+        OkHttpUtils instance=OkHttpUtils.getInstance();
+        instance.doGet(urlTail, new OkHttpUtils.OkHttpCallBackLinener() {
+            @Override
+            public void failure(Exception e) {
+
+            }
+
+            @Override
+            public void success(String json) {
+                Log.e("!!!!!", json );
+                User user= Convert.getUserFromStr(json);
+                key_id=user.getUid();
+            }
+        });
+    }
 
 
     private View getTabView(String tabTitle, int src) {
@@ -202,7 +223,6 @@ public class BodyActivity extends AppCompatActivity {
             default:
         }
     }
-
 
     //fragment适配器
     private class FragmentAdapter extends FragmentStatePagerAdapter{

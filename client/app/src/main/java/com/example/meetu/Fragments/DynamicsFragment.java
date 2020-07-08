@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import com.example.meetu.Activities.BodyActivity;
 import com.example.meetu.Activities.LoginActivity;
 import com.example.meetu.Activities.NewContentActivity;
+import com.example.meetu.Activities.ReleaseContentActivity;
 import com.example.meetu.Entities.Content;
 import com.example.meetu.Entities.User;
 import com.example.meetu.Layouts.ContentCard;
@@ -100,9 +102,16 @@ public class DynamicsFragment extends Fragment {
             StrictMode.setThreadPolicy(policy);
         }
 
+        Intent intent = getActivity().getIntent();
+
+        boolean getMyStateOnly = intent.getBooleanExtra("isPersonalSpace", true);
+
+        int ID = intent.getIntExtra("id", this.myId);
+
         //显示空间头
         OkHttpClient client = new OkHttpClient();
-        String url = "http://" + IP + ":8080/get-zone-head?uid=" + myId;
+        String url = "http://" + IP + ":8080/get-zone-head?uid=" + ID;
+        Log.i("uid",""+ID);
         Log.i("url", url);
         Request request = new Request.Builder()
                 .get()
@@ -116,11 +125,11 @@ public class DynamicsFragment extends Fragment {
             JSONObject json = new JSONObject(str);
 
             TextView textView = view.findViewById(R.id.zone_head_user_name);
-            textView.setText(json.getString("username"));
+            textView.setText(BodyActivity.key_username);
 
             String head_url = json.getString("head");
             String background_url = json.getString("background");
-            User user = new User(myId);
+            User user = new User(ID);
             user.setHead_url(head_url);
             user.setBackground_url(background_url);
             user.getHeadImage();
@@ -135,8 +144,6 @@ public class DynamicsFragment extends Fragment {
         }
 
         //获取要显示的状态列表
-        Intent intent = getActivity().getIntent();
-        boolean getMyStateOnly = intent.getBooleanExtra("isPersonalSpace", true);
         client = new OkHttpClient();
         JSONObject getStatePostJson = new JSONObject();
         url = "http://" + IP + ":8080/get-state-list";
@@ -146,7 +153,7 @@ public class DynamicsFragment extends Fragment {
         try {
             getStatePostJson.put("begin_time", null);
             getStatePostJson.put("end_time", null);
-            getStatePostJson.put("uid", myId);
+            getStatePostJson.put("uid", ID);
             getStatePostJson.put("get_friends", !getMyStateOnly);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -177,15 +184,47 @@ public class DynamicsFragment extends Fragment {
                 layout.addView(card);
                 Log.i("addView", "success");
             }
-
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        //添加动态
+        ImageButton btnRelease=view.findViewById(R.id.new_repost_button);
+        btnRelease.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(view.getId()==R.id.new_repost_button){
+                    startActivityForResult(new Intent(getActivity(), ReleaseContentActivity.class),REQUEST_CODE);
+                }
+            }
+        });
         return view;
     }
+
+    private final int REQUEST_CODE=130;
+    private final int RESULT_CODE=131;
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==REQUEST_CODE){
+            switch (resultCode){
+                case 141:
+//                    onResume();
+                    break;
+                case 110:
+                    break;
+
+            }
+        }
+
+    }
+
+    //    @Override
+//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+//        super.onActivityCreated(savedInstanceState);
+//        ImageView addDynamics=
+//    }
 
     //添加状态跳转
     public void newContent(View view) {
@@ -194,69 +233,5 @@ public class DynamicsFragment extends Fragment {
     }
 
     public void test() {
-        //                //测试无图片+无转发的状态
-//        Bitmap head = BitmapFactory.decodeResource(getResources(), R.mipmap.sample_head);
-//        Content content1 = new Content(head, null);
-//        layout.addView(new ContentCard(getContext(), content1));
-
-//        if (true) return view;
-
-//        //测试用的数据
-//        Bitmap head = BitmapFactory.decodeResource(getResources(), R.mipmap.sample_head);
-//        //9张图
-//        ArrayList<Bitmap> images = new ArrayList<>();
-//        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image1));
-//        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image2));
-//        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image3));
-//        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image4));
-//        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image5));
-//        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image6));
-//        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image7));
-//        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image8));
-//        images.add(BitmapFactory.decodeResource(getResources(), R.mipmap.sample_image9));
-//        //评论
-//        String[] remark_content = new String[]{"好的！", "知道了"};
-//        String[] remark_username = new String[]{"小A", "小B"};
-
-//        //测试无图片+无转发的状态
-//        Content content1 = new Content(head, null);
-//        layout.addView(new ContentCard(getContext(), content1));
-//
-//        //测试有图片+无转发的状态
-//        Content content2 = new Content(head, null);
-//        content2.setImages(images);
-//        ContentCard contentCard2 = new ContentCard(getContext(), content2);
-//        layout.addView(contentCard2);
-//
-//        //测试无图片+有转发的状态
-//        Content content3 = new Content(head, null);
-//        content3.setRepost(123);
-//        content3.setRepostContent(content1);
-//        layout.addView(new ContentCard(getContext(), content3));
-//
-//        //测试有图片+有评论的状态
-//        Content content4 = new Content(head, null);
-//        content4.setImages(images);
-//        content4.setRemarks_content(remark_content);
-//        content4.setRemarks_username(remark_username);
-//        ContentCard contentCard4 = new ContentCard(getContext(), content4);
-//        layout.addView(contentCard4);
-//
-//        //测试从网络获取content
-//        Content content5 = null;
-//        try {
-//            content5 = new Content(getContext(), 1);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        layout.addView(new ContentCard(getContext(), content5));
-//
-//        return view;
-//
     }
-
-
-
-    }
-
 }

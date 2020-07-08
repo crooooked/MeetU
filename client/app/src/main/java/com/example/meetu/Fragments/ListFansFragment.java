@@ -199,7 +199,7 @@ public class ListFansFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), PersonalDataShowActivity.class);
                 intent.putExtra("Name", focusdatas.get(position).nick);
                 //1：表示已经关注,表示从listview点进去到个人资料界面
-                intent.putExtra("flag", "1");
+                intent.putExtra("flag", "0");
                 startActivityForResult(intent, PERSONAL_DATA);
             }
         });

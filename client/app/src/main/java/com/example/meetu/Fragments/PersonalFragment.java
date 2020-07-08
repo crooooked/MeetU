@@ -26,6 +26,7 @@ import com.example.meetu.Activities.MainActivity;
 import com.example.meetu.Entities.Convert;
 import com.example.meetu.Entities.User;
 import com.example.meetu.Layouts.InformationActivity;
+import com.example.meetu.Tools.GlideCircleTransform;
 import com.example.meetu.Tools.OkHttpUtils;
 import com.example.meetu.R;
 
@@ -138,7 +139,8 @@ public class PersonalFragment extends Fragment {
         tvPersonalSpace.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), MainActivity.class);
+                Intent intent = new Intent(getActivity(), BodyActivity.class);
+                intent.putExtra("isPersonalSpace",true);
                 startActivityForResult(intent, MAIN_ACTIVITY);
             }
         });
@@ -234,20 +236,7 @@ public class PersonalFragment extends Fragment {
             Glide.with(getContext()).load(user.getBackground_url()).into(ivBgImage);
         }
         if(hdUrl!=null){
-            Glide.with(getContext()).load(user.getHead_url()).into(ivHeadImage);
+            Glide.with(getContext()).load(user.getHead_url()).transform(new GlideCircleTransform(getContext())).into(ivHeadImage);
         }
     }
-    //设置的是更新后的图片
-//    private void setView(String mParam1,String mParam2){
-//        if(mParam1!=null){
-////            Glide.with(getActivity()).load(new File(mParam1)).into(ivHeadImage);
-////=======
-//        if(bgUrl!=null){
-//            Glide.with(getContext()).load(bgUrl).centerCrop().into(ivBgImage);
-//>>>>>>> Stashed changes
-//        }
-//        if(hdUrl!=null){
-//            Glide.with(getContext()).load(hdUrl).centerCrop().into(ivHeadImage);
-//        }
-//    }
 }

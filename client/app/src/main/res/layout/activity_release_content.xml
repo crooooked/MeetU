@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimaryDark"
-            android:onClick="return_page"
+            android:onClick="returnpagefromdynamics"
             android:src="@drawable/return_icon"
 
             />

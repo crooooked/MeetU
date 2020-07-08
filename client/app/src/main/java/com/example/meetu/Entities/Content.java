@@ -80,7 +80,6 @@ public class Content {
     public void init(String url, boolean isSimple) throws IOException {
         //获取Content
         OkHttpClient client = new OkHttpClient();
-        String url = "http://" + IP + ":8080/get-specific-state?content_id="+content_id;
         Log.i("url", url);
         Request request = new Request.Builder()
                 .get()
@@ -126,6 +125,8 @@ public class Content {
                 }
             }
 
+            repost = res.getInt("repost");
+
             //获取简单状态时不解析此项
             if(!isSimple) {
                 time = res.getInt("time");
@@ -159,7 +160,7 @@ public class Content {
                 .post(body)
                 .build();
         try {
-            Response response = call.execute();
+            Response response = client.newCall(request).execute();
             Log.i("like_response", response.body().string());
         } catch (IOException e) {
             e.printStackTrace();
