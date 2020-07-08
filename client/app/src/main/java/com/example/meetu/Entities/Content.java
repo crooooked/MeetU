@@ -93,7 +93,7 @@ public class Content {
         try {
             JSONObject res = new JSONObject(str);
             content = res.getString("content");
-            Log.i("content", content);
+            //Log.i("content", content);
 
             //poster
             JSONObject poster = res.getJSONObject("poster");
@@ -104,9 +104,22 @@ public class Content {
 
             //images
             JSONArray image_list = res.getJSONArray("images");
+            Log.i("image_list", image_list.toString());
             image_urls = new String[image_list.length()];
-            for (int i = 0; i < image_list.length(); i++)
+            images = new ArrayList<Bitmap>();
+            Log.i("image_list_length", image_list.length()+"");
+            for (int i = 0; i < image_list.length(); i++) {
                 image_urls[i] = image_list.getJSONObject(i).getString("image");
+                Log.i("image"+i, image_urls[i]);
+
+                request = new Request.Builder()
+                        .url(image_urls[i])
+                        .build();
+                response = client.newCall(request).execute();
+                byte[] bytes = response.body().bytes();
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                images.add(bitmap);
+            }
             user.getHeadImage();
             //remarks
             //获取简单状态时不解析此项
@@ -118,9 +131,9 @@ public class Content {
                     Log.i("remarks", remark_list.toString());
                     for (int i = 0; i < remark_list.length(); i++) {
                         remarks_username[i] = remark_list.getJSONObject(i).getString("username");
-                        Log.i("remark_username", remarks_username[i]);
+//                        Log.i("remark_username", remarks_username[i]);
                         remarks_content[i] = remark_list.getJSONObject(i).getString("remark");
-                        Log.i("remark_content", remarks_content[i]);
+//                        Log.i("remark_content", remarks_content[i]);
                     }
                 }
             }

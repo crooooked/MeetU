@@ -100,7 +100,9 @@ public class ContentCard extends ConstraintLayout {
         ArrayList<Bitmap> images = content.getImages();
         if(images != null && images.size() != 0) {
             contentImage.initGrid(images.size());
+            Log.i("image_size", ""+images.size());
             contentImage.showImages(images);
+            Log.i("show", "success");
             //contentImage.setBackground(getResources().getDrawable(R.color.colorGreyForRepostBackground));
         }
         //显示转发模块contentRepost
@@ -156,12 +158,14 @@ public class ContentCard extends ConstraintLayout {
         });
         //查看评论
         remarkButton.setOnClickListener(new OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View view) {
                 remark(view);
             }
         });
         remarkSlogan.setOnClickListener(new OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View view) {
                 remark(view);
@@ -197,6 +201,7 @@ public class ContentCard extends ConstraintLayout {
 
     //事件源：remark_button + remark_slogan
     //查看该状态的所有评论
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void remark(View view) {
         RemarkUnfold remarkUnfold = new RemarkUnfold(getContext());
         remarkUnfold.show();
