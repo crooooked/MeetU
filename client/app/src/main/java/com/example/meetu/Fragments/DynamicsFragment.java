@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.meetu.Activities.BodyActivity;
@@ -59,6 +60,14 @@ public class DynamicsFragment extends Fragment {
     int myId = BodyActivity.key_id;
     String IP = LoginActivity.ip;
 
+    boolean getMyStateOnly;
+    int ID;
+    long lastTime;
+    View view;
+    LinearLayout layout;
+
+    Bitmap myHead;
+
     public DynamicsFragment() {
         // Required empty public constructor
     }
@@ -94,8 +103,7 @@ public class DynamicsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_dynamics, container, false);
-        LinearLayout layout = view.findViewById(R.id.linear_layout_space);
+        view = inflater.inflate(R.layout.fragment_dynamics, container, false);
 
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -103,10 +111,8 @@ public class DynamicsFragment extends Fragment {
         }
 
         Intent intent = getActivity().getIntent();
-
-        boolean getMyStateOnly = intent.getBooleanExtra("isPersonalSpace", true);
-
-        int ID = intent.getIntExtra("id", this.myId);
+        getMyStateOnly = intent.getBooleanExtra("isPersonalSpace", true);
+        ID = intent.getIntExtra("id", this.myId);
 
         //显示空间头
         OkHttpClient client = new OkHttpClient();
@@ -136,23 +142,49 @@ public class DynamicsFragment extends Fragment {
             user.getBackgroundImage();
 
             ImageView head = view.findViewById(R.id.zone_head_image);
-            head.setImageBitmap(user.getHead_image());
+            myHead = user.getHead_image();
+            if(myHead == null)
+                Log.i("myHead", "null");
+            head.setImageBitmap(myHead);
+
             ImageView background = view.findViewById(R.id.background_image);
             background.setImageBitmap(user.getBackground_image());
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
 
+        //添加动态
+        ImageButton btnRelease=view.findViewById(R.id.new_repost_button);
+        btnRelease.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(view.getId()==R.id.new_repost_button){
+                    startActivityForResult(new Intent(getActivity(), ReleaseContentActivity.class),REQUEST_CODE);
+                }
+            }
+        });
+
+        load(0);
+        return view;
+    }
+
+    //加载和刷新
+    public void load(long beginTime) {
+        layout = view.findViewById(R.id.linear_layout_space);
+
         //获取要显示的状态列表
-        client = new OkHttpClient();
+        OkHttpClient client = new OkHttpClient();
         JSONObject getStatePostJson = new JSONObject();
-        url = "http://" + IP + ":8080/get-state-list";
+        String url = "http://" + IP + ":8080/get-state-list";
         Log.i("url", url);
         Response response = null;
         String res = new String();
         try {
-            getStatePostJson.put("begin_time", null);
             getStatePostJson.put("end_time", null);
+            if(beginTime == 0)
+                getStatePostJson.put("begin_time", null);
+            else
+                getStatePostJson.put("begin_time", beginTime);
             getStatePostJson.put("uid", ID);
             getStatePostJson.put("get_friends", !getMyStateOnly);
         } catch (JSONException e) {
@@ -160,7 +192,7 @@ public class DynamicsFragment extends Fragment {
         }
         final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
         RequestBody body = RequestBody.create(JSON, getStatePostJson.toString());
-        request = new Request.Builder()
+        Request request = new Request.Builder()
                 .url(url)
                 .post(body)
                 .build();
@@ -178,10 +210,14 @@ public class DynamicsFragment extends Fragment {
             for (int i = 0; i < cardsArray.length(); i++) {
                 int id = cardsArray.getJSONObject(i).getInt("content_id");
                 Log.i("content_id", ""+id);
-                Content content = new Content(getContext(), id);
-                ContentCard card = new ContentCard(getContext(), content);
+                Content content = new Content(getContext(), id, this);
 
-                layout.addView(card);
+                if(i == 0)
+                    lastTime = content.getTime();
+                ContentCard card = new ContentCard(getContext(), content);
+                card.setfragment(this);
+
+                layout.addView(card, 1+i);
                 Log.i("addView", "success");
             }
         } catch (JSONException e) {
@@ -189,17 +225,12 @@ public class DynamicsFragment extends Fragment {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //添加动态
-        ImageButton btnRelease=view.findViewById(R.id.new_repost_button);
-        btnRelease.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(view.getId()==R.id.new_repost_button){
-                    startActivityForResult(new Intent(getActivity(), ReleaseContentActivity.class),REQUEST_CODE);
-                }
-            }
-        });
-        return view;
+    }
+
+    public void fresh() {
+        load(lastTime+100);
+        ScrollView scrollView = view.findViewById(R.id.scroll_view);
+        scrollView.fullScroll(View.FOCUS_UP);
     }
 
     private final int REQUEST_CODE=130;
@@ -218,6 +249,10 @@ public class DynamicsFragment extends Fragment {
             }
         }
 
+    }
+
+    public Bitmap getMyHead() {
+        return myHead;
     }
 
     //    @Override

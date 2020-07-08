@@ -6,9 +6,12 @@ import android.graphics.BitmapFactory;
 import android.os.Message;
 import android.util.Log;
 
+import androidx.fragment.app.Fragment;
+
 import com.bumptech.glide.Glide;
 import com.example.meetu.Activities.BodyActivity;
 import com.example.meetu.Activities.LoginActivity;
+import com.example.meetu.Fragments.DynamicsFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,7 +38,7 @@ public class Content {
     final String IP = LoginActivity.ip;
     public final int NO_REPOST = -1;
 
-    int myId = 2;
+    int myId = BodyActivity.key_id;
 
     int content_id;     //id
     int uid;            //发布者id
@@ -52,6 +55,8 @@ public class Content {
     int remark_times;
     int repost_times;
 
+    DynamicsFragment fragment;
+
     public Content(Bitmap head, Bitmap background) {
         content_id = 0;
         uid = 0;
@@ -65,18 +70,22 @@ public class Content {
     }
 
     //通过网络获取Content
-    public Content(Context context, int content_id) throws IOException {
+    public Content(Context context, int content_id, DynamicsFragment fragment) throws IOException {
         this.content_id = content_id;
+        this.fragment = fragment;
+        if(this.fragment == null)
+            Log.i("fragment", "null");
         String url = "http://" + IP + ":8080/get-specific-state?content_id="+content_id;
         init(url, false);
         if(repost != NO_REPOST) {
-            Log.i("repost", "have repost!");
             Log.i("repost", "" + repost);
             repostContent = new Content(repost);
+            repostContent.setFragment(fragment);
             String repost_url = "http://" + IP + ":8080/get-simple-state?content_id="+repost;
             repostContent.init(repost_url, true);
         }
     }
+
     public void init(String url, boolean isSimple) throws IOException {
         //获取Content
         OkHttpClient client = new OkHttpClient();
@@ -120,7 +129,11 @@ public class Content {
                 Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                 images.add(bitmap);
             }
-            user.getHeadImage();
+            Log.i("myid", ""+myId);
+            if(user.getUid() == myId)
+                user.setHead_image(fragment.getMyHead());
+            else
+                user.getHeadImage();
             //remarks
             //获取简单状态时不解析此项
             if(!isSimple) {
@@ -232,6 +245,10 @@ public class Content {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setFragment(DynamicsFragment fragment) {
+        this.fragment = fragment;
     }
 
     public int getContent_id() {
