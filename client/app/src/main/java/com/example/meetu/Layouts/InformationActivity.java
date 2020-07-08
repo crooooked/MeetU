@@ -13,6 +13,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -24,6 +25,7 @@ import com.example.meetu.Entities.User;
 import com.example.meetu.R;
 import com.example.meetu.Tools.FileUtil;
 import com.example.meetu.Tools.OkHttpUtils;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.io.File;
@@ -50,14 +52,14 @@ public class InformationActivity extends AppCompatActivity {
     private User user;
     //初始化页面
     private void initView(){
-        Intent intent=getIntent();
+        String username=getIntent().getStringExtra("username");
 
         tvHead=findViewById(R.id.tv_head);
         tvbg=findViewById(R.id.tv_background);
         edaddress=findViewById(R.id.tv_address_content);
         edgender=findViewById(R.id.tv_gender_content);
 
-        String username="cql";
+
 //                intent.getStringExtra("username");
         getInformationMethod(username);
     }
@@ -77,7 +79,6 @@ public class InformationActivity extends AppCompatActivity {
                 edaddress.setText(user.getAddress());
             }
         });
-
     }
 
     //点击事件
@@ -96,36 +97,41 @@ public class InformationActivity extends AppCompatActivity {
     }
 
     //出现底部选择栏
-//    private void getImageOptions(final int select){
-//        BottomSheetDialog bottomSheetDialog=new BottomSheetDialog(this);
-//        bottomSheetDialog.setCancelable(true);
-//        bottomSheetDialog.setContentView(R.layout.view_getimage_bottom);
-//        bottomSheetDialog.show();
-//        View view=View.inflate(getApplicationContext(),R.layout.view_getimage_bottom,null);
-//        btnSelectCamera=view.findViewById(R.id.btn_select_camera);
-//        btnSelectPhoto=view.findViewById(R.id.tv_select_photo);
+    private void getImageOptions(final int select){
+        final BottomSheetDialog bottomSheetDialog=new BottomSheetDialog(this);
+        bottomSheetDialog.setCancelable(true);
+        View view= LayoutInflater.from(InformationActivity.this).inflate(R.layout.view_getimage_bottom,null);
+        bottomSheetDialog.setContentView(R.layout.view_getimage_bottom);
+        final Button btnSelectCamera=view.findViewById(R.id.btn_select_camera);
+
+        final Button btnSelectPhoto=view.findViewById(R.id.tv_select_photo);
+
+
 //        bottomSheetDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
 //            @Override
 //            public boolean onKey(DialogInterface dialogInterface, int i, KeyEvent keyEvent) {
 //                return false;
 //            }
 //        });
-//
-//        btnSelectCamera.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Log.e("!!!!!", "onClick: ");
-//                capturePhoto(select);
-//            }
-//        });
-//
-//        btnSelectPhoto.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                getImage(select);
-//            }
-//        });
-//    }
+
+        btnSelectCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("!!!!!", "onClick: ");
+                bottomSheetDialog.dismiss();
+                capturePhoto(select);
+            }
+        });
+
+        btnSelectPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bottomSheetDialog.dismiss();
+                getImage(select);
+            }
+        });
+        bottomSheetDialog.show();
+    }
 //    Button btnSelectCamera;
 //    Button btnSelectPhoto;
 //    //顶栏返回父activity
@@ -232,7 +238,12 @@ public class InformationActivity extends AppCompatActivity {
             }
             @Override
             public void success(String json) {
-                Toast.makeText(getApplicationContext(),"上传成功！",Toast.LENGTH_LONG).show();
+                if(json.equals("400")){
+                    Toast.makeText(getApplicationContext(),"请重新上传！",Toast.LENGTH_LONG).show();
+                }
+                else{
+                    Toast.makeText(getApplicationContext(),"上传成功！",Toast.LENGTH_LONG).show();
+                }
             }
         });
     }

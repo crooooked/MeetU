@@ -21,6 +21,7 @@
             android:background="#ffffff"
             android:text="拍照"
 
+
             android:textSize="20sp"
             app:layout_constraintVertical_weight="10"
             app:layout_constraintTop_toTopOf="parent"

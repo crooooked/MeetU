@@ -15,6 +15,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -42,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText edPassword;
 
     private User mainUser;
-    public static String ip="10.234.184.71";
+    public static String ip="10.234.184.80";
     private CustomVideoView customVideoView;
     private MediaPlayer mp1;
 
@@ -89,6 +90,7 @@ public class LoginActivity extends AppCompatActivity {
         //找VideoView控件
 
     }
+
 
     //request for all permissions
     private void requestPermissions() {
@@ -219,20 +221,26 @@ public class LoginActivity extends AppCompatActivity {
             }
             @Override
             public void success(String json) {
-                String s = json;
-                if(s.equals("200")){
-//                    Toast.makeText(LoginActivity.this, s, Toast.LENGTH_SHORT).show();
-                    Intent intent=new Intent(LoginActivity.this,BodyActivity.class);
-                    intent.putExtra("userName",name);
-                    intent.putExtra("passWord",pwd);
-                    startActivity(intent);
-                    LoginActivity.this.finish();
-                }
-                else {
-                    Toast.makeText(LoginActivity.this, "密码错误或账号不存在！", Toast.LENGTH_SHORT).show();
+                try {
+                    JSONObject jsonObject = new JSONObject(json);
+                    int key_id = jsonObject.getInt("uid");
+                    if (key_id != 0) {
+                        Intent intent = new Intent(LoginActivity.this, BodyActivity.class);
+                        intent.putExtra("userName", name);
+                        intent.putExtra("userId", key_id);
+
+                        startActivity(intent);
+                        LoginActivity.this.finish();
+                    }
+                    else {
+                        Toast.makeText(LoginActivity.this, "密码错误或账号不存在！", Toast.LENGTH_SHORT).show();
+                    }
+                }catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
-        });
+        }
+        );
     }
 
 }

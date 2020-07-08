@@ -6,6 +6,7 @@ package com.example.meetu.Entities;
 import com.alibaba.fastjson.*;
 
 public class Convert {
+
     public static String getStrContentFromContent(Content content){
         JSONObject jsonObject=new JSONObject();
         try {
@@ -27,6 +28,8 @@ public class Convert {
         }
         return jsonObject.toString();
     }
+
+//    public static
     public static User getUserFromStr(String str){
         User user=new User(-1);
         try {

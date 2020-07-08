@@ -51,7 +51,7 @@ public class BodyActivity extends AppCompatActivity {
 
         Intent intent=getIntent();
         key_username =intent.getStringExtra("userName");
-        setKeyId();
+        key_id=intent.getIntExtra("userId",0);
         requestPermissions();
         initView();
     }
@@ -137,7 +137,6 @@ public class BodyActivity extends AppCompatActivity {
         imageViewNull.setVisibility(View.INVISIBLE);
         imageView.setImageResource(src);
         return v;
-
     }
 
 

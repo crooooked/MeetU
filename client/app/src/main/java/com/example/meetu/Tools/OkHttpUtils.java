@@ -175,7 +175,7 @@ public class OkHttpUtils {
             RequestBody fileBody=RequestBody.create(file,IMAGE);
             RequestBody requestBody=new MultipartBody.Builder()
                     .setType(MultipartBody.FORM)
-                    .addFormDataPart("file",file.getPath(),fileBody)
+                    .addFormDataPart("file",file.getName(),fileBody)
                     .addFormDataPart("username",username)
                     .build();
         Log.e("!!!!!", file.getPath());

@@ -109,7 +109,7 @@ public class ReleaseContentActivity extends AppCompatActivity {
 
     private List<String> imagesList=new ArrayList<>();
     //当前添加图片的位置位置的
-    private int currentLocation=0;
+    private static int currentLocation=0;
     public void onClickChooseImage(View view) {
         if((currentLocation<9) && (view.getId()==imageLocation[currentLocation])){
             Intent intent = new Intent(Intent.ACTION_PICK, null);
