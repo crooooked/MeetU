@@ -33,35 +33,55 @@
 
 
         app:layout_constraintBottom_toTopOf="@+id/tv_address"
-        app:layout_constraintEnd_toStartOf="@+id/tv_gender_content"
+        app:layout_constraintEnd_toStartOf="@+id/rg_gender_content"
 
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_head"
         app:layout_constraintVertical_weight="1" />
 
-    <TextView
-        android:id="@+id/tv_gender_content"
+    <RadioGroup
+        android:id="@id/rg_gender_content"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center"
         android:textSize="20sp"
-        android:padding="20dp"
+
         android:background="@null"
+        android:orientation="horizontal"
 
 
         app:layout_constraintVertical_weight="1"
         app:layout_constraintHorizontal_weight="1"
 
-        app:layout_constraintBottom_toTopOf="@+id/tv_address_content"
+        app:layout_constraintBottom_toTopOf="@+id/ed_signature_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_head"
-        app:layout_constraintStart_toEndOf="@+id/tv_gender"/>
+        app:layout_constraintStart_toEndOf="@+id/tv_gender">
+        <RadioButton
+            android:text="男"
+            android:id="@+id/rb_boy"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:textSize="20sp"
+            android:layout_height="match_parent"
+
+            />
+        <RadioButton
+            android:text="女"
+            android:id="@+id/rb_girl"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:textSize="20sp"
+            android:layout_height="match_parent"
+
+            />
+    </RadioGroup>
     <TextView
         android:id="@+id/tv_address"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:text="地址"
+        android:text="签名"
         android:onClick="onClickChangeInformation"
         app:layout_constraintVertical_weight="1"
         app:layout_constraintHorizontal_weight="1"
@@ -73,15 +93,15 @@
 
         app:layout_constraintTop_toBottomOf="@+id/tv_gender"
         app:layout_constraintBottom_toTopOf="@+id/tv_background"
-        app:layout_constraintRight_toLeftOf="@+id/tv_address_content"
+        app:layout_constraintRight_toLeftOf="@+id/ed_signature_content"
         app:layout_constraintLeft_toLeftOf="parent"
         />
 
-    <TextView
-        android:id="@+id/tv_address_content"
+    <EditText
+        android:id="@+id/ed_signature_content"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="center"
+        android:gravity="left|center_vertical"
         android:textSize="20sp"
         android:padding="20dp"
         android:background="@null"
@@ -91,7 +111,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toEndOf="@+id/tv_address"
-        app:layout_constraintTop_toBottomOf="@+id/tv_gender_content"
+        app:layout_constraintTop_toBottomOf="@+id/rg_gender_content"
         app:layout_constraintVertical_weight="1" />
 
     <TextView

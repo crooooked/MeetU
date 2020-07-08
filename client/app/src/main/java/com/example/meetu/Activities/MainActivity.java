@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.example.meetu.Entities.Content;
+import com.example.meetu.Fragments.PersonalSpaceFragment;
 import com.example.meetu.Layouts.ContentCard;
 import com.example.meetu.Layouts.ContentImage;
 import com.example.meetu.R;
@@ -35,6 +36,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+//        ImageView imageView=LayoutInflater.from(getApplicationContext()).inflate(R.layout.fragment_personal_space,null).findViewById(R.id.zone_return_arrow);
+//        imageView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//        });
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.framelayout_space_personal,
+                new PersonalSpaceFragment()).commit();
     }
 
     //"<"箭头响应，回到关注页面
@@ -42,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         if(NavUtils.getParentActivityName(getParent())!=null) {
             Intent intent = new Intent();
             Log.e("!!!!!", " 执行了返回intent");
-            setResult(110, intent);
+            setResult(160, intent);
             this.finish();
         }
     }
@@ -56,7 +68,4 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void setImage(Bitmap image) {
-
-    }
 }

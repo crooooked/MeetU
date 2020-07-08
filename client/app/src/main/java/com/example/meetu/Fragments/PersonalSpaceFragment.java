@@ -1,8 +1,6 @@
 package com.example.meetu.Fragments;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -20,7 +18,6 @@ import android.widget.TextView;
 
 import com.example.meetu.Activities.BodyActivity;
 import com.example.meetu.Activities.LoginActivity;
-import com.example.meetu.Activities.NewContentActivity;
 import com.example.meetu.Activities.ReleaseContentActivity;
 import com.example.meetu.Entities.Content;
 import com.example.meetu.Entities.User;
@@ -32,7 +29,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -42,10 +38,10 @@ import okhttp3.Response;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link DynamicsFragment#newInstance} factory method to
+ * Use the {@link PersonalSpaceFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DynamicsFragment extends Fragment {
+public class PersonalSpaceFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -56,10 +52,7 @@ public class DynamicsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    int myId = BodyActivity.key_id;
-    String IP = LoginActivity.ip;
-
-    public DynamicsFragment() {
+    public PersonalSpaceFragment() {
         // Required empty public constructor
     }
 
@@ -69,11 +62,11 @@ public class DynamicsFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment DynamicsFragment.
+     * @return A new instance of fragment PersonalSpaceFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static DynamicsFragment newInstance(String param1, String param2) {
-        DynamicsFragment fragment = new DynamicsFragment();
+    public static PersonalSpaceFragment newInstance(String param1, String param2) {
+        PersonalSpaceFragment fragment = new PersonalSpaceFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -90,12 +83,20 @@ public class DynamicsFragment extends Fragment {
         }
     }
 
+
+    ImageView returnBtrn;
+    int myId = BodyActivity.key_id;
+    String IP = LoginActivity.ip;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_dynamics, container, false);
-        LinearLayout layout = view.findViewById(R.id.linear_layout_space);
+        View view=inflater.inflate(R.layout.fragment_personal_space, container, false);
+
+        LinearLayout layout = view.findViewById(R.id.linear_layout_personal_space);
+
+
+
 
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -124,7 +125,7 @@ public class DynamicsFragment extends Fragment {
 
             JSONObject json = new JSONObject(str);
 
-            TextView textView = view.findViewById(R.id.zone_head_user_name);
+            TextView textView = view.findViewById(R.id.zone_head_user_personal_name);
             textView.setText(BodyActivity.key_username);
 
             String head_url = json.getString("head");
@@ -135,9 +136,9 @@ public class DynamicsFragment extends Fragment {
             user.getHeadImage();
             user.getBackgroundImage();
 
-            ImageView head = view.findViewById(R.id.zone_head_image);
+            ImageView head = view.findViewById(R.id.zone_head_personal_image);
             head.setImageBitmap(user.getHead_image());
-            ImageView background = view.findViewById(R.id.background_image);
+            ImageView background = view.findViewById(R.id.background_personal_image);
             background.setImageBitmap(user.getBackground_image());
         } catch (IOException | JSONException e) {
             e.printStackTrace();
@@ -190,11 +191,11 @@ public class DynamicsFragment extends Fragment {
             e.printStackTrace();
         }
         //添加动态
-        ImageButton btnRelease=view.findViewById(R.id.new_repost_button);
+        ImageButton btnRelease=view.findViewById(R.id.new_repost_personal_button);
         btnRelease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(view.getId()==R.id.new_repost_button){
+                if(view.getId()==R.id.new_repost_personal_button){
                     startActivityForResult(new Intent(getActivity(), ReleaseContentActivity.class),REQUEST_CODE);
                 }
             }
@@ -202,26 +203,8 @@ public class DynamicsFragment extends Fragment {
         return view;
     }
 
-    private final int REQUEST_CODE=130;
-    private final int RESULT_CODE=131;
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==REQUEST_CODE){
-            switch (resultCode){
-                case 141:
-                    break;
-                case 110:
-                    break;
-            }
-        }
-    }
-    //添加状态跳转
-    public void newContent(View view) {
-        Intent intent=new Intent(getActivity(), NewContentActivity.class);
-        startActivity(intent);
-    }
 
-    public void test() {
-    }
+
+
+    private final int REQUEST_CODE=130;
 }

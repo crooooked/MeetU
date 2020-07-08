@@ -49,7 +49,7 @@ public class PersonalFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     private static final int CHANGE_INFORMATION=111;
-    private static final int MAIN_ACTIVITY=110;
+    private static final int MAIN_ACTIVITY=160;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -106,14 +106,12 @@ public class PersonalFragment extends Fragment {
         setCount(username);
         return view;
     }
-
     //需要开线程或者非动态
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         final String username=BodyActivity.key_username;
-
         //添加点击事件，进入修改信息页面
         ibInfo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,12 +125,11 @@ public class PersonalFragment extends Fragment {
         tvPersonalSpace.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), BodyActivity.class);
+                Intent intent = new Intent(getActivity(), MainActivity.class);
                 intent.putExtra("isPersonalSpace",true);
                 startActivityForResult(intent, MAIN_ACTIVITY);
             }
         });
-
         //退出
         tvSetting.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -245,12 +242,9 @@ public class PersonalFragment extends Fragment {
 //        Glide.get(getContext()).clearDiskCache();
         if(bgUrl!=null){
             Glide.with(getContext()).load(bgUrl).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).into(ivBgImage);
-            Log.e("!!!!!", "setView: "+bgUrl );
         }
         if(hdUrl!=null){
             Glide.with(getContext()).load(hdUrl).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).transform(new GlideCircleTransform(getContext())).into(ivHeadImage);
-            Log.e("!!!!!", "setView: "+hdUrl );
-
         }
     }
 }
