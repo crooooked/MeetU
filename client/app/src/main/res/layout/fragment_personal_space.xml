@@ -4,26 +4,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Fragments.DynamicsFragment">
+    tools:context=".Fragments.PersonalSpaceFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <ScrollView
-        android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
-            android:id="@+id/linear_layout_space"
+            android:id="@+id/linear_layout_personal_space"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/personal_space_header"
+                android:id="@+id/personal_space_personal_header"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent">
 
                 <ImageView
-                    android:id="@+id/background_image"
+                    android:id="@+id/background_personal_image"
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
                     android:src="@mipmap/sample_background"
@@ -34,28 +33,35 @@
                     android:scaleType="centerCrop" />
 
                 <ImageView
-                    android:id="@+id/zone_head_image"
+                    android:id="@+id/zone_head_personal_image"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:src="@mipmap/sample_head"
-                    app:layout_constraintBottom_toBottomOf="@+id/background_image"
+                    app:layout_constraintBottom_toBottomOf="@+id/background_personal_image"
                     android:layout_marginLeft="10dp"
                     android:layout_marginBottom="10dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:scaleType="centerCrop"/>
+                    app:layout_constraintStart_toStartOf="parent" />
 
                 <TextView
-                    android:id="@+id/zone_head_user_name"
+                    android:id="@+id/zone_head_user_personal_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:text="@string/user_name_sample"
                     android:textColor="#FFFFFF"
                     android:textSize="20dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/zone_head_image"
-                    app:layout_constraintStart_toEndOf="@+id/zone_head_image"
-                    app:layout_constraintTop_toTopOf="@+id/zone_head_image"
+                    app:layout_constraintBottom_toBottomOf="@+id/zone_head_personal_image"
+                    app:layout_constraintStart_toEndOf="@+id/zone_head_personal_image"
+                    app:layout_constraintTop_toTopOf="@+id/zone_head_personal_image"
                     app:layout_constraintVertical_bias="0.75" />
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/zone_return_arrow"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:src="@drawable/return_icon"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent" />-->
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -63,7 +69,7 @@
     </ScrollView>
 
     <ImageButton
-        android:id="@+id/new_repost_button"
+        android:id="@+id/new_repost_personal_button"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_gravity="right"
@@ -72,4 +78,5 @@
         android:background="#00000000"
         android:scaleType="centerCrop"
         app:srcCompat="@mipmap/add_content" />
+
 </FrameLayout>

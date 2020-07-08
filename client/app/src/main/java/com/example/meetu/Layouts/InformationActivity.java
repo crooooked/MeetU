@@ -3,30 +3,31 @@ package com.example.meetu.Layouts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.meetu.Entities.Convert;
+import com.example.meetu.Entities.FileProvider7;
 import com.example.meetu.Entities.User;
 import com.example.meetu.R;
 import com.example.meetu.Tools.FileUtil;
 import com.example.meetu.Tools.OkHttpUtils;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.io.File;
 import java.io.IOException;
@@ -56,8 +57,8 @@ public class InformationActivity extends AppCompatActivity {
 
         tvHead=findViewById(R.id.tv_head);
         tvbg=findViewById(R.id.tv_background);
-        edaddress=findViewById(R.id.tv_address_content);
-        edgender=findViewById(R.id.tv_gender_content);
+        edaddress=findViewById(R.id.ed_signature_content);
+//        edgender=findViewById(R.id.tv_gender_content);
 
 
 //                intent.getStringExtra("username");
@@ -71,66 +72,69 @@ public class InformationActivity extends AppCompatActivity {
         instance.doGet(urlTail, new OkHttpUtils.OkHttpCallBackLinener() {
             @Override
             public void failure(Exception e) {
+
             }
             @Override
             public void success(String json) {
                 user=Convert.getUserFromStr(json);
-                edgender.setText(user.getGender());
+                setGender(user.getGender());
                 edaddress.setText(user.getAddress());
             }
         });
     }
 
+    private void setGender(String gender){
+//
+        switch (gender){
+            case "女":
+                RadioButton radioButtonGirl=findViewById(R.id.rb_girl);
+                radioButtonGirl.setChecked(true);
+                break;
+            case "男":
+                RadioButton radioButtonBoy=findViewById(R.id.rb_boy);
+                radioButtonBoy.setChecked(true);
+                break;
+            default:
+                break;
+        }
+    }
+
+
     //点击事件
     public void onClickChangeInformation(View view){
         switch (view.getId()){
             case R.id.tv_head:
-                getImage(0);break;
-            case R.id.tv_address_content:
-                break;
-            case R.id.tv_gender_content:
+                getImageOptions(0);break;
+            case R.id.ed_signature_content:
                 break;
             case R.id.tv_background:
-                getImage(1);
+                getImageOptions(1);
                 break;
         }
     }
 
     //出现底部选择栏
     private void getImageOptions(final int select){
-        final BottomSheetDialog bottomSheetDialog=new BottomSheetDialog(this);
-        bottomSheetDialog.setCancelable(true);
-        View view= LayoutInflater.from(InformationActivity.this).inflate(R.layout.view_getimage_bottom,null);
-        bottomSheetDialog.setContentView(R.layout.view_getimage_bottom);
-        final Button btnSelectCamera=view.findViewById(R.id.btn_select_camera);
-
-        final Button btnSelectPhoto=view.findViewById(R.id.tv_select_photo);
-
-
-//        bottomSheetDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
-//            @Override
-//            public boolean onKey(DialogInterface dialogInterface, int i, KeyEvent keyEvent) {
-//                return false;
-//            }
-//        });
-
-        btnSelectCamera.setOnClickListener(new View.OnClickListener() {
+        String []items={"拍照","相册","取消"};
+        @SuppressLint("ResourceType") AlertDialog.Builder builder=new AlertDialog.Builder(InformationActivity.this,2);
+        builder.setItems(items, new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Log.e("!!!!!", "onClick: ");
-                bottomSheetDialog.dismiss();
-                capturePhoto(select);
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+                switch (i){
+                    case 0:
+                        capturePhoto(select);
+                        break;
+                    case 1:
+                        getImage(select);
+                        break;
+                    case 2:
+                        break;
+                }
             }
         });
+        builder.create().show();
 
-        btnSelectPhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                bottomSheetDialog.dismiss();
-                getImage(select);
-            }
-        });
-        bottomSheetDialog.show();
     }
 //    Button btnSelectCamera;
 //    Button btnSelectPhoto;
@@ -161,8 +165,11 @@ public class InformationActivity extends AppCompatActivity {
     //更新文本资料
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void refresh(){
+        RadioGroup radioGroup=findViewById(R.id.rg_gender_content);
+        RadioButton select=findViewById(radioGroup.getCheckedRadioButtonId());
+
         String curAddress=edaddress.getText().toString();
-        String curGender=edgender.getText().toString();
+        String curGender=select.getText().toString();
         if(!curAddress.equals(user.getAddress())
                 ||!curGender.equals(user.getGender()))
         {
@@ -187,39 +194,60 @@ public class InformationActivity extends AppCompatActivity {
         });
     }
 
+    private static final int []SELECT_CAPTURE={114,115};
+    private static final int []SELECT_ALBUM={116,117};
     //拍照
+    String tempPhotoPath;
     private void capturePhoto(int index){
+
+        Uri imageUri;
         Intent intent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//       File fileDir=new File(Environment.getExternalStoragePublicDirectory()+File.separator+"photo"+File.separator);
-        startActivityForResult(intent, IMAGE_SELECT_OBJ[index]);
+        File fileDir=new File(Environment.getExternalStorageDirectory()+File.separator+"photoTest"+File.separator);
+        if (!fileDir.exists()) {
+            fileDir.mkdirs();
+        }
+        File photoFile = new File(fileDir, "photo.jpeg");
+        tempPhotoPath = photoFile.getAbsolutePath();
+        imageUri = FileProvider7.getUriForFile(this, photoFile);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+        startActivityForResult(intent,SELECT_CAPTURE[index]);
     }
 
     //获取本地图片
     private void getImage(int index){
         Intent intent=new Intent(Intent.ACTION_PICK,null);
         intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,"image/*");
-        startActivityForResult(intent, IMAGE_SELECT_OBJ[index]);
+        startActivityForResult(intent, SELECT_ALBUM[index]);
     }
     @Override
     //获取本地图片路径
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         int index=0;
-        switch (requestCode){
-            case 114:
-                if(resultCode==RESULT_OK)
+        String filepath="";
+        if(resultCode==RESULT_OK){
+            switch (requestCode){
+                case 114:
                     index=0;
-                break;
-            case 115:
-                if(RESULT_OK==resultCode)
+                    filepath=tempPhotoPath;
+                    break;
+                case 115:
                     index=1;
-                break;
-        }
-        if (data != null&&data.getData()!=null) {
-            String filePath = FileUtil.getFilePathByUri(this, data.getData());
-
+                    filepath=tempPhotoPath;
+                    break;
+                case 116:
+                    index=0;
+                    assert data != null;
+                    filepath=FileUtil.getFilePathByUri(this, data.getData());
+                    break;
+                case 117:
+                    index=1;
+                    assert data != null;
+                    filepath=FileUtil.getFilePathByUri(this, data.getData());
+                    break;
+            }
             try {
-                postImage(filePath,index);
+                postImage(filepath,index);
             } catch (IOException e) {
                 e.printStackTrace();
             }
