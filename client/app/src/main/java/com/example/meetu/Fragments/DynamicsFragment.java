@@ -60,7 +60,7 @@ public class DynamicsFragment extends Fragment {
     int myId = BodyActivity.key_id;
     String IP = LoginActivity.ip;
 
-    boolean getMyStateOnly;
+    boolean getMyStateOnly=false;
     int ID;
     long lastTime;
     View view;
@@ -77,15 +77,13 @@ public class DynamicsFragment extends Fragment {
      * this fragment using the provided parameters.
      *
      * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment DynamicsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static DynamicsFragment newInstance(String param1, String param2) {
+    public static DynamicsFragment newInstance(boolean param1) {
         DynamicsFragment fragment = new DynamicsFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putBoolean(ARG_PARAM1, param1);
         fragment.setArguments(args);
         return fragment;
     }
@@ -94,8 +92,8 @@ public class DynamicsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            getMyStateOnly = getArguments().getBoolean(ARG_PARAM1);
+
         }
     }
 
@@ -111,7 +109,7 @@ public class DynamicsFragment extends Fragment {
         }
 
         Intent intent = getActivity().getIntent();
-        getMyStateOnly = intent.getBooleanExtra("isPersonalSpace", true);
+//        getMyStateOnly = intent.getBooleanExtra("isPersonalSpace", true);
         ID = intent.getIntExtra("id", this.myId);
 
         //显示空间头
