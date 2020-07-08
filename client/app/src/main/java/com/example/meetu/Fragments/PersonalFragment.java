@@ -1,5 +1,7 @@
 package com.example.meetu.Fragments;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,12 +22,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.meetu.Activities.BodyActivity;
 import com.example.meetu.Activities.LoginActivity;
 import com.example.meetu.Activities.MainActivity;
 import com.example.meetu.Entities.Convert;
 import com.example.meetu.Entities.User;
 import com.example.meetu.Layouts.InformationActivity;
+import com.example.meetu.Tools.GlideCircleTransform;
 import com.example.meetu.Tools.OkHttpUtils;
 import com.example.meetu.R;
 
@@ -93,10 +97,13 @@ public class PersonalFragment extends Fragment {
         tvFollow=view.findViewById(R.id.tv_audience);
         tvPersonalSpace=view.findViewById(R.id.tv_personal_space);
         tvSetting=view.findViewById(R.id.tv_setting);
-        ivBgImage=view.findViewById(R.id.iv_bg_mine);
-        ivHeadImage=view.findViewById(R.id.iv_head_mine);
+        ivBgImage=view.findViewById(R.id.image_bg_mine);
+        ivHeadImage=view.findViewById(R.id.image_head_mine);
         ibInfo=view.findViewById(R.id.ib_info);
 
+        final String username=BodyActivity.key_username;
+        setImage(username);
+        setCount(username);
         return view;
     }
 
@@ -106,24 +113,6 @@ public class PersonalFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         final String username=BodyActivity.key_username;
-
-        String url="/get-information?username="+username;
-        OkHttpUtils instance=OkHttpUtils.getInstance();
-        instance.doGet(url, new OkHttpUtils.OkHttpCallBackLinener() {
-            @Override
-            public void failure(Exception e) {
-                Toast.makeText(getContext(),"此人不存在",Toast.LENGTH_LONG).show();
-            }
-            @Override
-            public void success(String json) {
-                user= Convert.getUserFromStr(json);
-                setView();
-            }
-        });
-
-        setImage(username);
-        setCount(username);
-
 
         //添加点击事件，进入修改信息页面
         ibInfo.setOnClickListener(new View.OnClickListener() {
@@ -138,7 +127,8 @@ public class PersonalFragment extends Fragment {
         tvPersonalSpace.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), MainActivity.class);
+                Intent intent = new Intent(getActivity(), BodyActivity.class);
+                intent.putExtra("isPersonalSpace",true);
                 startActivityForResult(intent, MAIN_ACTIVITY);
             }
         });
@@ -147,9 +137,22 @@ public class PersonalFragment extends Fragment {
         tvSetting.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
-                startActivity(intent);
-                getActivity().finish();
+                AlertDialog alertDialog=new AlertDialog.Builder(getActivity())
+                        .setTitle("是否退出？")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                startActivity(new Intent(getActivity(),LoginActivity.class));
+                                getActivity().finish();
+                            }
+                        })
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                return;
+                            }
+                        }).create();
+                alertDialog.show();
             }
         });
     }
@@ -209,8 +212,7 @@ public class PersonalFragment extends Fragment {
         switch (requestCode){
             case CHANGE_INFORMATION:
                 if(resultCode==112){
-                    onResume();
-                    setImage(BodyActivity.key_username);
+//                    setView();
                 }
                 break;
 
@@ -222,32 +224,33 @@ public class PersonalFragment extends Fragment {
         }
     }
 
+    private boolean isFirstLoading=true;
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(!isFirstLoading){
+            setView();
+        }
+        isFirstLoading=false;
+    }
+
     //设置的是初始化图片
     private void setView(){
         tvName.setText(user.getUsername());
         String bgUrl=user.getBackground_url();
         String hdUrl=user.getHead_url();
 //<<<<<<< Updated upstream
-        Log.e("!!!!!", "setView: "+hdUrl );
-
+//
+//        Glide.get(getContext()).clearMemory();
+//        Glide.get(getContext()).clearDiskCache();
         if(bgUrl!=null){
-            Glide.with(getContext()).load(user.getBackground_url()).into(ivBgImage);
+            Glide.with(getContext()).load(bgUrl).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).into(ivBgImage);
+            Log.e("!!!!!", "setView: "+bgUrl );
         }
         if(hdUrl!=null){
-            Glide.with(getContext()).load(user.getHead_url()).into(ivHeadImage);
+            Glide.with(getContext()).load(hdUrl).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).transform(new GlideCircleTransform(getContext())).into(ivHeadImage);
+            Log.e("!!!!!", "setView: "+hdUrl );
+
         }
     }
-    //设置的是更新后的图片
-//    private void setView(String mParam1,String mParam2){
-//        if(mParam1!=null){
-////            Glide.with(getActivity()).load(new File(mParam1)).into(ivHeadImage);
-////=======
-//        if(bgUrl!=null){
-//            Glide.with(getContext()).load(bgUrl).centerCrop().into(ivBgImage);
-//>>>>>>> Stashed changes
-//        }
-//        if(hdUrl!=null){
-//            Glide.with(getContext()).load(hdUrl).centerCrop().into(ivHeadImage);
-//        }
-//    }
 }

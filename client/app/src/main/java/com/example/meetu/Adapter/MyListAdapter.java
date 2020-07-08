@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.meetu.FocusClass.FocusData;
 import com.example.meetu.R;
 import com.example.meetu.Tools.GlideCircleTransform;
@@ -61,6 +62,7 @@ public class MyListAdapter extends BaseAdapter {
 
         Glide.with(mContext)
                 .load(mfocusList.get(position).getheadUrl())
+
                 .transform(new GlideCircleTransform(mContext))
 
                 .into((ImageView)convertView.findViewById(R.id.item_image));

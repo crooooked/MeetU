@@ -23,6 +23,7 @@ import androidx.fragment.app.Fragment;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.meetu.Activities.BodyActivity;
+import com.example.meetu.Activities.LoginActivity;
 import com.example.meetu.Activities.PersonalDataShowActivity;
 import com.example.meetu.Adapter.MyListAdapter;
 import com.example.meetu.FocusClass.AnalyseJson;
@@ -118,7 +119,7 @@ public class ListFansFragment extends Fragment {
 
     };
 
-    String ip="10.234.184.71";
+    String ip= LoginActivity.ip;
     String url_getAudiences="http://"+ip+":8080/get-audiences?username=";
 
     String myName= BodyActivity.key_username;
@@ -199,7 +200,7 @@ public class ListFansFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), PersonalDataShowActivity.class);
                 intent.putExtra("Name", focusdatas.get(position).nick);
                 //1：表示已经关注,表示从listview点进去到个人资料界面
-                intent.putExtra("flag", "1");
+                intent.putExtra("flag", "0");
                 startActivityForResult(intent, PERSONAL_DATA);
             }
         });

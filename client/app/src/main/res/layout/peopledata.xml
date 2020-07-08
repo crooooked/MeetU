@@ -165,6 +165,7 @@
             android:text="@string/watchMoment"
             android:textSize="@dimen/bigSize"
             android:layout_marginLeft="20dp"
+            android:visibility="gone"
             tools:ignore="OnClick" />
 
     </LinearLayout>

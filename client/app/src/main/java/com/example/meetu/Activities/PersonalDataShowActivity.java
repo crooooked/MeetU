@@ -7,11 +7,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -57,7 +60,7 @@ public class PersonalDataShowActivity extends AppCompatActivity {
     public ImageView image_head,image_background;
     public String focusText;
     Httprequest httprequest=new Httprequest();
-    public  static String ip="10.234.184.71";
+    public  static String ip=LoginActivity.ip;
 
     String url_getInformation="http://"+ip+":8080/get-information";
     String url_mangeAttention="http://"+ip+":8080/manage-attentions";
@@ -250,7 +253,23 @@ public class PersonalDataShowActivity extends AppCompatActivity {
         //flag:1-添加关注    0-取消关注
         int flag;
         String jsonString;
+        Toast toast=new Toast(getApplicationContext());
 
+//创建一个填充物,用于填充Toast
+        LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
+
+//填充物来自的xml文件,在这个改成一个view
+//实现xml到view的转变哦
+
+
+        View viewToast =inflater.inflate(R.layout.toast,null);
+
+//不一定需要，找到xml里面的组件，设置组件里面的具体内容
+
+        ImageView imageView1=viewToast.findViewById(R.id.iv_toast);
+        TextView textView1=viewToast.findViewById(R.id.tv_toast);
+
+        imageView1.setImageResource(R.drawable.add_toast);
         //添加关注---->已关注
         if(focusText.equals("添加关注")){
             flag=1;
@@ -263,7 +282,17 @@ public class PersonalDataShowActivity extends AppCompatActivity {
             btn_focus.setText("取消关注");
             Log.d("Tag","关注成功==="+jsonString);
 
+
+
+
+
+        textView1.setText("关注成功");
+
+
+
+
         }
+
 
         if(focusText.equals("取消关注")){
             flag=0;
@@ -273,10 +302,25 @@ public class PersonalDataShowActivity extends AppCompatActivity {
             httprequest.post(url_mangeAttention,jsonString);
             Log.d("Tag","取消关注成功==="+jsonString);
 
+           // imageView1.setImageResource(R.drawable.cancel_toast);
+            textView1.setText("取消成功");
+
         }
 
+        //把填充物放进toast
+        toast.setView(viewToast);
+        toast.setGravity(Gravity.CENTER,0,0);
+        toast.setDuration(Toast.LENGTH_SHORT);
+
+        //展示toast
+        toast.show();
 
     }
+
+
+
+
+
 
 }
 

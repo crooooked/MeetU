@@ -31,19 +31,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimaryDark"
-            android:onClick="return_page"
+            android:onClick="returnpagefromdynamics"
             android:src="@drawable/return_icon"
 
             />
         <TextView
+            android:id="@+id/tv_release_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="发布"
+            android:onClick="onclickrelease"
             android:layout_gravity="right"
             android:layout_marginEnd="5dp"
             android:textColor="@color/colorWhite"
             android:textSize="25sp"
-            ></TextView>
+            />
 
     </androidx.appcompat.widget.Toolbar>
 

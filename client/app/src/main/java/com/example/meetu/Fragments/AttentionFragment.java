@@ -26,6 +26,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
 import com.example.meetu.Activities.BodyActivity;
 import com.example.meetu.Activities.FocusListActivity;
+import com.example.meetu.Activities.LoginActivity;
 import com.example.meetu.Activities.PersonalDataShowActivity;
 import com.example.meetu.Adapter.AttentionAdapter;
 import com.example.meetu.FocusClass.AnalyseJson;
@@ -97,7 +98,7 @@ public class AttentionFragment extends Fragment {
     public LinearLayout pop_up_box;
     public ImageView search_image;
     public TextView search_name;
-    public static String ip="10.234.184.71";
+    public static String ip= LoginActivity.ip;
     Httprequest httprequest = new Httprequest();
     //httprequest.handler=handler;将Httprequest的handler与下面的handler关联在一起
 

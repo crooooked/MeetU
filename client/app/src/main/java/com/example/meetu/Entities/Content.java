@@ -7,6 +7,8 @@ import android.os.Message;
 import android.util.Log;
 
 import com.bumptech.glide.Glide;
+import com.example.meetu.Activities.BodyActivity;
+import com.example.meetu.Activities.LoginActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,7 +32,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class Content {
-    final String IP = "10.234.184.71";
+    final String IP = LoginActivity.ip;
     public final int NO_REPOST = -1;
 
     int myId = 2;
@@ -58,7 +60,6 @@ public class Content {
         repost = -1;
         user = new User(head, background);
     }
-
     public Content(int content_id) {
         this.content_id = content_id;
     }
@@ -76,7 +77,6 @@ public class Content {
             repostContent.init(repost_url, true);
         }
     }
-
     public void init(String url, boolean isSimple) throws IOException {
         //获取Content
         OkHttpClient client = new OkHttpClient();
@@ -84,6 +84,7 @@ public class Content {
         Request request = new Request.Builder()
                 .get()
                 .url(url)
+                //.header("content_id", ""+content_id)
                 .build();
         Response response = client.newCall(request).execute();
         String str = response.body().string();
@@ -93,14 +94,15 @@ public class Content {
             JSONObject res = new JSONObject(str);
             content = res.getString("content");
             Log.i("content", content);
+
             //poster
             JSONObject poster = res.getJSONObject("poster");
             uid = poster.getInt("uid");
             user = new User(uid);
             user.setUsername(poster.getString("username"));
             user.setHead_url(poster.getString("head"));
+
             //images
-            Log.i("image", "null");
             JSONArray image_list = res.getJSONArray("images");
             image_urls = new String[image_list.length()];
             for (int i = 0; i < image_list.length(); i++)
@@ -122,8 +124,8 @@ public class Content {
                     }
                 }
             }
-            this.repost = res.getInt("repost");
-            Log.i("repost", "" + this.repost);
+
+            repost = res.getInt("repost");
 
             //获取简单状态时不解析此项
             if(!isSimple) {
@@ -159,12 +161,14 @@ public class Content {
                 .build();
         try {
             Response response = client.newCall(request).execute();
-            Log.i("like_res", response.body().string());
+            Log.i("like_response", response.body().string());
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
         return true;
     }
+
     //评论
     public void remark(String text) {
         String url = "http://"+IP+":8080/remark";

@@ -8,7 +8,9 @@ import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.meetu.Activities.BodyActivity;
 import com.example.meetu.Activities.LoginActivity;
+import com.example.meetu.FocusClass.IP;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -173,7 +175,7 @@ public class OkHttpUtils {
             RequestBody fileBody=RequestBody.create(file,IMAGE);
             RequestBody requestBody=new MultipartBody.Builder()
                     .setType(MultipartBody.FORM)
-                    .addFormDataPart("file",file.getPath(),fileBody)
+                    .addFormDataPart("file",file.getName(),fileBody)
                     .addFormDataPart("username",username)
                     .build();
         Log.e("!!!!!", file.getPath());

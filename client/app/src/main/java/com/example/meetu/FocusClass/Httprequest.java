@@ -141,9 +141,7 @@ public class Httprequest {
         task.enqueue(new Callback() {
             @Override
             public void onFailure(okhttp3.Call call, IOException e) {
-
                 Log.d("Tag","失败========"+call);
-
             }
 
             @Override
