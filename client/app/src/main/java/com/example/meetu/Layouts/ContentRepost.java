@@ -42,6 +42,7 @@ public class ContentRepost extends ConstraintLayout {
     }
 
     public void setImages(ArrayList<Bitmap> images) {
+        repostContentImage.initGrid(images.size());
         repostContentImage.showImages(images);
     }
 }

@@ -170,8 +170,8 @@ public class PersonalFragment extends Fragment {
             public void success(String json) {
                 try {
                     JSONObject jsonObject=new JSONObject(json);
-                    String attention=jsonObject.getInt("follower")+"关注";
-                    String audience=jsonObject.getInt("audience")+"听众";
+                    String attention=jsonObject.getInt("follower")+"\n关注";
+                    String audience=jsonObject.getInt("audience")+"\n听众";
 
                     tvAttention.setText(attention);
                     tvFollow.setText(audience);

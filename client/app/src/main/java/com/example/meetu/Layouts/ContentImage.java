@@ -158,6 +158,10 @@ class ContentImageItem extends androidx.appcompat.widget.AppCompatImageView{
 
     public void setImage(Bitmap image) {
         this.image = image;
+        if(image == null) {
+            Log.i("wrong!", "null!");
+            return;
+        }
 
         Bitmap result = image;
         int widthOrg = image.getWidth();

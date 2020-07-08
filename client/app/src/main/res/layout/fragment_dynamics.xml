@@ -8,6 +8,7 @@
 
     <!-- TODO: Update blank fragment layout -->
     <ScrollView
+        android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
@@ -40,7 +41,8 @@
                     app:layout_constraintBottom_toBottomOf="@+id/background_image"
                     android:layout_marginLeft="10dp"
                     android:layout_marginBottom="10dp"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:scaleType="centerCrop"/>
 
                 <TextView
                     android:id="@+id/zone_head_user_name"

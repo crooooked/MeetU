@@ -20,8 +20,10 @@ import android.widget.TextView;
 import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.fragment.app.Fragment;
 
 import com.example.meetu.Entities.Content;
+import com.example.meetu.Fragments.DynamicsFragment;
 import com.example.meetu.R;
 
 import java.text.ParseException;
@@ -53,6 +55,8 @@ public class ContentCard extends ConstraintLayout {
     TextView remark1;
     TextView remark2;
     EditText remarkEdit;
+
+    DynamicsFragment parent;
 
     boolean editTextForRemark = true;
 
@@ -100,7 +104,9 @@ public class ContentCard extends ConstraintLayout {
         ArrayList<Bitmap> images = content.getImages();
         if(images != null && images.size() != 0) {
             contentImage.initGrid(images.size());
+            Log.i("image_size", ""+images.size());
             contentImage.showImages(images);
+            Log.i("show", "success");
             //contentImage.setBackground(getResources().getDrawable(R.color.colorGreyForRepostBackground));
         }
         //显示转发模块contentRepost
@@ -156,12 +162,14 @@ public class ContentCard extends ConstraintLayout {
         });
         //查看评论
         remarkButton.setOnClickListener(new OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View view) {
                 remark(view);
             }
         });
         remarkSlogan.setOnClickListener(new OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View view) {
                 remark(view);
@@ -197,6 +205,7 @@ public class ContentCard extends ConstraintLayout {
 
     //事件源：remark_button + remark_slogan
     //查看该状态的所有评论
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void remark(View view) {
         RemarkUnfold remarkUnfold = new RemarkUnfold(getContext());
         remarkUnfold.show();
@@ -221,15 +230,30 @@ public class ContentCard extends ConstraintLayout {
         //发表评论
         if(editTextForRemark) {
             Log.i("remark", text);
+            InputMethodManager imm = (InputMethodManager) getContext().getSystemService(INPUT_METHOD_SERVICE);
+            imm.showSoftInput(remarkEdit, InputMethodManager.HIDE_IMPLICIT_ONLY);
             content.remark(text);
+            remarkEdit.setText("");
         }
         //转发
         else {
+            InputMethodManager imm = (InputMethodManager) getContext().getSystemService(INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getWindowToken(), 0);
+            Log.i("repost", "keyboard hide!");
+
             Log.i("repost", text);
             repostButton.setImageResource(R.mipmap.repost_red);
-            //content.repost(text);
+            content.repost(text);
+            Log.i("repost", "finished!");
+
+            remarkEdit.setText("");
+            parent.fresh();
+            Log.i("repost", "refreshed!");
         }
-        remarkEdit.setText("");
+    }
+
+    public void setfragment(DynamicsFragment parent) {
+        this.parent = parent;
     }
 
 }
