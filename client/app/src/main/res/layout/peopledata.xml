@@ -118,7 +118,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="60dp"
-            android:text="@string/address"
+            android:text="@string/signature"
             android:textColor="@color/colorBlack"
             android:textSize="@dimen/idSize" />
 

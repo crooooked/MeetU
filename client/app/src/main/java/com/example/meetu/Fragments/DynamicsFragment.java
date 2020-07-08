@@ -241,6 +241,7 @@ public class DynamicsFragment extends Fragment {
         if(requestCode==REQUEST_CODE){
             switch (resultCode){
                 case 141:
+                    fresh();
 //                    onResume();
                     break;
                 case 110:
